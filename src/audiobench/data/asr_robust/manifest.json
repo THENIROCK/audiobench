@@ -1,0 +1,71 @@
+{
+  "suite": "ab/asr-robust",
+  "revision": "0.1.0",
+  "default_seed": 1337,
+  "conditions": [
+    "clean",
+    "noise-cafe-10db",
+    "noise-pink-5db",
+    "bandlimited-8k",
+    "reverb-medium"
+  ],
+  "condition_seeds": {
+    "clean": 100,
+    "noise-cafe-10db": 200,
+    "noise-pink-5db": 300,
+    "bandlimited-8k": 400,
+    "reverb-medium": 500
+  },
+  "clips": [
+    {
+      "id": 1,
+      "file": "clip01.wav",
+      "text": "Today we test robust speech recognition under real world conditions."
+    },
+    {
+      "id": 2,
+      "file": "clip02.wav",
+      "text": "Audio benchmarks should report where a model fails, not just one average score."
+    },
+    {
+      "id": 3,
+      "file": "clip03.wav",
+      "text": "The quick brown fox jumps over the lazy dog in a noisy cafe."
+    },
+    {
+      "id": 4,
+      "file": "clip04.wav",
+      "text": "Please call me back at noon after the product demo is finished."
+    },
+    {
+      "id": 5,
+      "file": "clip05.wav",
+      "text": "Machine learning systems must be reproducible across hardware and time."
+    },
+    {
+      "id": 6,
+      "file": "clip06.wav",
+      "text": "This benchmark includes clean audio, noise, phone band, and reverb."
+    },
+    {
+      "id": 7,
+      "file": "clip07.wav",
+      "text": "Teams use this report to prioritize data collection and model updates."
+    },
+    {
+      "id": 8,
+      "file": "clip08.wav",
+      "text": "A reliable metric helps engineering leaders make better deployment decisions."
+    },
+    {
+      "id": 9,
+      "file": "clip09.wav",
+      "text": "We run the same suite every week to track regressions before release."
+    },
+    {
+      "id": 10,
+      "file": "clip10.wav",
+      "text": "One command should produce trustworthy numbers for realistic workloads."
+    }
+  ]
+}

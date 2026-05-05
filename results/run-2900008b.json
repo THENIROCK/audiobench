@@ -1,0 +1,38 @@
+{
+  "suite": "ab/asr-robust",
+  "revision": "0.1.0",
+  "model": "tiny",
+  "seed": 1337,
+  "clip_count": 1,
+  "conditions": [
+    "clean",
+    "noise-cafe-10db",
+    "noise-pink-5db",
+    "bandlimited-8k",
+    "reverb-medium"
+  ],
+  "manifest_hash": "4b8bf9d8e6e073a96cbb4290b58ebe097beec0de681b6a917735f4a75935a541",
+  "per_condition_wer": {
+    "clean": 0.0,
+    "noise-cafe-10db": 0.0,
+    "noise-pink-5db": 0.0,
+    "bandlimited-8k": 0.0,
+    "reverb-medium": 0.0
+  },
+  "weighted_mean_wer": 0.0,
+  "per_clip_hypotheses": [
+    {
+      "clip_id": 1,
+      "file": "clip01.wav",
+      "reference": "Today we test robust speech recognition under real world conditions.",
+      "hypotheses": {
+        "clean": "Today we test robust speech recognition under real world conditions.",
+        "noise-cafe-10db": "Today we test robust speech recognition under real world conditions.",
+        "noise-pink-5db": "Today we test robust speech recognition under real world conditions.",
+        "bandlimited-8k": "Today we test robust speech recognition under real world conditions.",
+        "reverb-medium": "Today we test robust speech recognition under real world conditions."
+      }
+    }
+  ],
+  "run_hash": "2900008b067731f792f5dece8578638d6f59b04520a33516b771928d0b648928"
+}

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "audiobench"
+version = "0.1.0"
+description = "MVP evaluation suite for audio ML models."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "audiobench"}]
+dependencies = [
+  "typer==0.24.1",
+  "rich==15.0.0",
+  "openai-whisper==20250625",
+  "jiwer==4.0.0",
+  "numpy==2.4.3",
+  "scipy==1.17.1",
+  "soundfile==0.13.1",
+]
+
+[project.scripts]
+audiobench = "audiobench.cli:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"audiobench.data.asr_robust" = ["manifest.json", "clips/*.wav"]
