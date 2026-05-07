@@ -8,5 +8,13 @@ __pycache__/
 .venv/
 .eggs/
 
+# Build artifacts
+/dist/
+/build/
+
+# Ad-hoc run outputs (`results/` itself is checked in for demo files;
+# this only ignores generated `run-<hash>.json` artifacts.)
+/results/run-*.json
+
 # mkdocs build output
 /site/

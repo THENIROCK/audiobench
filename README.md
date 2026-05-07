@@ -2,7 +2,7 @@
 
 audiobench is a reproducible CLI benchmark for audio ML models. It demonstrates the core idea from [audiobench.dev](https://audiobench.dev): a single clean-set metric hides failure modes, so the benchmark reports performance across realistic perturbations and mixtures.
 
-> **Full docs site:** [`docs/`](docs/index.md) is a Material-for-MkDocs site. Run `pip install -e ".[docs]" && mkdocs serve` and open <http://127.0.0.1:8000>. See [Building and deploying the docs](#building-and-deploying-the-docs) at the bottom of this file.
+> **Docs:** <https://thenirock.github.io/audiobench/>
 
 ## Suites in this MVP
 

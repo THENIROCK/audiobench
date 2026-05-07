@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "audiobench"
-version = "0.1.0"
+version = "0.1.1"
 description = "Reproducible CLI benchmark for audio ML models."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -55,6 +55,7 @@ Homepage      = "https://audiobench.dev"
 Documentation = "https://thenirock.github.io/audiobench/"
 Repository    = "https://github.com/THENIROCK/audiobench"
 Issues        = "https://github.com/THENIROCK/audiobench/issues"
+Changelog     = "https://github.com/THENIROCK/audiobench/blob/main/CHANGELOG.md"
 
 [project.scripts]
 audiobench = "audiobench.cli:app"

@@ -79,8 +79,10 @@ class ClapAdapter:
             import laion_clap
         except ImportError as exc:  # pragma: no cover - import-time guard
             raise RuntimeError(
-                "clap-base requires the optional dependency `laion_clap` "
-                "(`pip install laion-clap`). It downloads weights on first use."
+                "clap-base requires the optional `laion_clap` dependency. "
+                "Install it with `pip install \"audiobench[clap]\"` "
+                "(or `pip install laion-clap` if you installed audiobench "
+                "from source). Weights are downloaded on first use."
             ) from exc
         self._laion_clap = laion_clap
         self._model = laion_clap.CLAP_Module(enable_fusion=False)

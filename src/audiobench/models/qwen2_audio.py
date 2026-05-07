@@ -94,9 +94,13 @@ class Qwen2AudioAdapter:
             from transformers import AutoProcessor, Qwen2AudioForConditionalGeneration
         except ImportError as exc:  # pragma: no cover - import-time guard
             raise RuntimeError(
-                "qwen2-audio-7b requires either AUDIOBENCH_QWEN_ENDPOINT to be "
-                "set or `pip install transformers torch` plus a local "
-                "Qwen2-Audio checkpoint. See README for setup details."
+                "qwen2-audio-7b requires either AUDIOBENCH_QWEN_ENDPOINT to "
+                "point at a remote inference server, or the local "
+                "`transformers` + `torch` stack. Install the local stack "
+                "with `pip install \"audiobench[qwen]\"` "
+                "(or `pip install transformers torch` from source) and "
+                "have a Qwen2-Audio checkpoint available. See README for "
+                "setup details."
             ) from exc
         self._mode = "local"
         self._device, self._dtype = _pick_device_and_dtype()
