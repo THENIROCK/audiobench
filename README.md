@@ -25,7 +25,7 @@ Conditions: `clean`, `noise-cafe-10db`, `noise-pink-5db`, `bandlimited-8k`, `rev
 
 ### `ab/sound-id` (sound events)
 
-For each mixture of labeled clips, the model is asked once per candidate label using the bundled prompt set (canonical wording: "Do you hear a {label}?"). The exact wording, version, and any ensemble setting are pinned in the run hash — see [Prompt protocol](#prompt-protocol).
+For each mixture of labeled clips, the model is asked once per candidate label using the bundled prompt set (canonical wording: "Do you hear a {label}?"). The exact wording, version, and any ensemble setting are pinned in the run hash — see the **Prompt protocol** section below.
 
 The benchmark scores how many components of the mixture were correctly identified.
 
@@ -40,7 +40,14 @@ Conditions are mixture sizes:
 - `triple` — N=3
 - `quad` — N=4
 
-Per `(pack, condition)` it reports `recall` (components understood / present), `precision`, `f1`, and `fpr` (false-positive rate on distractor prompts). Headline number: `components understood: X / Y`.
+For every `(pack, condition)` row, the benchmark reports:
+
+- **recall** — of the sounds actually in the mixture, what fraction did the model correctly say "yes" to? (1.0 = caught every component; lower = missed some.)
+- **precision** — of the times the model said "yes", what fraction were actually present? (1.0 = no false alarms; lower = it claims to hear things that aren't there.)
+- **F1** — a single combined score that blends recall and precision; useful when you want one number.
+- **FPR** (false-positive rate) — for sounds that are NOT in the mixture (distractors), how often does the model still say "yes"? (0.0 = never hallucinates; higher = it answers "yes" too eagerly.)
+
+Headline number: `components understood: X / Y` — across every mixture, X is how many ground-truth components the model identified out of Y total. **This is the number you'd quote in a tweet.**
 
 ## Demo: compare two models on `ab/sound-id`
 
