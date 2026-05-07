@@ -2,6 +2,8 @@
 
 audiobench is a reproducible CLI benchmark for audio ML models. It demonstrates the core idea from [audiobench.dev](https://audiobench.dev): a single clean-set metric hides failure modes, so the benchmark reports performance across realistic perturbations and mixtures.
 
+> **Full docs site:** [`docs/`](docs/index.md) is a Material-for-MkDocs site. Run `pip install -e ".[docs]" && mkdocs serve` and open <http://127.0.0.1:8000>. See [Building and deploying the docs](#building-and-deploying-the-docs) at the bottom of this file.
+
 ## Suites in this MVP
 
 - `ab/asr-robust` — speech recognition under noise, bandlimiting, and reverb. Default model: Whisper.
@@ -241,7 +243,7 @@ When the run was made with `--prompt-ensemble N`, `inspect` also prints a per-pa
 - `heuristic-v0` (bundled, CPU) — the strong bundled baseline. See **How the bundled heuristics work** below.
 - `heuristic-weak` (bundled, CPU) — a deliberately weaker variant of the same algorithm so `audiobench compare` has something to show out of the box. See **How the bundled heuristics work** below.
 - `clap-base` — LAION-CLAP zero-shot. Requires `pip install laion-clap` (lazy import). First run downloads weights.
-- `qwen2-audio-7b` — Qwen2-Audio-Instruct via HuggingFace `transformers`. Requires GPU (~16 GB VRAM) or set `AUDIOBENCH_QWEN_ENDPOINT=https://...` to point at a remote inference endpoint.
+- `qwen2-audio-7b` — Qwen2-Audio-Instruct via HuggingFace `transformers`. Requires GPU (~16 GB VRAM) locally, or set `AUDIOBENCH_QWEN_ENDPOINT=https://...` to point at a remote inference endpoint. See [docs/models/qwen2-audio.md](docs/models/qwen2-audio.md) for the endpoint contract, a deployable Modal recipe, a free Google Colab + Cloudflared alternative, and Apple Silicon notes.
 
 Add your own model adapter in `src/audiobench/models/` and register it in `src/audiobench/models/registry.py`.
 
@@ -340,3 +342,33 @@ audiobench push results/sound-id-heuristic.json --pretty-json
 - `push` is local-only and does not send network traffic.
 - CPU-first workflow; the bundled heuristic and CLAP models are the CPU-friendly paths.
 - English-only data in `ab/asr-robust`.
+
+## Building and deploying the docs
+
+The full docs live at [`docs/`](docs/index.md) and render as a Material-for-MkDocs site. The `[docs]` extra pulls in `mkdocs`, `mkdocs-material`, and `pymdown-extensions`.
+
+**Run locally with hot reload:**
+
+```bash
+pip install -e ".[docs]"
+mkdocs serve
+# open http://127.0.0.1:8000
+```
+
+`mkdocs serve` watches `docs/` and `mkdocs.yml`; saving any file rebuilds and refreshes the browser tab.
+
+**Build a static site (output in `site/`, gitignored):**
+
+```bash
+mkdocs build --strict
+```
+
+`--strict` turns warnings into errors. Useful in CI to catch broken internal links before they ship.
+
+**Deploy to GitHub Pages:**
+
+```bash
+mkdocs gh-deploy --force
+```
+
+This builds the site and pushes it to a `gh-pages` branch. Then in the GitHub repo settings, under **Pages → Source**, point at the `gh-pages` branch. The site lives at `https://<user>.github.io/audiobench/` (configured in `mkdocs.yml` as `site_url`). For a CI-driven deploy, the [official GitHub Action](https://www.mkdocs.org/user-guide/deploying-your-docs/#github-pages) does the same thing on every push to `main`.
