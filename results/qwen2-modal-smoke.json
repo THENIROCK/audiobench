@@ -1,0 +1,349 @@
+{
+  "conditions": [
+    "solo",
+    "pair",
+    "triple",
+    "quad"
+  ],
+  "config": {
+    "custom_mixtures": [],
+    "limit": 3,
+    "model": "qwen2-audio-7b",
+    "packs": [
+      "demo"
+    ],
+    "parser_version": "v1",
+    "profile": null,
+    "prompt_ensemble": null,
+    "prompt_paraphrases_hash": "3ffb67d4260b208de8bb5f74a78258c61b6b8526aaddb7b683bc23d475a3edac",
+    "prompt_paraphrases_used": [
+      "Do you hear a {label}?"
+    ],
+    "prompt_source": "bundled",
+    "prompt_version": "yesno-v1",
+    "seed": 1337,
+    "selected_conditions": [
+      "solo"
+    ],
+    "skipped_packs": []
+  },
+  "headline": {
+    "components_present": 3,
+    "components_understood": 2,
+    "solo_quad_cliff": null,
+    "weighted_fpr": 0.8333333333333334,
+    "weighted_recall": 0.6666666666666666
+  },
+  "model": "qwen2-audio-7b",
+  "pack_summaries": {
+    "demo": {
+      "license_tag": "bundled",
+      "per_class": {
+        "baby_cry": {
+          "components_present": 1.0,
+          "components_understood": 1.0,
+          "f1": 1.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tn": 0.0,
+          "tp": 1.0
+        },
+        "dog_bark": {
+          "components_present": 0.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 0.0,
+          "fp": 2.0,
+          "fpr": 0.6666666666666666,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 1.0,
+          "tp": 0.0
+        },
+        "siren": {
+          "components_present": 0.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 0.0,
+          "fp": 2.0,
+          "fpr": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 0.0,
+          "tp": 0.0
+        },
+        "speech": {
+          "components_present": 1.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 0.0,
+          "tp": 0.0
+        },
+        "vacuum": {
+          "components_present": 1.0,
+          "components_understood": 1.0,
+          "f1": 0.6666666666666666,
+          "fn": 0.0,
+          "fp": 1.0,
+          "fpr": 1.0,
+          "precision": 0.5,
+          "recall": 1.0,
+          "tn": 0.0,
+          "tp": 1.0
+        }
+      },
+      "per_condition": {
+        "solo": {
+          "components_present": 3.0,
+          "components_understood": 2.0,
+          "f1": 0.4,
+          "fn": 1.0,
+          "fp": 5.0,
+          "fpr": 0.8333333333333334,
+          "precision": 0.2857142857142857,
+          "recall": 0.6666666666666666,
+          "tn": 1.0,
+          "tp": 2.0
+        }
+      },
+      "scope_note": "Procedural audio generated in-process; not a real-world dataset. Powers the headline demo with zero downloads.",
+      "title": "Procedural demo pack",
+      "totals": {
+        "components_present": 3.0,
+        "components_understood": 2.0,
+        "f1": 0.4,
+        "fn": 1.0,
+        "fp": 5.0,
+        "fpr": 0.8333333333333334,
+        "precision": 0.2857142857142857,
+        "recall": 0.6666666666666666,
+        "tn": 1.0,
+        "tp": 2.0
+      }
+    }
+  },
+  "packs": [
+    "demo"
+  ],
+  "parser_version": "v1",
+  "per_mixture": [
+    {
+      "components_present": [
+        "speech"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-001",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "No."
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "No."
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "Yes."
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "Yes."
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "Yes"
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "Yes"
+        }
+      ],
+      "sources": [
+        {
+          "label": "speech",
+          "source": "demo://speech@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "speech"
+        ],
+        "name": "demo-solo-001",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "vacuum"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-002",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "Yes."
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "Yes."
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "Yes"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "Yes"
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "Yes"
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "Yes"
+        }
+      ],
+      "sources": [
+        {
+          "label": "vacuum",
+          "source": "demo://vacuum@1"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "vacuum"
+        ],
+        "name": "demo-solo-002",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "baby_cry"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-003",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "Yes"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "Yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "No."
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "No."
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "Yes"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "Yes"
+        }
+      ],
+      "sources": [
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "baby_cry"
+        ],
+        "name": "demo-solo-003",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    }
+  ],
+  "profile": null,
+  "prompt_ensemble": null,
+  "prompt_paraphrases_used": [
+    "Do you hear a {label}?"
+  ],
+  "prompt_source": "bundled",
+  "prompt_version": "yesno-v1",
+  "revision": "0.1.0",
+  "run_hash": "fd63509ad83ad16365f9b350c5f47ca5d76e19c74c7fc6d3108ec374e1d51766",
+  "seed": 1337,
+  "skipped_packs": [],
+  "suite": "ab/sound-id"
+}

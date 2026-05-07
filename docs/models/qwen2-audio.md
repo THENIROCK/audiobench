@@ -32,8 +32,10 @@ The adapter source of truth is `_answer_api` in [`src/audiobench/models/qwen2_au
 
 ```bash
 pip install modal
-modal token new   # opens a browser to sign up / log in
+modal token new
 ```
+
+`modal token new` opens a browser for sign-up/login.
 
 Modal asks for a payment method; the monthly credits make this free for benchmarking purposes.
 
@@ -144,29 +146,44 @@ The first request triggers a cold start (~60–120 s while Modal pulls the model
 
 ```bash
 ENDPOINT="https://<your-username>--audiobench-qwen2-qwenserver-web.modal.run"
+```
 
+Create a 1-second silent WAV:
+
+```bash
 python -c "
 import soundfile as sf, numpy as np
 sf.write('/tmp/silence.wav', np.zeros(16000, dtype=np.float32), 16000)
 "
+```
 
+Send one request to warm the endpoint and verify the contract:
+
+```bash
 curl -sS -X POST "$ENDPOINT" \
   -F 'prompt=Listen to the audio and answer with only the word yes or no. Do you hear a siren?' \
   -F 'audio=@/tmp/silence.wav;type=audio/wav'
-# expect "no" (or similar). once warm, calls take a couple of seconds.
 ```
+
+Once warm, calls usually take a couple of seconds. The exact answer can vary (`yes` or `no`), and either is fine for a contract smoke test.
 
 ### 5. Run the benchmark
 
 ```bash
 export AUDIOBENCH_QWEN_ENDPOINT="$ENDPOINT"
+```
 
-# tiny first: one solo mixture, 3 probes, finishes in ~10 s warm
+Start with a tiny run first (one solo mixture, 3 probes):
+
+```bash
 audiobench run ab/sound-id --model qwen2-audio-7b \
   --pack demo --conditions solo --limit 1 \
   --output results/qwen2-modal-smoke.json --pretty-json
+```
 
-# full demo profile: ~30 mixtures, ~120 probes, ~5 min warm
+Then run the full `demo-fast` profile (~30 mixtures, ~120 probes):
+
+```bash
 audiobench run ab/sound-id --model qwen2-audio-7b --profile demo-fast \
   --output results/qwen2-modal-demo-fast.json
 ```
@@ -183,11 +200,15 @@ Free, no credit card, runs in a browser tab. The free tier gives you a T4 with 1
 
 In a fresh Colab notebook with a GPU runtime selected (Runtime → Change runtime type → T4 GPU):
 
-```python
-# cell 1
-!pip install -q transformers soundfile librosa fastapi uvicorn python-multipart
+Install dependencies:
 
-# cell 2
+```python
+!pip install -q transformers soundfile librosa fastapi uvicorn python-multipart
+```
+
+Load the model and start the FastAPI server:
+
+```python
 import io, threading, numpy as np, soundfile as sf, torch
 from transformers import AutoProcessor, Qwen2AudioForConditionalGeneration
 from fastapi import FastAPI, File, Form, UploadFile
@@ -225,17 +246,17 @@ threading.Thread(
     target=lambda: uvicorn.run(app, host="0.0.0.0", port=8000, log_level="warning"),
     daemon=True,
 ).start()
+```
 
-# cell 3 — start a free public HTTPS tunnel
+Start a free public HTTPS tunnel:
+
+```python
 !wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O cloudflared
 !chmod +x cloudflared
 !./cloudflared tunnel --url http://localhost:8000 2>&1 | head -20
-# look for the line like:
-#   https://<random>.trycloudflare.com
-# that's your AUDIOBENCH_QWEN_ENDPOINT
 ```
 
-Take the `https://*.trycloudflare.com` URL Cloudflared prints, drop it into your local terminal, and run the same audiobench commands as the Modal section.
+Take the `https://*.trycloudflare.com` URL Cloudflared prints and use it as `AUDIOBENCH_QWEN_ENDPOINT` in your local terminal.
 
 ## Local setup
 
@@ -294,6 +315,8 @@ You can verify the venv is fully materialized with:
 ```bash
 find .venv -type f -flags +dataless | wc -l   # should print 0
 ```
+
+You want this command to print `0`.
 
 ## Picking between options
 
