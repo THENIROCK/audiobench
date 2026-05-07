@@ -15,6 +15,14 @@ source .venv/bin/activate
 pip install -e .
 ```
 
+### Troubleshooting: `ModuleNotFoundError: No module named 'audiobench'` on macOS
+
+If `audiobench --help` raises `ModuleNotFoundError: No module named 'audiobench'` immediately after `pip install -e .`, this is a known macOS + pip + Python 3.13 `site.py` interaction (Python issue [#127012](https://github.com/python/cpython/issues/127012) / pip issue [#13153](https://github.com/pypa/pip/issues/13153)): pip-installed files inherit a `com.apple.provenance` xattr that carries the `UF_HIDDEN` flag, and Python 3.13's `site.py` skips `.pth` files with that flag, so the editable-install pointer never lands on `sys.path`. Clear the flag on the venv's `site-packages`:
+
+```bash
+chflags -R nohidden .venv/lib/python3.13/site-packages
+```
+
 ### `ab/asr-robust` (speech)
 
 ```bash
