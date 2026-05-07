@@ -1,0 +1,33 @@
+{
+  "id": "core",
+  "title": "FSD50K core (single-positive PP filter)",
+  "source": "FSD50K",
+  "license": "CC-BY 4.0 / CC0 (per-clip)",
+  "license_tag": "open",
+  "scope_note": "Filtered to FSD50K clips with exactly one positive PP-quality label. Requires FSD50K dev/eval audio at ~/.cache/audiobench/sound_id/fsd50k/.",
+  "labels": [
+    "siren",
+    "alarm",
+    "dog_bark",
+    "engine",
+    "glass_breaking",
+    "baby_cry",
+    "coughing",
+    "water",
+    "vacuum",
+    "speech",
+    "music",
+    "applause",
+    "doorbell"
+  ],
+  "clip_resolver": "user-cache",
+  "cache_subdir": "fsd50k",
+  "expected_layout": "FSD50K.dev_audio/<clip_id>.wav with a clips.json index",
+  "mixture_counts": {
+    "solo": 20,
+    "pair": 20,
+    "triple": 20,
+    "quad": 20
+  },
+  "distractor_count": 3
+}

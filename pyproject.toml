@@ -18,6 +18,7 @@ dependencies = [
   "numpy==2.4.3",
   "scipy==1.17.1",
   "soundfile==0.13.1",
+  "PyYAML>=6.0,<7.0",
 ]
 
 [project.scripts]
@@ -31,3 +32,4 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "audiobench.data.asr_robust" = ["manifest.json", "clips/*.wav"]
+"audiobench.data.sound_id" = ["packs/*.json", "prompts.yaml"]

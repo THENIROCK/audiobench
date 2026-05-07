@@ -1,0 +1,424 @@
+{
+  "conditions": [
+    "solo",
+    "pair",
+    "triple",
+    "quad",
+    "custom"
+  ],
+  "config": {
+    "custom_mixtures": [
+      {
+        "labels": [
+          "siren",
+          "glass_breaking"
+        ],
+        "name": "factory_alarm",
+        "snr_db": 0.0
+      },
+      {
+        "label_levels": {
+          "baby_cry": -3.0,
+          "engine": 0.0,
+          "vacuum": -6.0
+        },
+        "labels": [
+          "engine",
+          "baby_cry",
+          "vacuum"
+        ],
+        "name": "cabin_baby_over_engine",
+        "snr_db": 0.0
+      },
+      {
+        "labels": [
+          "dog_bark",
+          "alarm",
+          "glass_breaking"
+        ],
+        "name": "home_intrusion",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    ],
+    "limit": null,
+    "model": "heuristic-v0",
+    "packs": [
+      "demo"
+    ],
+    "profile": null,
+    "seed": 1337,
+    "selected_conditions": [
+      "solo",
+      "pair",
+      "triple",
+      "quad"
+    ],
+    "skipped_packs": []
+  },
+  "headline": {
+    "components_present": 8,
+    "components_understood": 4,
+    "solo_quad_cliff": null,
+    "weighted_fpr": 0.3333333333333333,
+    "weighted_recall": 0.5
+  },
+  "model": "heuristic-v0",
+  "pack_summaries": {
+    "demo": {
+      "license_tag": "bundled",
+      "per_class": {
+        "alarm": {
+          "components_present": 1.0,
+          "components_understood": 1.0,
+          "f1": 0.6666666666666666,
+          "fn": 0.0,
+          "fp": 1.0,
+          "fpr": 0.5,
+          "precision": 0.5,
+          "recall": 1.0,
+          "tn": 1.0,
+          "tp": 1.0
+        },
+        "baby_cry": {
+          "components_present": 1.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 1.0,
+          "tp": 0.0
+        },
+        "dog_bark": {
+          "components_present": 1.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 0.0,
+          "tp": 0.0
+        },
+        "engine": {
+          "components_present": 1.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 0.0,
+          "tp": 0.0
+        },
+        "glass_breaking": {
+          "components_present": 2.0,
+          "components_understood": 1.0,
+          "f1": 0.6666666666666666,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.5,
+          "tn": 0.0,
+          "tp": 1.0
+        },
+        "siren": {
+          "components_present": 1.0,
+          "components_understood": 1.0,
+          "f1": 1.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tn": 0.0,
+          "tp": 1.0
+        },
+        "speech": {
+          "components_present": 0.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 0.0,
+          "fp": 1.0,
+          "fpr": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 0.0,
+          "tp": 0.0
+        },
+        "vacuum": {
+          "components_present": 1.0,
+          "components_understood": 1.0,
+          "f1": 1.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tn": 1.0,
+          "tp": 1.0
+        },
+        "water": {
+          "components_present": 0.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 1.0,
+          "tp": 0.0
+        }
+      },
+      "per_condition": {
+        "custom": {
+          "components_present": 8.0,
+          "components_understood": 4.0,
+          "f1": 0.5714285714285715,
+          "fn": 4.0,
+          "fp": 2.0,
+          "fpr": 0.3333333333333333,
+          "precision": 0.6666666666666666,
+          "recall": 0.5,
+          "tn": 4.0,
+          "tp": 4.0
+        }
+      },
+      "scope_note": "Procedural audio generated in-process; not a real-world dataset. Powers the headline demo with zero downloads.",
+      "title": "Procedural demo pack",
+      "totals": {
+        "components_present": 8.0,
+        "components_understood": 4.0,
+        "f1": 0.5714285714285715,
+        "fn": 4.0,
+        "fp": 2.0,
+        "fpr": 0.3333333333333333,
+        "precision": 0.6666666666666666,
+        "recall": 0.5,
+        "tn": 4.0,
+        "tp": 4.0
+      }
+    }
+  },
+  "packs": [
+    "demo"
+  ],
+  "per_mixture": [
+    {
+      "components_present": [
+        "siren",
+        "glass_breaking"
+      ],
+      "condition": "custom",
+      "mixture_name": "factory_alarm",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "siren",
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "glass_breaking",
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "alarm",
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "yes"
+        }
+      ],
+      "sources": [
+        {
+          "label": "siren",
+          "source": "demo://siren@1"
+        },
+        {
+          "label": "glass_breaking",
+          "source": "demo://glass_breaking@3"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "siren",
+          "glass_breaking"
+        ],
+        "name": "factory_alarm",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "engine",
+        "baby_cry",
+        "vacuum"
+      ],
+      "condition": "custom",
+      "mixture_name": "cabin_baby_over_engine",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "engine",
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "vacuum",
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "water",
+          "prompt": "Do you hear a water?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "alarm",
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        }
+      ],
+      "sources": [
+        {
+          "label": "engine",
+          "source": "demo://engine@0"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@4"
+        },
+        {
+          "label": "vacuum",
+          "source": "demo://vacuum@0"
+        }
+      ],
+      "spec": {
+        "label_levels": {
+          "baby_cry": -3.0,
+          "engine": 0.0,
+          "vacuum": -6.0
+        },
+        "labels": [
+          "engine",
+          "baby_cry",
+          "vacuum"
+        ],
+        "name": "cabin_baby_over_engine",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "dog_bark",
+        "alarm",
+        "glass_breaking"
+      ],
+      "condition": "custom",
+      "mixture_name": "home_intrusion",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "dog_bark",
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "alarm",
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "glass_breaking",
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "dog_bark",
+          "source": "demo://dog_bark@0"
+        },
+        {
+          "label": "alarm",
+          "source": "demo://alarm@5"
+        },
+        {
+          "label": "glass_breaking",
+          "source": "demo://glass_breaking@5"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "dog_bark",
+          "alarm",
+          "glass_breaking"
+        ],
+        "name": "home_intrusion",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    }
+  ],
+  "profile": null,
+  "revision": "0.1.0",
+  "run_hash": "20bad14640e270fbbf935da835c796596b3e4d83c689551e6a8bb34db9bfd109",
+  "seed": 1337,
+  "skipped_packs": [],
+  "suite": "ab/sound-id"
+}

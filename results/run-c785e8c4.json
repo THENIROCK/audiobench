@@ -1,0 +1,146 @@
+{
+  "suite": "ab/asr-robust",
+  "revision": "0.1.0",
+  "model": "base",
+  "seed": 1337,
+  "clip_count": 10,
+  "conditions": [
+    "clean",
+    "noise-cafe-10db",
+    "noise-pink-5db",
+    "bandlimited-8k",
+    "reverb-medium"
+  ],
+  "manifest_hash": "4b8bf9d8e6e073a96cbb4290b58ebe097beec0de681b6a917735f4a75935a541",
+  "per_condition_wer": {
+    "clean": 1.8181818181818181,
+    "noise-cafe-10db": 3.6363636363636362,
+    "noise-pink-5db": 6.363636363636363,
+    "bandlimited-8k": 2.727272727272727,
+    "reverb-medium": 1.8181818181818181
+  },
+  "weighted_mean_wer": 3.2727272727272725,
+  "per_clip_hypotheses": [
+    {
+      "clip_id": 1,
+      "file": "clip01.wav",
+      "reference": "Today we test robust speech recognition under real world conditions.",
+      "hypotheses": {
+        "clean": "Today we test robust speech recognition under real-world conditions.",
+        "noise-cafe-10db": "Today we test robust speech recognition under real-world conditions.",
+        "noise-pink-5db": "Today we test robust speech recognition under real-world conditions.",
+        "bandlimited-8k": "Today we test robust speech recognition under real-world conditions.",
+        "reverb-medium": "Today we test robust speech recognition under real-world conditions."
+      }
+    },
+    {
+      "clip_id": 2,
+      "file": "clip02.wav",
+      "reference": "Audio benchmarks should report where a model fails, not just one average score.",
+      "hypotheses": {
+        "clean": "Audio benchmarks should report where a model fails, not just one average score.",
+        "noise-cafe-10db": "Audio benchmarks should report where a model fails, not just one average score.",
+        "noise-pink-5db": "Audio benchmarks should report where a model fails, not just one average score.",
+        "bandlimited-8k": "Audio benchmarks should report where a model fails, not just one average score.",
+        "reverb-medium": "Audio benchmarks should report where a model fails, not just one average score."
+      }
+    },
+    {
+      "clip_id": 3,
+      "file": "clip03.wav",
+      "reference": "The quick brown fox jumps over the lazy dog in a noisy cafe.",
+      "hypotheses": {
+        "clean": "The quick brown fox jumps over the lazy dog in a noisy cafe.",
+        "noise-cafe-10db": "The quick round fox jumps over the lazy dog in a noisy cafe.",
+        "noise-pink-5db": "a quick round box jumps over the lazy dog in a noisy cafe.",
+        "bandlimited-8k": "The quick brown fox jumps over the lazy dog in the noisy cafe.",
+        "reverb-medium": "The quick brown fox jumps over the lazy dog in a noisy cafe."
+      }
+    },
+    {
+      "clip_id": 4,
+      "file": "clip04.wav",
+      "reference": "Please call me back at noon after the product demo is finished.",
+      "hypotheses": {
+        "clean": "Please call me back at noon after the product demo is finished.",
+        "noise-cafe-10db": "Please call me back at noon after the product demo is finished.",
+        "noise-pink-5db": "Please call me back at noon after the product demo is finished.",
+        "bandlimited-8k": "Please call me back at noon after the product demo is finished.",
+        "reverb-medium": "Please call me back at noon after the product demo is finished."
+      }
+    },
+    {
+      "clip_id": 5,
+      "file": "clip05.wav",
+      "reference": "Machine learning systems must be reproducible across hardware and time.",
+      "hypotheses": {
+        "clean": "Machine learning systems must be reproducible across hardware and time.",
+        "noise-cafe-10db": "Machine learning systems must be reproducible across hardware and time.",
+        "noise-pink-5db": "Machine learning systems must be reproducible across hardware and time.",
+        "bandlimited-8k": "Machine learning systems must be reproducible across hardware and time.",
+        "reverb-medium": "Machine learning systems must be reproducible across hardware and time."
+      }
+    },
+    {
+      "clip_id": 6,
+      "file": "clip06.wav",
+      "reference": "This benchmark includes clean audio, noise, phone band, and reverb.",
+      "hypotheses": {
+        "clean": "This benchmark includes clean audio, noise, phone band, and reverb.",
+        "noise-cafe-10db": "This bench-mark includes clean audio, noise, phone band, and reverb.",
+        "noise-pink-5db": "This benchmark includes clean audio, noise, phone band, and reverb.",
+        "bandlimited-8k": "This benchmark includes clean audio, noise, phone band, and reverb.",
+        "reverb-medium": "This benchmark includes clean audio, noise, phone band, and reverb."
+      }
+    },
+    {
+      "clip_id": 7,
+      "file": "clip07.wav",
+      "reference": "Teams use this report to prioritize data collection and model updates.",
+      "hypotheses": {
+        "clean": "Teams use this report to prioritize data collection and model updates.",
+        "noise-cafe-10db": "Teams use this report to prioritize data collection and model updates.",
+        "noise-pink-5db": "Teams use this report to prioritize data collection and model updates.",
+        "bandlimited-8k": "Teams use this report to prioritize data collection and model updates.",
+        "reverb-medium": "Teams use this report to prioritize data collection and model updates."
+      }
+    },
+    {
+      "clip_id": 8,
+      "file": "clip08.wav",
+      "reference": "A reliable metric helps engineering leaders make better deployment decisions.",
+      "hypotheses": {
+        "clean": "A reliable metric helps engineering leaders make better deployment decisions.",
+        "noise-cafe-10db": "reliable metric helps engineering leaders make better deployment decisions.",
+        "noise-pink-5db": "reliable metric health engineering leaders make better deployment decisions.",
+        "bandlimited-8k": "A reliable metric helps engineering leaders make better deployment decisions.",
+        "reverb-medium": "A reliable metric helps engineering leaders make better deployment decisions."
+      }
+    },
+    {
+      "clip_id": 9,
+      "file": "clip09.wav",
+      "reference": "We run the same suite every week to track regressions before release.",
+      "hypotheses": {
+        "clean": "We run the same suite every week to track regressions before release.",
+        "noise-cafe-10db": "We run the same suite every week to track regressions before release.",
+        "noise-pink-5db": "We run the same suite every week to track regressions before release.",
+        "bandlimited-8k": "We run the same suite every week to track regressions before release.",
+        "reverb-medium": "We run the same suite every week to track regressions before release."
+      }
+    },
+    {
+      "clip_id": 10,
+      "file": "clip10.wav",
+      "reference": "One command should produce trustworthy numbers for realistic workloads.",
+      "hypotheses": {
+        "clean": "One command should produce trustworthy numbers for realistic workloads.",
+        "noise-cafe-10db": "One command should produce trustworthy numbers for realistic workloads.",
+        "noise-pink-5db": "One command should produce trustworthy numbers for realistic workloads.",
+        "bandlimited-8k": "One command should produce trustworthy numbers for realistic workloads.",
+        "reverb-medium": "One command should produce trustworthy numbers for realistic workloads."
+      }
+    }
+  ],
+  "run_hash": "c785e8c45f79b3c3f264c4705a538312be8667677401ee1ae1d1886066a14c85"
+}

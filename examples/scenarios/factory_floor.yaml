@@ -1,0 +1,14 @@
+mixtures:
+  - name: factory_alarm
+    labels: [siren, glass_breaking]
+    snr_db: 0
+
+  - name: cabin_baby_over_engine
+    label_levels:
+      engine: 0
+      baby_cry: -3
+      vacuum: -6
+
+  - name: home_intrusion
+    pack: demo
+    labels: [dog_bark, alarm, glass_breaking]

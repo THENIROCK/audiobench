@@ -1,0 +1,25 @@
+{
+  "id": "health",
+  "title": "Health (ESC-50 medical subset)",
+  "source": "ESC-50",
+  "license": "Various CC (per-clip)",
+  "license_tag": "non-clinical",
+  "scope_note": "Non-clinical respiratory/body-sound classes from ESC-50. Does not include clinical respiratory waveforms (crackle/wheeze) without an ICBHI extension.",
+  "labels": [
+    "coughing",
+    "sneezing",
+    "breathing",
+    "snoring",
+    "crying_baby"
+  ],
+  "clip_resolver": "user-cache",
+  "cache_subdir": "esc50",
+  "expected_layout": "audio/<filename>.wav with ESC-50 meta/esc50.csv",
+  "mixture_counts": {
+    "solo": 10,
+    "pair": 10,
+    "triple": 10,
+    "quad": 10
+  },
+  "distractor_count": 2
+}

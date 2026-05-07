@@ -1,0 +1,25 @@
+{
+  "id": "security",
+  "title": "Security / surveillance (UrbanSound8K)",
+  "source": "UrbanSound8K",
+  "license": "CC BY-NC 3.0",
+  "license_tag": "non-commercial research",
+  "scope_note": "Threat-detection adjacent classes from UrbanSound8K. Non-commercial only.",
+  "labels": [
+    "gun_shot",
+    "siren",
+    "car_horn",
+    "dog_bark",
+    "jackhammer"
+  ],
+  "clip_resolver": "user-cache",
+  "cache_subdir": "urbansound8k",
+  "expected_layout": "audio/fold[1-10]/<class_id>-<file_id>.wav",
+  "mixture_counts": {
+    "solo": 10,
+    "pair": 10,
+    "triple": 10,
+    "quad": 10
+  },
+  "distractor_count": 2
+}

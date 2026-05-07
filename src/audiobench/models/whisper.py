@@ -10,6 +10,14 @@ from scipy.signal import resample_poly
 TARGET_SAMPLE_RATE = 16000
 
 
+def warmup_model(model_name: str) -> str:
+    import whisper
+
+    model = whisper.load_model(model_name)
+    _ = model
+    return model_name
+
+
 @dataclass
 class WhisperTranscriber:
     model_name: str

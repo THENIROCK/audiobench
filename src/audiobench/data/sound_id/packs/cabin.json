@@ -1,0 +1,28 @@
+{
+  "id": "cabin",
+  "title": "Smart cabin (FSD50K + UrbanSound8K)",
+  "source": "FSD50K + UrbanSound8K",
+  "license": "non-commercial research (UrbanSound8K is CC BY-NC 3.0)",
+  "license_tag": "non-commercial research",
+  "scope_note": "Mixed-source pack covering in-cabin sounds. Tag flags non-commercial.",
+  "labels": [
+    "engine",
+    "traffic",
+    "baby_cry",
+    "music",
+    "speech",
+    "car_horn",
+    "siren",
+    "drilling"
+  ],
+  "clip_resolver": "user-cache",
+  "cache_subdir": "fsd50k+urbansound8k",
+  "expected_layout": "fsd50k/ and urbansound8k/audio/foldN/ subdirectories under ~/.cache/audiobench/sound_id/",
+  "mixture_counts": {
+    "solo": 12,
+    "pair": 12,
+    "triple": 12,
+    "quad": 12
+  },
+  "distractor_count": 2
+}

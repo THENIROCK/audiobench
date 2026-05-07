@@ -1,0 +1,20 @@
+# ab/sound-id prompt protocol.
+#
+# `version` is opaque text that is folded into every run_hash; bump it when
+# you change wording so old runs are not silently confused with new ones.
+# `parser_version` is pinned to the yes/no parser implementation in
+# audiobench.probes; leave it at v1 unless you also change the parser.
+# `paraphrases` is a non-empty list of yes/no questions, each containing
+# the literal placeholder `{label}`. The first entry is the canonical
+# single-prompt question; the first N entries are used when running with
+# `--prompt-ensemble N`.
+
+version: yesno-v1
+parser_version: v1
+
+paraphrases:
+  - "Do you hear a {label}?"
+  - "Is there a {label} in this audio?"
+  - "Can you hear a {label}?"
+  - "Does this audio contain a {label}?"
+  - "Listen to the audio. Is a {label} present? Answer yes or no."

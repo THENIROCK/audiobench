@@ -1,0 +1,3952 @@
+{
+  "conditions": [
+    "solo",
+    "pair",
+    "triple",
+    "quad"
+  ],
+  "config": {
+    "custom_mixtures": [],
+    "limit": null,
+    "model": "heuristic-v0",
+    "packs": [
+      "demo"
+    ],
+    "parser_version": "v1",
+    "profile": null,
+    "prompt_ensemble": 5,
+    "prompt_paraphrases_hash": "3ffb67d4260b208de8bb5f74a78258c61b6b8526aaddb7b683bc23d475a3edac",
+    "prompt_paraphrases_used": [
+      "Do you hear a {label}?",
+      "Is there a {label} in this audio?",
+      "Can you hear a {label}?",
+      "Does this audio contain a {label}?",
+      "Listen to the audio. Is a {label} present? Answer yes or no."
+    ],
+    "prompt_source": "results/my_prompts.yaml",
+    "prompt_version": "yesno-v1",
+    "seed": 1337,
+    "selected_conditions": [
+      "solo",
+      "quad"
+    ],
+    "skipped_packs": []
+  },
+  "headline": {
+    "components_present": 50,
+    "components_understood": 20,
+    "solo_quad_cliff": -0.75,
+    "weighted_fpr": 0.1,
+    "weighted_recall": 0.4
+  },
+  "model": "heuristic-v0",
+  "pack_summaries": {
+    "demo": {
+      "license_tag": "bundled",
+      "per_class": {
+        "alarm": {
+          "components_present": 5.0,
+          "components_understood": 5.0,
+          "f1": 0.9090909090909091,
+          "fn": 0.0,
+          "fp": 1.0,
+          "fpr": 0.5,
+          "precision": 0.8333333333333334,
+          "recall": 1.0,
+          "tn": 1.0,
+          "tp": 5.0
+        },
+        "baby_cry": {
+          "components_present": 9.0,
+          "components_understood": 3.0,
+          "f1": 0.46153846153846156,
+          "fn": 6.0,
+          "fp": 1.0,
+          "fpr": 0.5,
+          "precision": 0.75,
+          "recall": 0.3333333333333333,
+          "tn": 1.0,
+          "tp": 3.0
+        },
+        "coughing": {
+          "components_present": 5.0,
+          "components_understood": 1.0,
+          "f1": 0.33333333333333337,
+          "fn": 4.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.2,
+          "tn": 5.0,
+          "tp": 1.0
+        },
+        "dog_bark": {
+          "components_present": 2.0,
+          "components_understood": 1.0,
+          "f1": 0.4,
+          "fn": 1.0,
+          "fp": 2.0,
+          "fpr": 0.3333333333333333,
+          "precision": 0.3333333333333333,
+          "recall": 0.5,
+          "tn": 4.0,
+          "tp": 1.0
+        },
+        "engine": {
+          "components_present": 5.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 5.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 2.0,
+          "tp": 0.0
+        },
+        "glass_breaking": {
+          "components_present": 4.0,
+          "components_understood": 1.0,
+          "f1": 0.4,
+          "fn": 3.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.25,
+          "tn": 4.0,
+          "tp": 1.0
+        },
+        "siren": {
+          "components_present": 4.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 4.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 6.0,
+          "tp": 0.0
+        },
+        "speech": {
+          "components_present": 8.0,
+          "components_understood": 4.0,
+          "f1": 0.6666666666666666,
+          "fn": 4.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.5,
+          "tn": 4.0,
+          "tp": 4.0
+        },
+        "vacuum": {
+          "components_present": 5.0,
+          "components_understood": 5.0,
+          "f1": 1.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tn": 6.0,
+          "tp": 5.0
+        },
+        "water": {
+          "components_present": 3.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 3.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 3.0,
+          "tp": 0.0
+        }
+      },
+      "per_condition": {
+        "quad": {
+          "components_present": 40.0,
+          "components_understood": 10.0,
+          "f1": 0.392156862745098,
+          "fn": 30.0,
+          "fp": 1.0,
+          "fpr": 0.05,
+          "precision": 0.9090909090909091,
+          "recall": 0.25,
+          "tn": 19.0,
+          "tp": 10.0
+        },
+        "solo": {
+          "components_present": 10.0,
+          "components_understood": 10.0,
+          "f1": 0.8695652173913044,
+          "fn": 0.0,
+          "fp": 3.0,
+          "fpr": 0.15,
+          "precision": 0.7692307692307693,
+          "recall": 1.0,
+          "tn": 17.0,
+          "tp": 10.0
+        }
+      },
+      "scope_note": "Procedural audio generated in-process; not a real-world dataset. Powers the headline demo with zero downloads.",
+      "title": "Procedural demo pack",
+      "totals": {
+        "components_present": 50.0,
+        "components_understood": 20.0,
+        "f1": 0.5405405405405406,
+        "fn": 30.0,
+        "fp": 4.0,
+        "fpr": 0.1,
+        "precision": 0.8333333333333334,
+        "recall": 0.4,
+        "tn": 36.0,
+        "tp": 20.0
+      }
+    }
+  },
+  "packs": [
+    "demo"
+  ],
+  "parser_version": "v1",
+  "per_mixture": [
+    {
+      "components_present": [
+        "speech"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-001",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a dog bark in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a dog bark present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "speech",
+          "source": "demo://speech@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "speech"
+        ],
+        "name": "demo-solo-001",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "vacuum"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-002",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a siren in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a siren present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a dog bark in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a dog bark?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a dog bark?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a dog bark present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "yes"
+        }
+      ],
+      "sources": [
+        {
+          "label": "vacuum",
+          "source": "demo://vacuum@1"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "vacuum"
+        ],
+        "name": "demo-solo-002",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "baby_cry"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-003",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a dog bark in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a dog bark present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a siren in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a siren present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "baby_cry"
+        ],
+        "name": "demo-solo-003",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "speech"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-004",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a siren in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a siren present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "yes"
+        }
+      ],
+      "sources": [
+        {
+          "label": "speech",
+          "source": "demo://speech@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "speech"
+        ],
+        "name": "demo-solo-004",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "speech"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-005",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "coughing",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a coughing in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a coughing present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "speech",
+          "source": "demo://speech@1"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "speech"
+        ],
+        "name": "demo-solo-005",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "dog_bark"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-006",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a dog bark in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a dog bark?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a dog bark?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a dog bark present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "alarm",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a alarm?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a alarm in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a alarm?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a alarm?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a alarm present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "dog_bark",
+          "source": "demo://dog_bark@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "dog_bark"
+        ],
+        "name": "demo-solo-006",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "baby_cry"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-007",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "glass_breaking",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a glass breaking in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a glass breaking present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a siren in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a siren present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@5"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "baby_cry"
+        ],
+        "name": "demo-solo-007",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "coughing"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-008",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "coughing",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a coughing?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a coughing in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a coughing?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a coughing?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a coughing present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a dog bark in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a dog bark?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a dog bark?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a dog bark present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "water",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a water in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a water present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a water?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "coughing",
+          "source": "demo://coughing@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "coughing"
+        ],
+        "name": "demo-solo-008",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "baby_cry"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-009",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "glass_breaking",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a glass breaking in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a glass breaking present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "engine",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a engine in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a engine present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@2"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "baby_cry"
+        ],
+        "name": "demo-solo-009",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "glass_breaking"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-010",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "glass_breaking",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a glass breaking?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a glass breaking in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a glass breaking?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a glass breaking?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a glass breaking present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "engine",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a engine in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a engine present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "glass_breaking",
+          "source": "demo://glass_breaking@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "glass_breaking"
+        ],
+        "name": "demo-solo-010",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "coughing",
+        "engine",
+        "baby_cry",
+        "siren"
+      ],
+      "condition": "quad",
+      "mixture_name": "demo-quad-001",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "coughing",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a coughing in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a coughing present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "engine",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a engine in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a engine present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a siren in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a siren present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "alarm",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a alarm in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a alarm present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        }
+      ],
+      "sources": [
+        {
+          "label": "coughing",
+          "source": "demo://coughing@0"
+        },
+        {
+          "label": "engine",
+          "source": "demo://engine@2"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@0"
+        },
+        {
+          "label": "siren",
+          "source": "demo://siren@3"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "coughing",
+          "engine",
+          "baby_cry",
+          "siren"
+        ],
+        "name": "demo-quad-001",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "coughing",
+        "speech",
+        "alarm",
+        "glass_breaking"
+      ],
+      "condition": "quad",
+      "mixture_name": "demo-quad-002",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "coughing",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a coughing in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a coughing present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "alarm",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a alarm in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a alarm present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "glass_breaking",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a glass breaking in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a glass breaking present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "water",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a water in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a water present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a water?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "coughing",
+          "source": "demo://coughing@2"
+        },
+        {
+          "label": "speech",
+          "source": "demo://speech@3"
+        },
+        {
+          "label": "alarm",
+          "source": "demo://alarm@3"
+        },
+        {
+          "label": "glass_breaking",
+          "source": "demo://glass_breaking@2"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "coughing",
+          "speech",
+          "alarm",
+          "glass_breaking"
+        ],
+        "name": "demo-quad-002",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "baby_cry",
+        "coughing",
+        "vacuum",
+        "water"
+      ],
+      "condition": "quad",
+      "mixture_name": "demo-quad-003",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "coughing",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a coughing in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a coughing present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "water",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a water in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a water present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a water?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a dog bark in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a dog bark present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@3"
+        },
+        {
+          "label": "coughing",
+          "source": "demo://coughing@3"
+        },
+        {
+          "label": "vacuum",
+          "source": "demo://vacuum@1"
+        },
+        {
+          "label": "water",
+          "source": "demo://water@4"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "baby_cry",
+          "coughing",
+          "vacuum",
+          "water"
+        ],
+        "name": "demo-quad-003",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "glass_breaking",
+        "siren",
+        "baby_cry",
+        "speech"
+      ],
+      "condition": "quad",
+      "mixture_name": "demo-quad-004",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "glass_breaking",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a glass breaking in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a glass breaking present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a siren in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a siren present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "coughing",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a coughing in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a coughing present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "glass_breaking",
+          "source": "demo://glass_breaking@3"
+        },
+        {
+          "label": "siren",
+          "source": "demo://siren@5"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@0"
+        },
+        {
+          "label": "speech",
+          "source": "demo://speech@4"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "glass_breaking",
+          "siren",
+          "baby_cry",
+          "speech"
+        ],
+        "name": "demo-quad-004",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "alarm",
+        "water",
+        "engine",
+        "speech"
+      ],
+      "condition": "quad",
+      "mixture_name": "demo-quad-005",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "alarm",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a alarm in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a alarm present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "water",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a water in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a water present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a water?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "engine",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a engine in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a engine present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "glass_breaking",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a glass breaking in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a glass breaking present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "alarm",
+          "source": "demo://alarm@3"
+        },
+        {
+          "label": "water",
+          "source": "demo://water@3"
+        },
+        {
+          "label": "engine",
+          "source": "demo://engine@4"
+        },
+        {
+          "label": "speech",
+          "source": "demo://speech@2"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "alarm",
+          "water",
+          "engine",
+          "speech"
+        ],
+        "name": "demo-quad-005",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "baby_cry",
+        "water",
+        "glass_breaking",
+        "coughing"
+      ],
+      "condition": "quad",
+      "mixture_name": "demo-quad-006",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "water",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a water in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a water present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a water?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "glass_breaking",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a glass breaking in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a glass breaking present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "coughing",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a coughing in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a coughing present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a siren in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a siren present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@4"
+        },
+        {
+          "label": "water",
+          "source": "demo://water@0"
+        },
+        {
+          "label": "glass_breaking",
+          "source": "demo://glass_breaking@0"
+        },
+        {
+          "label": "coughing",
+          "source": "demo://coughing@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "baby_cry",
+          "water",
+          "glass_breaking",
+          "coughing"
+        ],
+        "name": "demo-quad-006",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "engine",
+        "vacuum",
+        "alarm",
+        "baby_cry"
+      ],
+      "condition": "quad",
+      "mixture_name": "demo-quad-007",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "engine",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a engine in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a engine present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "alarm",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a alarm in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a alarm present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "coughing",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a coughing in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a coughing present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "engine",
+          "source": "demo://engine@0"
+        },
+        {
+          "label": "vacuum",
+          "source": "demo://vacuum@3"
+        },
+        {
+          "label": "alarm",
+          "source": "demo://alarm@0"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@5"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "engine",
+          "vacuum",
+          "alarm",
+          "baby_cry"
+        ],
+        "name": "demo-quad-007",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "vacuum",
+        "siren",
+        "alarm",
+        "engine"
+      ],
+      "condition": "quad",
+      "mixture_name": "demo-quad-008",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a siren in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a siren present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "alarm",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a alarm in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a alarm present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "engine",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a engine in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a engine present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "coughing",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a coughing in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a coughing present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "glass_breaking",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a glass breaking in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a glass breaking?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a glass breaking present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "vacuum",
+          "source": "demo://vacuum@5"
+        },
+        {
+          "label": "siren",
+          "source": "demo://siren@4"
+        },
+        {
+          "label": "alarm",
+          "source": "demo://alarm@3"
+        },
+        {
+          "label": "engine",
+          "source": "demo://engine@4"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "vacuum",
+          "siren",
+          "alarm",
+          "engine"
+        ],
+        "name": "demo-quad-008",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "speech",
+        "siren",
+        "vacuum",
+        "baby_cry"
+      ],
+      "condition": "quad",
+      "mixture_name": "demo-quad-009",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a siren in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a siren present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "vacuum",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a vacuum in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a vacuum?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a vacuum present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a crying baby in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a crying baby?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a crying baby present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "coughing",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a coughing in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a coughing?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a coughing present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a dog bark in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a dog bark present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "speech",
+          "source": "demo://speech@5"
+        },
+        {
+          "label": "siren",
+          "source": "demo://siren@1"
+        },
+        {
+          "label": "vacuum",
+          "source": "demo://vacuum@2"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@4"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "speech",
+          "siren",
+          "vacuum",
+          "baby_cry"
+        ],
+        "name": "demo-quad-009",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "engine",
+        "speech",
+        "alarm",
+        "dog_bark"
+      ],
+      "condition": "quad",
+      "mixture_name": "demo-quad-010",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "engine",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a engine in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a engine?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a engine present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "speech",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a speech in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a speech?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a speech present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "alarm",
+          "paraphrase_answers": [
+            {
+              "answered_yes": true,
+              "prompt": "Do you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Is there a alarm in this audio?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Can you hear a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Does this audio contain a alarm?",
+              "raw_answer": "yes"
+            },
+            {
+              "answered_yes": true,
+              "prompt": "Listen to the audio. Is a alarm present? Answer yes or no.",
+              "raw_answer": "yes"
+            }
+          ],
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "dog_bark",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a dog bark in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a dog bark?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a dog bark present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "water",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a water in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a water?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a water present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a water?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "paraphrase_answers": [
+            {
+              "answered_yes": false,
+              "prompt": "Do you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Is there a siren in this audio?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Can you hear a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Does this audio contain a siren?",
+              "raw_answer": "no"
+            },
+            {
+              "answered_yes": false,
+              "prompt": "Listen to the audio. Is a siren present? Answer yes or no.",
+              "raw_answer": "no"
+            }
+          ],
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "engine",
+          "source": "demo://engine@0"
+        },
+        {
+          "label": "speech",
+          "source": "demo://speech@2"
+        },
+        {
+          "label": "alarm",
+          "source": "demo://alarm@4"
+        },
+        {
+          "label": "dog_bark",
+          "source": "demo://dog_bark@2"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "engine",
+          "speech",
+          "alarm",
+          "dog_bark"
+        ],
+        "name": "demo-quad-010",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    }
+  ],
+  "profile": null,
+  "prompt_ensemble": 5,
+  "prompt_paraphrases_used": [
+    "Do you hear a {label}?",
+    "Is there a {label} in this audio?",
+    "Can you hear a {label}?",
+    "Does this audio contain a {label}?",
+    "Listen to the audio. Is a {label} present? Answer yes or no."
+  ],
+  "prompt_source": "results/my_prompts.yaml",
+  "prompt_version": "yesno-v1",
+  "revision": "0.1.0",
+  "run_hash": "8e29e74eca5e1b444924d291ec774882d733dbbb0724a84829b0b76cc45f73d6",
+  "seed": 1337,
+  "skipped_packs": [],
+  "suite": "ab/sound-id"
+}

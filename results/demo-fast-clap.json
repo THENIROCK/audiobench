@@ -1,0 +1,1093 @@
+{
+  "conditions": [
+    "solo",
+    "pair",
+    "triple",
+    "quad"
+  ],
+  "config": {
+    "custom_mixtures": [],
+    "limit": null,
+    "model": "heuristic-v0",
+    "packs": [
+      "demo"
+    ],
+    "profile": "demo-fast",
+    "seed": 1337,
+    "selected_conditions": [
+      "solo",
+      "pair",
+      "triple",
+      "quad"
+    ],
+    "skipped_packs": []
+  },
+  "headline": {
+    "components_present": 30,
+    "components_understood": 12,
+    "solo_quad_cliff": null,
+    "weighted_fpr": 0.03333333333333333,
+    "weighted_recall": 0.4
+  },
+  "model": "heuristic-v0",
+  "pack_summaries": {
+    "demo": {
+      "license_tag": "bundled",
+      "per_class": {
+        "alarm": {
+          "components_present": 3.0,
+          "components_understood": 3.0,
+          "f1": 1.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tn": 1.0,
+          "tp": 3.0
+        },
+        "baby_cry": {
+          "components_present": 7.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 7.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 2.0,
+          "tp": 0.0
+        },
+        "coughing": {
+          "components_present": 5.0,
+          "components_understood": 1.0,
+          "f1": 0.33333333333333337,
+          "fn": 4.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.2,
+          "tn": 2.0,
+          "tp": 1.0
+        },
+        "dog_bark": {
+          "components_present": 2.0,
+          "components_understood": 1.0,
+          "f1": 0.5,
+          "fn": 1.0,
+          "fp": 1.0,
+          "fpr": 0.2,
+          "precision": 0.5,
+          "recall": 0.5,
+          "tn": 4.0,
+          "tp": 1.0
+        },
+        "engine": {
+          "components_present": 2.0,
+          "components_understood": 1.0,
+          "f1": 0.6666666666666666,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.5,
+          "tn": 1.0,
+          "tp": 1.0
+        },
+        "glass_breaking": {
+          "components_present": 3.0,
+          "components_understood": 1.0,
+          "f1": 0.5,
+          "fn": 2.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "tn": 4.0,
+          "tp": 1.0
+        },
+        "siren": {
+          "components_present": 1.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 6.0,
+          "tp": 0.0
+        },
+        "speech": {
+          "components_present": 4.0,
+          "components_understood": 3.0,
+          "f1": 0.8571428571428571,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.75,
+          "tn": 5.0,
+          "tp": 3.0
+        },
+        "vacuum": {
+          "components_present": 1.0,
+          "components_understood": 1.0,
+          "f1": 1.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tn": 4.0,
+          "tp": 1.0
+        },
+        "water": {
+          "components_present": 2.0,
+          "components_understood": 1.0,
+          "f1": 0.6666666666666666,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.5,
+          "tn": 0.0,
+          "tp": 1.0
+        }
+      },
+      "per_condition": {
+        "pair": {
+          "components_present": 10.0,
+          "components_understood": 4.0,
+          "f1": 0.5714285714285715,
+          "fn": 6.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.4,
+          "tn": 10.0,
+          "tp": 4.0
+        },
+        "solo": {
+          "components_present": 5.0,
+          "components_understood": 4.0,
+          "f1": 0.8000000000000002,
+          "fn": 1.0,
+          "fp": 1.0,
+          "fpr": 0.1,
+          "precision": 0.8,
+          "recall": 0.8,
+          "tn": 9.0,
+          "tp": 4.0
+        },
+        "triple": {
+          "components_present": 15.0,
+          "components_understood": 4.0,
+          "f1": 0.4210526315789474,
+          "fn": 11.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.26666666666666666,
+          "tn": 10.0,
+          "tp": 4.0
+        }
+      },
+      "scope_note": "Procedural audio generated in-process; not a real-world dataset. Powers the headline demo with zero downloads.",
+      "title": "Procedural demo pack",
+      "totals": {
+        "components_present": 30.0,
+        "components_understood": 12.0,
+        "f1": 0.5581395348837209,
+        "fn": 18.0,
+        "fp": 1.0,
+        "fpr": 0.03333333333333333,
+        "precision": 0.9230769230769231,
+        "recall": 0.4,
+        "tn": 29.0,
+        "tp": 12.0
+      }
+    }
+  },
+  "packs": [
+    "demo"
+  ],
+  "per_mixture": [
+    {
+      "components_present": [
+        "speech"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-001",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "dog_bark",
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "speech",
+          "source": "demo://speech@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "speech"
+        ],
+        "name": "demo-solo-001",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "vacuum"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-002",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "vacuum",
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": false,
+          "label": "dog_bark",
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "yes"
+        }
+      ],
+      "sources": [
+        {
+          "label": "vacuum",
+          "source": "demo://vacuum@1"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "vacuum"
+        ],
+        "name": "demo-solo-002",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "baby_cry"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-003",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "dog_bark",
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "baby_cry"
+        ],
+        "name": "demo-solo-003",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "speech"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-004",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "speech",
+          "source": "demo://speech@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "speech"
+        ],
+        "name": "demo-solo-004",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "speech"
+      ],
+      "condition": "solo",
+      "mixture_name": "demo-solo-005",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "coughing",
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "speech",
+          "source": "demo://speech@1"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "speech"
+        ],
+        "name": "demo-solo-005",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "dog_bark",
+        "baby_cry"
+      ],
+      "condition": "pair",
+      "mixture_name": "demo-pair-001",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "dog_bark",
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "dog_bark",
+          "source": "demo://dog_bark@4"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@3"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "dog_bark",
+          "baby_cry"
+        ],
+        "name": "demo-pair-001",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "coughing",
+        "baby_cry"
+      ],
+      "condition": "pair",
+      "mixture_name": "demo-pair-002",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "coughing",
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "engine",
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "dog_bark",
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "coughing",
+          "source": "demo://coughing@1"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@5"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "coughing",
+          "baby_cry"
+        ],
+        "name": "demo-pair-002",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "glass_breaking",
+        "coughing"
+      ],
+      "condition": "pair",
+      "mixture_name": "demo-pair-003",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "glass_breaking",
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "coughing",
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "glass_breaking",
+          "source": "demo://glass_breaking@1"
+        },
+        {
+          "label": "coughing",
+          "source": "demo://coughing@2"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "glass_breaking",
+          "coughing"
+        ],
+        "name": "demo-pair-003",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "engine",
+        "baby_cry"
+      ],
+      "condition": "pair",
+      "mixture_name": "demo-pair-004",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "engine",
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "glass_breaking",
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "engine",
+          "source": "demo://engine@4"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@4"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "engine",
+          "baby_cry"
+        ],
+        "name": "demo-pair-004",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "alarm",
+        "coughing"
+      ],
+      "condition": "pair",
+      "mixture_name": "demo-pair-005",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "alarm",
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "coughing",
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "glass_breaking",
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "alarm",
+          "source": "demo://alarm@2"
+        },
+        {
+          "label": "coughing",
+          "source": "demo://coughing@5"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "alarm",
+          "coughing"
+        ],
+        "name": "demo-pair-005",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "coughing",
+        "alarm",
+        "baby_cry"
+      ],
+      "condition": "triple",
+      "mixture_name": "demo-triple-001",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "coughing",
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "alarm",
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "dog_bark",
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "coughing",
+          "source": "demo://coughing@0"
+        },
+        {
+          "label": "alarm",
+          "source": "demo://alarm@2"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@3"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "coughing",
+          "alarm",
+          "baby_cry"
+        ],
+        "name": "demo-triple-001",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "coughing",
+        "speech",
+        "glass_breaking"
+      ],
+      "condition": "triple",
+      "mixture_name": "demo-triple-002",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "coughing",
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "glass_breaking",
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "coughing",
+          "source": "demo://coughing@4"
+        },
+        {
+          "label": "speech",
+          "source": "demo://speech@4"
+        },
+        {
+          "label": "glass_breaking",
+          "source": "demo://glass_breaking@3"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "coughing",
+          "speech",
+          "glass_breaking"
+        ],
+        "name": "demo-triple-002",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "siren",
+        "baby_cry",
+        "alarm"
+      ],
+      "condition": "triple",
+      "mixture_name": "demo-triple-003",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "siren",
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "alarm",
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "coughing",
+          "prompt": "Do you hear a coughing?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "glass_breaking",
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "siren",
+          "source": "demo://siren@2"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@4"
+        },
+        {
+          "label": "alarm",
+          "source": "demo://alarm@5"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "siren",
+          "baby_cry",
+          "alarm"
+        ],
+        "name": "demo-triple-003",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "water",
+        "engine",
+        "dog_bark"
+      ],
+      "condition": "triple",
+      "mixture_name": "demo-triple-004",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "water",
+          "prompt": "Do you hear a water?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "engine",
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "dog_bark",
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "glass_breaking",
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "water",
+          "source": "demo://water@3"
+        },
+        {
+          "label": "engine",
+          "source": "demo://engine@0"
+        },
+        {
+          "label": "dog_bark",
+          "source": "demo://dog_bark@0"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "water",
+          "engine",
+          "dog_bark"
+        ],
+        "name": "demo-triple-004",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "baby_cry",
+        "water",
+        "glass_breaking"
+      ],
+      "condition": "triple",
+      "mixture_name": "demo-triple-005",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "water",
+          "prompt": "Do you hear a water?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "glass_breaking",
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "alarm",
+          "prompt": "Do you hear a alarm?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "siren",
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@0"
+        },
+        {
+          "label": "water",
+          "source": "demo://water@5"
+        },
+        {
+          "label": "glass_breaking",
+          "source": "demo://glass_breaking@3"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "baby_cry",
+          "water",
+          "glass_breaking"
+        ],
+        "name": "demo-triple-005",
+        "pack": "demo",
+        "snr_db": 0.0
+      }
+    }
+  ],
+  "profile": "demo-fast",
+  "revision": "0.1.0",
+  "run_hash": "306b4c9e5063168c467fb38a9ec26281fc0fbecf8bb77348f9959ce740ac47ec",
+  "seed": 1337,
+  "skipped_packs": [],
+  "suite": "ab/sound-id"
+}

@@ -1,0 +1,29 @@
+{
+  "clip_count": 1,
+  "conditions": [
+    "clean",
+    "bandlimited-8k"
+  ],
+  "manifest_hash": "4b8bf9d8e6e073a96cbb4290b58ebe097beec0de681b6a917735f4a75935a541",
+  "model": "tiny",
+  "per_clip_hypotheses": [
+    {
+      "clip_id": 1,
+      "file": "clip01.wav",
+      "hypotheses": {
+        "bandlimited-8k": "Today we test robust speech recognition under real world conditions.",
+        "clean": "Today we test robust speech recognition under real world conditions."
+      },
+      "reference": "Today we test robust speech recognition under real world conditions."
+    }
+  ],
+  "per_condition_wer": {
+    "bandlimited-8k": 0.0,
+    "clean": 0.0
+  },
+  "revision": "0.1.0",
+  "run_hash": "2f844e1156290e77e9f641ce572062943e137e9c64aa4ccf8c314a45f467e33e",
+  "seed": 1337,
+  "suite": "ab/asr-robust",
+  "weighted_mean_wer": 0.0
+}

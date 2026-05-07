@@ -1,0 +1,30 @@
+{
+  "id": "home",
+  "title": "Smart home (DESED synthetic subset)",
+  "source": "DESED",
+  "license": "open (Scaper-generated)",
+  "license_tag": "open",
+  "scope_note": "Synthetic Scaper-generated subset only; no YouTube dependency. Requires DESED at ~/.cache/audiobench/sound_id/desed/.",
+  "labels": [
+    "alarm_bell",
+    "cat",
+    "dishes",
+    "frying",
+    "blender",
+    "water",
+    "speech",
+    "vacuum",
+    "dog",
+    "electric_shaver"
+  ],
+  "clip_resolver": "user-cache",
+  "cache_subdir": "desed",
+  "expected_layout": "synthetic21_train/soundscapes/ with a clips.json label index",
+  "mixture_counts": {
+    "solo": 15,
+    "pair": 15,
+    "triple": 15,
+    "quad": 15
+  },
+  "distractor_count": 3
+}

@@ -1,0 +1,321 @@
+{
+  "conditions": [
+    "solo",
+    "pair",
+    "triple",
+    "quad",
+    "custom"
+  ],
+  "config": {
+    "custom_mixtures": [
+      {
+        "labels": [
+          "siren",
+          "glass_breaking",
+          "baby_cry"
+        ],
+        "name": "inline-1",
+        "snr_db": 0.0
+      },
+      {
+        "labels": [
+          "engine",
+          "baby_cry"
+        ],
+        "name": "inline-2",
+        "snr_db": 0.0
+      }
+    ],
+    "limit": null,
+    "model": "heuristic-v0",
+    "packs": [
+      "demo"
+    ],
+    "profile": null,
+    "seed": 1337,
+    "selected_conditions": [
+      "solo",
+      "pair",
+      "triple",
+      "quad"
+    ],
+    "skipped_packs": []
+  },
+  "headline": {
+    "components_present": 5,
+    "components_understood": 1,
+    "solo_quad_cliff": null,
+    "weighted_fpr": 0.0,
+    "weighted_recall": 0.2
+  },
+  "model": "heuristic-v0",
+  "pack_summaries": {
+    "demo": {
+      "license_tag": "bundled",
+      "per_class": {
+        "baby_cry": {
+          "components_present": 2.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 2.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 0.0,
+          "tp": 0.0
+        },
+        "dog_bark": {
+          "components_present": 0.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 1.0,
+          "tp": 0.0
+        },
+        "engine": {
+          "components_present": 1.0,
+          "components_understood": 1.0,
+          "f1": 1.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tn": 0.0,
+          "tp": 1.0
+        },
+        "glass_breaking": {
+          "components_present": 1.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 0.0,
+          "tp": 0.0
+        },
+        "siren": {
+          "components_present": 1.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 1.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 0.0,
+          "tp": 0.0
+        },
+        "speech": {
+          "components_present": 0.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 1.0,
+          "tp": 0.0
+        },
+        "vacuum": {
+          "components_present": 0.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 1.0,
+          "tp": 0.0
+        },
+        "water": {
+          "components_present": 0.0,
+          "components_understood": 0.0,
+          "f1": 0.0,
+          "fn": 0.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tn": 1.0,
+          "tp": 0.0
+        }
+      },
+      "per_condition": {
+        "custom": {
+          "components_present": 5.0,
+          "components_understood": 1.0,
+          "f1": 0.33333333333333337,
+          "fn": 4.0,
+          "fp": 0.0,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "recall": 0.2,
+          "tn": 4.0,
+          "tp": 1.0
+        }
+      },
+      "scope_note": "Procedural audio generated in-process; not a real-world dataset. Powers the headline demo with zero downloads.",
+      "title": "Procedural demo pack",
+      "totals": {
+        "components_present": 5.0,
+        "components_understood": 1.0,
+        "f1": 0.33333333333333337,
+        "fn": 4.0,
+        "fp": 0.0,
+        "fpr": 0.0,
+        "precision": 1.0,
+        "recall": 0.2,
+        "tn": 4.0,
+        "tp": 1.0
+      }
+    }
+  },
+  "packs": [
+    "demo"
+  ],
+  "per_mixture": [
+    {
+      "components_present": [
+        "siren",
+        "glass_breaking",
+        "baby_cry"
+      ],
+      "condition": "custom",
+      "mixture_name": "inline-1",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "siren",
+          "prompt": "Do you hear a siren?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "glass_breaking",
+          "prompt": "Do you hear a glass breaking?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "dog_bark",
+          "prompt": "Do you hear a dog bark?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "water",
+          "prompt": "Do you hear a water?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "siren",
+          "source": "demo://siren@4"
+        },
+        {
+          "label": "glass_breaking",
+          "source": "demo://glass_breaking@4"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@3"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "siren",
+          "glass_breaking",
+          "baby_cry"
+        ],
+        "name": "inline-1",
+        "snr_db": 0.0
+      }
+    },
+    {
+      "components_present": [
+        "engine",
+        "baby_cry"
+      ],
+      "condition": "custom",
+      "mixture_name": "inline-2",
+      "pack": "demo",
+      "probes": [
+        {
+          "answered_yes": true,
+          "expected": true,
+          "label": "engine",
+          "prompt": "Do you hear a engine?",
+          "raw_answer": "yes"
+        },
+        {
+          "answered_yes": false,
+          "expected": true,
+          "label": "baby_cry",
+          "prompt": "Do you hear a crying baby?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "vacuum",
+          "prompt": "Do you hear a vacuum?",
+          "raw_answer": "no"
+        },
+        {
+          "answered_yes": false,
+          "expected": false,
+          "label": "speech",
+          "prompt": "Do you hear a speech?",
+          "raw_answer": "no"
+        }
+      ],
+      "sources": [
+        {
+          "label": "engine",
+          "source": "demo://engine@5"
+        },
+        {
+          "label": "baby_cry",
+          "source": "demo://baby_cry@1"
+        }
+      ],
+      "spec": {
+        "labels": [
+          "engine",
+          "baby_cry"
+        ],
+        "name": "inline-2",
+        "snr_db": 0.0
+      }
+    }
+  ],
+  "profile": null,
+  "revision": "0.1.0",
+  "run_hash": "5a21a6276a9d117949c17cdb16f14fee32a88a1e0a922b2156a3e2a10d1bf6f7",
+  "seed": 1337,
+  "skipped_packs": [],
+  "suite": "ab/sound-id"
+}

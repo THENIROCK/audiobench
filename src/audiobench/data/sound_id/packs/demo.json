@@ -1,0 +1,34 @@
+{
+  "id": "demo",
+  "title": "Procedural demo pack",
+  "source": "procedural (bundled)",
+  "license": "bundled",
+  "license_tag": "bundled",
+  "scope_note": "Procedural audio generated in-process; not a real-world dataset. Powers the headline demo with zero downloads.",
+  "labels": [
+    "siren",
+    "alarm",
+    "dog_bark",
+    "engine",
+    "glass_breaking",
+    "baby_cry",
+    "coughing",
+    "water",
+    "vacuum",
+    "speech"
+  ],
+  "clip_resolver": "procedural",
+  "clips_per_label": 6,
+  "mixture_counts": {
+    "solo": 10,
+    "pair": 10,
+    "triple": 10,
+    "quad": 10
+  },
+  "distractor_count": 2,
+  "demo_fast_mixture_counts": {
+    "solo": 5,
+    "pair": 5,
+    "triple": 5
+  }
+}
