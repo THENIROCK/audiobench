@@ -80,7 +80,7 @@ Each `ab/sound-id` run targets one or more **packs**. Each pack defines a label 
 | `security` | UrbanSound8K | gun_shot, siren, car_horn, dog_bark, jackhammer | **non-commercial research** |
 | `health` | ESC-50 medical subset | coughing, sneezing, breathing, snoring, crying_baby | non-clinical scope |
 
-The `demo` pack runs with no downloads and powers the headline demo. Other packs require user-supplied data at `~/.cache/audiobench/sound_id/<source>/`; see [Bringing your own data](#bringing-your-own-data).
+The `demo` pack runs with no downloads and powers the headline demo. Other packs require user-supplied data at `~/.cache/audiobench/sound_id/<source>/`; see the **Bringing your own data** section below.
 
 ```bash
 audiobench list-packs
@@ -230,12 +230,33 @@ When the run was made with `--prompt-ensemble N`, `inspect` also prints a per-pa
 
 `ab/sound-id` ships four model adapters:
 
-- `heuristic-v0` (bundled, CPU) — log-spectrum fingerprint matcher with a discriminative-margin threshold. Deterministic, runs anywhere. The bundled baseline that powers the headline demo.
-- `heuristic-weak` (bundled, CPU) — wider threshold + per-decision jitter, useful as a comparison target so `audiobench compare` has something to show without external dependencies.
+- `heuristic-v0` (bundled, CPU) — the strong bundled baseline. See **How the bundled heuristics work** below.
+- `heuristic-weak` (bundled, CPU) — a deliberately weaker variant of the same algorithm so `audiobench compare` has something to show out of the box. See **How the bundled heuristics work** below.
 - `clap-base` — LAION-CLAP zero-shot. Requires `pip install laion-clap` (lazy import). First run downloads weights.
 - `qwen2-audio-7b` — Qwen2-Audio-Instruct via HuggingFace `transformers`. Requires GPU (~16 GB VRAM) or set `AUDIOBENCH_QWEN_ENDPOINT=https://...` to point at a remote inference endpoint.
 
 Add your own model adapter in `src/audiobench/models/` and register it in `src/audiobench/models/registry.py`.
+
+### How the bundled heuristics work
+
+The bundled heuristics aren't ML models — they're a deterministic spectral matcher. They exist so `audiobench` runs end-to-end on a fresh laptop with no GPU, no weight downloads, and no network. The algorithm:
+
+1. **Fingerprint the input audio.** Pad to the next power of two, take an FFT, and bin power into 24 log-spaced frequency bands from 50 Hz to 7.5 kHz. Apply `log1p` to compress dynamic range and L2-normalize. The result is a 24-D unit vector that captures the audio's spectral shape.
+2. **Pre-compute one fingerprint per known label** by running the same recipe on the canonical procedural clip for each of the demo pack's 10 labels (`siren`, `engine`, `dog_bark`, …). These reference fingerprints are built once at import time.
+3. **Score the probe.** For a question "Do you hear a {label}?", compute the cosine similarity between the input fingerprint and the reference for `{label}` (`target_score`), and the mean cosine similarity to every *other* known label (`baseline`). The decision metric is the **discriminative margin** `margin = target_score − baseline`. Using a margin (rather than the raw similarity) keeps false positives down: in a quad mixture every reference still has decent absolute similarity, but only the components that are actually present beat the rest by a clear margin.
+4. **Threshold the margin.** Answer "yes" if `margin >= margin_threshold`, else "no".
+
+The two adapters differ only in two parameters:
+
+| | `margin_threshold` | `noise_amplitude` |
+|---|---|---|
+| `heuristic-v0` | `0.20` | `0.0` |
+| `heuristic-weak` | `0.30` | `0.10` |
+
+- A **higher `margin_threshold`** makes the model more conservative: it answers "yes" only when the target label's match clearly stands out from every other reference. `heuristic-weak`'s `0.30` is well above the typical margin for a true positive in a quad mixture, so it misses many components there — that's the recall hit you'll see in `compare`.
+- A **non-zero `noise_amplitude`** adds a small per-decision jitter (`±0.10` here, deterministically derived from a SHA-1 of the label, margin, and audio length, so runs are still reproducible). This lets `heuristic-weak` flip near-threshold decisions, simulating a noisy classifier without breaking the run hash.
+
+Because both heuristics are pure functions of the audio fingerprint and the prompt, they're CPU-only, deterministic, and finish a full `--profile demo-fast` run in well under a second. They're not meant to be competitive with CLAP or Qwen2-Audio — they're meant to make the harness honestly demonstrable on its own.
 
 ## Bringing your own data
 
@@ -258,13 +279,30 @@ The `demo` pack runs out of the box. The other packs reference real datasets tha
 ## Other CLI commands
 
 ```bash
+# Pre-download the Whisper checkpoint so the next `run` doesn't pay for it.
 audiobench warmup --model whisper-tiny
+
+# List every suite this build knows about (stable + in-design).
 audiobench list
+
+# Print metadata for a suite: clip count, conditions, expected layout.
 audiobench info ab/asr-robust
+
+# Run only two ASR conditions and print the run JSON instead of a table.
 audiobench run ab/asr-robust --model whisper-tiny --conditions clean,bandlimited-8k --pretty-json
+
+# Print the bundled prompts.yaml (version, parser_version, paraphrase list).
 audiobench prompts show
+
+# Copy the bundled prompts.yaml to a path you can edit, then pass it via `--prompts`.
 audiobench prompts export results/my_prompts.yaml
+
+# Compare two ab/sound-id runs even if their prompt_version / ensemble settings differ.
+# By default `compare` refuses mismatched prompts to keep numbers honest.
 audiobench compare results/a.json results/b.json --allow-mismatched-prompt
+
+# Local-only "push" stub: prints a signed payload (suite, revision, run_hash,
+# payload_sha256). No network traffic in MVP mode.
 audiobench push results/sound-id-heuristic.json --pretty-json
 ```
 

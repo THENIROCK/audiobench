@@ -42,9 +42,7 @@ Conditions: `clean`, `noise-cafe-10db`, `noise-pink-5db`, `bandlimited-8k`, `rev
 
 ### `ab/sound-id` (sound events)
 
-For each mixture of labeled clips, the model is asked once per candidate label:
-
-> "Do you hear a {label}?"
+For each mixture of labeled clips, the model is asked once per candidate label using the bundled prompt set (canonical wording: "Do you hear a {label}?"). The exact wording, version, and any ensemble setting are pinned in the run hash — see the **Prompt protocol** section below.
 
 The benchmark scores how many components of the mixture were correctly identified.
 
@@ -59,7 +57,14 @@ Conditions are mixture sizes:
 - `triple` — N=3
 - `quad` — N=4
 
-Per `(pack, condition)` it reports `recall` (components understood / present), `precision`, `f1`, and `fpr` (false-positive rate on distractor prompts). Headline number: `components understood: X / Y`.
+For every `(pack, condition)` row, the benchmark reports:
+
+- **recall** — of the sounds actually in the mixture, what fraction did the model correctly say "yes" to? (1.0 = caught every component; lower = missed some.)
+- **precision** — of the times the model said "yes", what fraction were actually present? (1.0 = no false alarms; lower = it claims to hear things that aren't there.)
+- **F1** — a single combined score that blends recall and precision; useful when you want one number.
+- **FPR** (false-positive rate) — for sounds that are NOT in the mixture (distractors), how often does the model still say "yes"? (0.0 = never hallucinates; higher = it answers "yes" too eagerly.)
+
+Headline number: `components understood: X / Y` — across every mixture, X is how many ground-truth components the model identified out of Y total. **This is the number you'd quote in a tweet.**
 
 ## Demo: compare two models on `ab/sound-id`
 
@@ -92,7 +97,7 @@ Each `ab/sound-id` run targets one or more **packs**. Each pack defines a label 
 | `security` | UrbanSound8K | gun_shot, siren, car_horn, dog_bark, jackhammer | **non-commercial research** |
 | `health` | ESC-50 medical subset | coughing, sneezing, breathing, snoring, crying_baby | non-clinical scope |
 
-The `demo` pack runs with no downloads and powers the headline demo. Other packs require user-supplied data at `~/.cache/audiobench/sound_id/<source>/`; see [Bringing your own data](#bringing-your-own-data).
+The `demo` pack runs with no downloads and powers the headline demo. Other packs require user-supplied data at `~/.cache/audiobench/sound_id/<source>/`; see the **Bringing your own data** section below.
 
 ```bash
 audiobench list-packs
@@ -138,6 +143,67 @@ audiobench run ab/sound-id --recipes scenarios/factory_floor.yaml --model heuris
 
 When `--mix` or `--recipes` is used, results land under a `custom` condition. The run hash includes the canonicalized mixture spec so any custom run is bit-reproducible.
 
+## Prompt protocol
+
+Every `ab/sound-id` run uses a versioned prompt set that lives at [`src/audiobench/data/sound_id/prompts.yaml`](src/audiobench/data/sound_id/prompts.yaml). The version, the parser version, the ensemble size, and a hash of the paraphrase list all feed into `run_hash`, so two runs with different prompt configurations cannot silently be confused.
+
+### Default behavior
+
+By default the suite asks one prompt per probe — the canonical wording "Do you hear a {label}?". The run summary records `prompt_version=yesno-v1, parser=v1, ensemble=off`.
+
+### Inspect or export the bundled prompts
+
+```bash
+audiobench prompts show
+audiobench prompts export results/my_prompts.yaml
+```
+
+`prompts export` writes a starter file you can edit; pass it back with `--prompts`.
+
+### Custom prompts (`--prompts`)
+
+Edit the exported YAML, bump the `version` so old runs aren't confused with the new ones, then point the runner at the file:
+
+```yaml
+version: my-clean-room-v1
+parser_version: v1
+paraphrases:
+  - "Do you hear a {label}?"
+  - "Listen carefully. Is a {label} present? Reply yes or no."
+```
+
+```bash
+audiobench run ab/sound-id --prompts results/my_prompts.yaml --model heuristic-v0
+```
+
+Schema:
+
+- `version` (required) — opaque label folded into `run_hash`. Any change in wording should bump it.
+- `parser_version` (optional, default `v1`) — pinned to the yes/no parser in `audiobench.probes`. Leave it at `v1` unless the parser also changes.
+- `paraphrases` (required, ≥ 1) — every entry must contain the literal placeholder `{label}`.
+
+### Prompt ensembles (`--prompt-ensemble N`)
+
+Reduce wording sensitivity by asking N paraphrases per probe and taking a majority vote. The vote is recorded along with each individual paraphrase answer in the run JSON.
+
+```bash
+audiobench run ab/sound-id --model qwen2-audio-7b --prompt-ensemble 5
+```
+
+`N` must be ≤ the number of paraphrases in the prompts file (5 in the bundled set). The first `N` paraphrases are used in order.
+
+### Comparison guard rails
+
+`audiobench compare` refuses to compare two `ab/sound-id` runs whose `prompt_version`, `parser_version`, or `prompt_ensemble` disagree:
+
+```text
+$ audiobench compare results/run-bundled.json results/run-ensemble.json
+Invalid value: runs disagree on prompt_ensemble: A=None vs B=3.
+Re-run with matching prompts, or pass --allow-mismatched-prompt.
+```
+
+Pass `--allow-mismatched-prompt` to override (the comparison header annotates the mismatch).
+
 ### Mixture preview
 
 Render a mixture WAV without running probes — useful for demo prep, debugging levels, and authoring recipes:
@@ -162,6 +228,7 @@ mixture 12 (pack=demo, condition=triple)
     dog_bark        demo://dog_bark@0
 
   model: heuristic-v0
+  prompts: version=yesno-v1, parser=v1, ensemble=off (single prompt), source=bundled
   yes responses:
     siren           ✓
     dog_bark        ✓
@@ -174,16 +241,39 @@ mixture 12 (pack=demo, condition=triple)
   components understood: 2 of 3
 ```
 
+When the run was made with `--prompt-ensemble N`, `inspect` also prints a per-paraphrase breakdown showing each rendered prompt and the model's individual yes/no for it.
+
 ## Models
 
 `ab/sound-id` ships four model adapters:
 
-- `heuristic-v0` (bundled, CPU) — log-spectrum fingerprint matcher with a discriminative-margin threshold. Deterministic, runs anywhere. The bundled baseline that powers the headline demo.
-- `heuristic-weak` (bundled, CPU) — wider threshold + per-decision jitter, useful as a comparison target so `audiobench compare` has something to show without external dependencies.
+- `heuristic-v0` (bundled, CPU) — the strong bundled baseline. See **How the bundled heuristics work** below.
+- `heuristic-weak` (bundled, CPU) — a deliberately weaker variant of the same algorithm so `audiobench compare` has something to show out of the box. See **How the bundled heuristics work** below.
 - `clap-base` — LAION-CLAP zero-shot. Requires `pip install laion-clap` (lazy import). First run downloads weights.
 - `qwen2-audio-7b` — Qwen2-Audio-Instruct via HuggingFace `transformers`. Requires GPU (~16 GB VRAM) or set `AUDIOBENCH_QWEN_ENDPOINT=https://...` to point at a remote inference endpoint.
 
 Add your own model adapter in `src/audiobench/models/` and register it in `src/audiobench/models/registry.py`.
+
+### How the bundled heuristics work
+
+The bundled heuristics aren't ML models — they're a deterministic spectral matcher. They exist so `audiobench` runs end-to-end on a fresh laptop with no GPU, no weight downloads, and no network. The algorithm:
+
+1. **Fingerprint the input audio.** Pad to the next power of two, take an FFT, and bin power into 24 log-spaced frequency bands from 50 Hz to 7.5 kHz. Apply `log1p` to compress dynamic range and L2-normalize. The result is a 24-D unit vector that captures the audio's spectral shape.
+2. **Pre-compute one fingerprint per known label** by running the same recipe on the canonical procedural clip for each of the demo pack's 10 labels (`siren`, `engine`, `dog_bark`, …). These reference fingerprints are built once at import time.
+3. **Score the probe.** For a question "Do you hear a {label}?", compute the cosine similarity between the input fingerprint and the reference for `{label}` (`target_score`), and the mean cosine similarity to every *other* known label (`baseline`). The decision metric is the **discriminative margin** `margin = target_score − baseline`. Using a margin (rather than the raw similarity) keeps false positives down: in a quad mixture every reference still has decent absolute similarity, but only the components that are actually present beat the rest by a clear margin.
+4. **Threshold the margin.** Answer "yes" if `margin >= margin_threshold`, else "no".
+
+The two adapters differ only in two parameters:
+
+| | `margin_threshold` | `noise_amplitude` |
+|---|---|---|
+| `heuristic-v0` | `0.20` | `0.0` |
+| `heuristic-weak` | `0.30` | `0.10` |
+
+- A **higher `margin_threshold`** makes the model more conservative: it answers "yes" only when the target label's match clearly stands out from every other reference. `heuristic-weak`'s `0.30` is well above the typical margin for a true positive in a quad mixture, so it misses many components there — that's the recall hit you'll see in `compare`.
+- A **non-zero `noise_amplitude`** adds a small per-decision jitter (`±0.10` here, deterministically derived from a SHA-1 of the label, margin, and audio length, so runs are still reproducible). This lets `heuristic-weak` flip near-threshold decisions, simulating a noisy classifier without breaking the run hash.
+
+Because both heuristics are pure functions of the audio fingerprint and the prompt, they're CPU-only, deterministic, and finish a full `--profile demo-fast` run in well under a second. They're not meant to be competitive with CLAP or Qwen2-Audio — they're meant to make the harness honestly demonstrable on its own.
 
 ## Bringing your own data
 
@@ -206,10 +296,30 @@ The `demo` pack runs out of the box. The other packs reference real datasets tha
 ## Other CLI commands
 
 ```bash
+# Pre-download the Whisper checkpoint so the next `run` doesn't pay for it.
 audiobench warmup --model whisper-tiny
+
+# List every suite this build knows about (stable + in-design).
 audiobench list
+
+# Print metadata for a suite: clip count, conditions, expected layout.
 audiobench info ab/asr-robust
+
+# Run only two ASR conditions and print the run JSON instead of a table.
 audiobench run ab/asr-robust --model whisper-tiny --conditions clean,bandlimited-8k --pretty-json
+
+# Print the bundled prompts.yaml (version, parser_version, paraphrase list).
+audiobench prompts show
+
+# Copy the bundled prompts.yaml to a path you can edit, then pass it via `--prompts`.
+audiobench prompts export results/my_prompts.yaml
+
+# Compare two ab/sound-id runs even if their prompt_version / ensemble settings differ.
+# By default `compare` refuses mismatched prompts to keep numbers honest.
+audiobench compare results/a.json results/b.json --allow-mismatched-prompt
+
+# Local-only "push" stub: prints a signed payload (suite, revision, run_hash,
+# payload_sha256). No network traffic in MVP mode.
 audiobench push results/sound-id-heuristic.json --pretty-json
 ```
 
@@ -217,11 +327,12 @@ audiobench push results/sound-id-heuristic.json --pretty-json
 
 - Manifest, mixture, and probe seeds are fixed.
 - The mixer is deterministic (peak-normalize, RMS-match, sum).
+- The prompt set is versioned and pinned in `run_hash` (`prompt_version`, `parser_version`, `prompt_ensemble`, plus a SHA-256 over the canonicalized paraphrase list).
 - Every run writes a JSON artifact with:
   - suite, revision, model, seed, config
-  - per-clip / per-mixture hypotheses
+  - per-clip / per-mixture hypotheses (with per-paraphrase answers when ensembling)
   - per-condition metrics and weighted mean
-  - `run_hash` (SHA-256 over canonicalized run payload, including mixture spec)
+  - `run_hash` (SHA-256 over canonicalized run payload, including mixture spec and prompt config)
 - `audiobench push` is suite-agnostic and works for both suites; it only reads `suite`, `revision`, `run_hash`.
 
 ## Extend this MVP
@@ -229,6 +340,7 @@ audiobench push results/sound-id-heuristic.json --pretty-json
 - Add a model adapter in `src/audiobench/models/` and register it in `models/registry.py`.
 - Add a perturbation in `src/audiobench/perturbations.py` for `ab/asr-robust`.
 - Add a pack in `src/audiobench/data/sound_id/packs/` for `ab/sound-id`.
+- Author a custom prompt set: `audiobench prompts export my_prompts.yaml`, edit, then run with `--prompts my_prompts.yaml`.
 
 ## Scope limits
 
