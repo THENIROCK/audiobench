@@ -25,8 +25,29 @@ def _make_qwen() -> AudioLLMAdapter:
     return Qwen2AudioAdapter()
 
 
+def _make_gemini() -> AudioLLMAdapter:
+    from audiobench.models.gemini import GeminiAdapter
+
+    return GeminiAdapter()
+
+
+def _make_voxtral() -> AudioLLMAdapter:
+    from audiobench.models.voxtral import VoxtralAdapter
+
+    return VoxtralAdapter()
+
+
+def _make_agent() -> AudioLLMAdapter:
+    from audiobench.models.agent import AgentAdapter
+
+    return AgentAdapter()
+
+
 _FACTORIES["clap-base"] = _make_clap
 _FACTORIES["qwen2-audio-7b"] = _make_qwen
+_FACTORIES["gemini-flash"] = _make_gemini
+_FACTORIES["voxtral-small"] = _make_voxtral
+_FACTORIES["agent"] = _make_agent
 
 
 def list_models() -> list[str]:
