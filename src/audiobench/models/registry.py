@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Callable
 
 from audiobench.models.audio_llm import AudioLLMAdapter
+from audiobench.models.agent_llms import DEFAULT_AGENT_MODEL
 from audiobench.models.heuristic import make_heuristic_v0, make_heuristic_weak
 
 _FACTORIES: dict[str, Callable[[], AudioLLMAdapter]] = {
@@ -37,10 +38,10 @@ def _make_voxtral() -> AudioLLMAdapter:
     return VoxtralAdapter()
 
 
-def _make_agent() -> AudioLLMAdapter:
+def _make_agent(model: str = DEFAULT_AGENT_MODEL) -> AudioLLMAdapter:
     from audiobench.models.agent import AgentAdapter
 
-    return AgentAdapter()
+    return AgentAdapter(model=model)
 
 
 _FACTORIES["clap-base"] = _make_clap
@@ -55,6 +56,11 @@ def list_models() -> list[str]:
 
 
 def make_model(name: str) -> AudioLLMAdapter:
+    if name.startswith("agent:"):
+        agent_model = name.split(":", 1)[1].strip()
+        if not agent_model:
+            raise KeyError("agent model spec must be `agent:<provider-model-id>`")
+        return _make_agent(agent_model)
     if name not in _FACTORIES:
         raise KeyError(
             f"unknown model: {name!r}. known: {', '.join(list_models())}"

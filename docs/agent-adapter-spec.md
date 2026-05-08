@@ -69,13 +69,15 @@ Single tool provided to the LLM:
 
 ## LLM Backend
 
-Configurable via `AUDIOBENCH_AGENT_LLM` env var:
+Configurable via the model argument passed to `audiobench run`:
 
-| Value | Provider | API Key Env Var |
-|-------|----------|-----------------|
-| `claude-sonnet` (default) | Anthropic | `ANTHROPIC_API_KEY` |
-| `gpt-4o` | OpenAI | `OPENAI_API_KEY` |
-| `gemini-flash` | Google GenAI | `GOOGLE_API_KEY` |
+| Model ID prefix | Provider | API Key Env Var | Example |
+|-----------------|----------|-----------------|---------|
+| `claude-` | Anthropic | `ANTHROPIC_API_KEY` | `agent:claude-sonnet-4-6` |
+| `gpt-` or `o` | OpenAI | `OPENAI_API_KEY` | `agent:gpt-5.4-mini-2026-03-17` |
+| `gemini-` | Google GenAI | `GOOGLE_API_KEY` | `agent:gemini-2.5-flash` |
+
+Default model: `agent:claude-sonnet-4-6`.
 
 Audio is NOT passed multimodally to the LLM. The LLM only sees text — it must use the tool to inspect the audio.
 
@@ -111,12 +113,13 @@ LLM response:
 ## Configuration
 
 ```bash
-# Required
-export AUDIOBENCH_AGENT_LLM=claude-sonnet   # or gpt-4o, gemini-flash
-export ANTHROPIC_API_KEY=sk-...              # whichever LLM you pick
+# Required: whichever API key matches the model id you pick.
+export ANTHROPIC_API_KEY=sk-...
 
 # Run
-audiobench run ab/sound-id --model agent
+audiobench run ab/sound-id --model agent:claude-sonnet-4-6
+audiobench run ab/sound-id --model agent:gpt-5.4-mini-2026-03-17
+audiobench run ab/sound-id --model agent:gemini-2.5-flash
 ```
 
 ## Error Handling
@@ -142,7 +145,7 @@ docker/agent/Dockerfile                   — Sandbox image definition
 agent = ["anthropic>=0.30", "openai>=1.0", "google-genai>=1.0"]
 ```
 
-Only the SDK for the chosen LLM actually needs to be installed; the adapter should lazy-import based on `AUDIOBENCH_AGENT_LLM`.
+Only the SDK for the chosen LLM actually needs to be installed; the adapter should lazy-import based on the model id prefix.
 
 ## Registry
 

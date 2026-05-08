@@ -15,6 +15,7 @@ __pycache__/
 # Ad-hoc run outputs (`results/` itself is checked in for demo files;
 # this only ignores generated `run-<hash>.json` artifacts.)
 /results/run-*.json
+/.audiobench-agent-tmp/
 
 # mkdocs build output
 /site/

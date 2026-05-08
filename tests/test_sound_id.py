@@ -74,6 +74,27 @@ class _ScriptedAdapter:
         return "no"
 
 
+class _DiagnosticAdapter:
+    name = "diagnostic"
+
+    def __init__(self) -> None:
+        self._progress_callback = None
+
+    def set_progress_callback(self, callback) -> None:
+        self._progress_callback = callback
+
+    def answer(self, audio, sample_rate: int, prompt: str) -> str:
+        _ = (audio, sample_rate, prompt)
+        if self._progress_callback is not None:
+            self._progress_callback(
+                {
+                    "event": "agent_tool_output",
+                    "output": "diagnostic output",
+                }
+            )
+        return "yes"
+
+
 class LabelsTest(unittest.TestCase):
     def test_humanize_overrides(self) -> None:
         self.assertEqual(humanize("dog_bark"), "dog bark")
@@ -379,6 +400,51 @@ class SoundIdSuiteTest(unittest.TestCase):
             if probe["label"] in {"siren", "engine"}:
                 self.assertTrue(probe["answered_yes"])
                 self.assertEqual(len(probe["paraphrase_answers"]), 3)
+
+    def test_progress_callback_reports_mixture_and_probe_events(self) -> None:
+        adapter = FakeAdapter(present_labels={"siren"})
+        events: list[dict] = []
+
+        result = sound_id_suite.run_suite(
+            model_name="ignored",
+            seed=1,
+            pack_ids=["demo"],
+            selected_conditions=["solo"],
+            limit=1,
+            model=adapter,
+            progress_callback=events.append,
+        )
+
+        self.assertIn("run_hash", result)
+        self.assertEqual(events[0]["event"], "start")
+        self.assertEqual(events[0]["total_mixtures"], 1)
+        self.assertTrue(any(event["event"] == "mixture_start" for event in events))
+        self.assertTrue(any(event["event"] == "probe_start" for event in events))
+        probe_done = [event for event in events if event["event"] == "probe_done"]
+        self.assertTrue(probe_done)
+        self.assertIn("prompt", probe_done[0])
+        self.assertIn("raw_answer", probe_done[0])
+        self.assertTrue(any(event["event"] == "mixture_done" for event in events))
+        self.assertEqual(events[-1]["event"], "done")
+
+    def test_progress_callback_forwards_adapter_diagnostics(self) -> None:
+        events: list[dict] = []
+
+        sound_id_suite.run_suite(
+            model_name="ignored",
+            seed=1,
+            pack_ids=["demo"],
+            selected_conditions=["solo"],
+            limit=1,
+            model=_DiagnosticAdapter(),
+            progress_callback=events.append,
+        )
+
+        diagnostics = [event for event in events if event["event"] == "agent_tool_output"]
+        self.assertTrue(diagnostics)
+        self.assertEqual(diagnostics[0]["output"], "diagnostic output")
+        self.assertEqual(diagnostics[0]["suite"], "ab/sound-id")
+        self.assertIn("prompt", diagnostics[0])
 
 
 class CompareTest(unittest.TestCase):

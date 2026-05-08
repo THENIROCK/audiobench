@@ -8,6 +8,8 @@ from dataclasses import dataclass
 from typing import Protocol
 
 
+DEFAULT_AGENT_MODEL = "claude-sonnet-4-6"
+
 SYSTEM_PROMPT = (
     "You are an audio analysis agent. An audio file is available at "
     "/input/audio.wav inside your sandbox.\n\n"
@@ -55,36 +57,34 @@ class AgentLLM(Protocol):
     def final_answer(self, tool_output: str) -> str: ...
 
 
-def make_agent_llm() -> AgentLLM:
-    backend = os.environ.get("AUDIOBENCH_AGENT_LLM", "claude-sonnet").strip().lower()
-    if backend == "claude-sonnet":
-        return AnthropicAgentLLM()
-    if backend == "gpt-4o":
-        return OpenAIAgentLLM()
-    if backend == "gemini-flash":
-        return GeminiAgentLLM()
+def make_agent_llm(model: str = DEFAULT_AGENT_MODEL) -> AgentLLM:
+    normalized = model.strip()
+    if normalized.startswith("claude-"):
+        return AnthropicAgentLLM(normalized)
+    if normalized.startswith(("gpt-", "o")):
+        return OpenAIAgentLLM(normalized)
+    if normalized.startswith("gemini-"):
+        return GeminiAgentLLM(normalized)
     raise RuntimeError(
-        "unknown AUDIOBENCH_AGENT_LLM={!r}; valid values are: "
-        "claude-sonnet, gpt-4o, gemini-flash".format(backend)
+        "cannot infer provider for agent model {!r}; use a model id beginning "
+        "with claude-, gpt-, o, or gemini-".format(model)
     )
 
 
 class AnthropicAgentLLM:
-    def __init__(self) -> None:
+    def __init__(self, model: str) -> None:
         try:
             import anthropic
         except ImportError as exc:
             raise RuntimeError(
-                "agent with AUDIOBENCH_AGENT_LLM=claude-sonnet requires the "
+                "agent with a Claude model requires the "
                 "`anthropic` package. Install it with `pip install \"audiobench[agent]\"` "
                 "(or `pip install anthropic`)."
             ) from exc
         if not os.environ.get("ANTHROPIC_API_KEY"):
-            raise RuntimeError("agent with claude-sonnet requires ANTHROPIC_API_KEY.")
+            raise RuntimeError("agent with a Claude model requires ANTHROPIC_API_KEY.")
         self._client = anthropic.Anthropic()
-        self._model = os.environ.get(
-            "AUDIOBENCH_AGENT_ANTHROPIC_MODEL", "claude-sonnet-4-6"
-        )
+        self._model = model
         self._messages: list[dict[str, object]] = []
         self._last_content: object | None = None
         self._last_tool_id: str | None = None
@@ -101,9 +101,14 @@ class AnthropicAgentLLM:
         )
         self._last_content = response.content
         for block in response.content:
-            if getattr(block, "type", None) == "tool_use" and getattr(block, "name", None) == "run_python":
-                self._last_tool_id = block.id
-                return LLMResponse(tool_request=ToolRequest(code=block.input.get("code", "")))
+            block_type = _block_value(block, "type")
+            block_name = _block_value(block, "name")
+            if block_type == "tool_use" and block_name == "run_python":
+                block_input = _block_value(block, "input") or {}
+                self._last_tool_id = str(_block_value(block, "id"))
+                return LLMResponse(
+                    tool_request=ToolRequest(code=str(block_input.get("code", "")))
+                )
         return LLMResponse(text=_content_text(response.content))
 
     def final_answer(self, tool_output: str) -> str:
@@ -111,43 +116,56 @@ class AnthropicAgentLLM:
             return ""
         messages = [
             *self._messages,
-            {"role": "assistant", "content": self._last_content},
+            {"role": "assistant", "content": _content_blocks(self._last_content)},
             {
                 "role": "user",
                 "content": [
                     {
                         "type": "tool_result",
                         "tool_use_id": self._last_tool_id,
-                        "content": tool_output,
-                    }
+                        "content": [{"type": "text", "text": tool_output}],
+                    },
+                    {
+                        "type": "text",
+                        "text": (
+                            "Based only on the run_python output, answer the original "
+                            "question with exactly one word: yes or no."
+                        ),
+                    },
                 ],
             },
         ]
         response = self._client.messages.create(
             model=self._model,
-            max_tokens=32,
+            max_tokens=8,
             system=SYSTEM_PROMPT,
-            tools=[_anthropic_tool()],
-            tool_choice={"type": "none"},
             messages=messages,
         )
-        return _content_text(response.content).strip()
+        text = _content_text(response.content).strip()
+        if text:
+            return text
+        stop_reason = getattr(response, "stop_reason", None)
+        content_summary = _content_summary(getattr(response, "content", None))
+        return (
+            "[agent error] Anthropic final response was empty; "
+            f"stop_reason={stop_reason!r}; content={content_summary}"
+        )
 
 
 class OpenAIAgentLLM:
-    def __init__(self) -> None:
+    def __init__(self, model: str) -> None:
         try:
             from openai import OpenAI
         except ImportError as exc:
             raise RuntimeError(
-                "agent with AUDIOBENCH_AGENT_LLM=gpt-4o requires the `openai` "
+                "agent with an OpenAI model requires the `openai` "
                 "package. Install it with `pip install \"audiobench[agent]\"` "
                 "(or `pip install openai`)."
             ) from exc
         if not os.environ.get("OPENAI_API_KEY"):
-            raise RuntimeError("agent with gpt-4o requires OPENAI_API_KEY.")
+            raise RuntimeError("agent with an OpenAI model requires OPENAI_API_KEY.")
         self._client = OpenAI()
-        self._model = os.environ.get("AUDIOBENCH_AGENT_OPENAI_MODEL", "gpt-4o")
+        self._model = model
         self._messages: list[dict[str, object]] = []
         self._assistant_message: dict[str, object] | None = None
         self._tool_call_id: str | None = None
@@ -194,21 +212,21 @@ class OpenAIAgentLLM:
 
 
 class GeminiAgentLLM:
-    def __init__(self) -> None:
+    def __init__(self, model: str) -> None:
         try:
             from google import genai
             from google.genai import types
         except ImportError as exc:
             raise RuntimeError(
-                "agent with AUDIOBENCH_AGENT_LLM=gemini-flash requires the "
+                "agent with a Gemini model requires the "
                 "`google-genai` package. Install it with `pip install \"audiobench[agent]\"` "
                 "(or `pip install google-genai`)."
             ) from exc
         if not os.environ.get("GOOGLE_API_KEY"):
-            raise RuntimeError("agent with gemini-flash requires GOOGLE_API_KEY.")
+            raise RuntimeError("agent with a Gemini model requires GOOGLE_API_KEY.")
         self._types = types
         self._client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
-        self._model = os.environ.get("AUDIOBENCH_AGENT_GEMINI_MODEL", "gemini-2.5-flash")
+        self._model = model
         self._prompt = ""
         self._function_call = None
 
@@ -273,6 +291,52 @@ def _anthropic_tool() -> dict[str, object]:
 def _content_text(content: object) -> str:
     pieces: list[str] = []
     for block in content if isinstance(content, list) else []:
-        if getattr(block, "type", None) == "text":
-            pieces.append(getattr(block, "text", ""))
+        if _block_value(block, "type") == "text":
+            text = _block_value(block, "text")
+            if text is not None:
+                pieces.append(str(text))
     return "\n".join(piece for piece in pieces if piece)
+
+
+def _content_blocks(content: object) -> list[dict[str, object]]:
+    blocks: list[dict[str, object]] = []
+    for block in content if isinstance(content, list) else []:
+        if isinstance(block, dict):
+            blocks.append(block)
+            continue
+        if hasattr(block, "model_dump"):
+            blocks.append(block.model_dump(exclude_none=True))
+            continue
+        block_type = _block_value(block, "type")
+        if block_type == "text":
+            blocks.append({"type": "text", "text": str(_block_value(block, "text") or "")})
+        elif block_type == "tool_use":
+            blocks.append(
+                {
+                    "type": "tool_use",
+                    "id": str(_block_value(block, "id") or ""),
+                    "name": str(_block_value(block, "name") or ""),
+                    "input": _block_value(block, "input") or {},
+                }
+            )
+    return blocks
+
+
+def _block_value(block: object, key: str) -> object:
+    if isinstance(block, dict):
+        return block.get(key)
+    return getattr(block, key, None)
+
+
+def _content_summary(content: object) -> str:
+    if not isinstance(content, list):
+        return repr(content)
+    items = []
+    for block in content:
+        block_type = _block_value(block, "type")
+        if block_type == "text":
+            text = str(_block_value(block, "text") or "")
+            items.append(f"text({len(text)} chars)")
+        else:
+            items.append(str(block_type))
+    return "[" + ", ".join(items) + "]"

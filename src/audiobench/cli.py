@@ -7,7 +7,18 @@ from typing import Any
 import numpy as np
 import soundfile as sf
 import typer
-from rich.console import Console
+from rich.console import Console, Group
+from rich.markup import escape
+from rich.panel import Panel
+from rich.progress import (
+    BarColumn,
+    Progress,
+    SpinnerColumn,
+    TaskID,
+    TaskProgressColumn,
+    TextColumn,
+    TimeElapsedColumn,
+)
 from rich.table import Table
 
 from audiobench.compare import CompareMismatchError, render_run_pair
@@ -83,6 +94,169 @@ def _parse_csv(raw: str | None) -> list[str] | None:
         return None
     values = [item.strip() for item in raw.split(",") if item.strip()]
     return values or None
+
+
+def _make_run_progress() -> Progress:
+    return Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        BarColumn(),
+        TaskProgressColumn(),
+        TimeElapsedColumn(),
+        console=console,
+        transient=False,
+    )
+
+
+def _sound_id_progress_callback(progress: Progress, task_id: TaskID):
+    task_total: int | None = None
+
+    def handle(event: dict[str, Any]) -> None:
+        nonlocal task_total
+        kind = event.get("event")
+        if kind == "start":
+            task_total = event.get("total_mixtures") or None
+            progress.update(
+                task_id,
+                total=task_total,
+                description=f"running {event.get('suite', 'ab/sound-id')} · {event.get('model', '')}",
+            )
+            return
+        if kind == "mixture_start":
+            progress.update(
+                task_id,
+                description=(
+                    f"{event.get('pack')}:{event.get('condition')} · "
+                    f"{event.get('mixture_name')}"
+                ),
+            )
+            return
+        if kind == "probe_start":
+            suffix = ""
+            prompt_total = event.get("prompt_total")
+            if prompt_total and prompt_total > 1:
+                suffix = f" prompt {event.get('prompt_index')}/{prompt_total}"
+            progress.update(
+                task_id,
+                description=(
+                    f"{event.get('pack')}:{event.get('condition')} · "
+                    f"{event.get('mixture_name')} · {event.get('label')}{suffix}"
+                ),
+            )
+            return
+        if kind == "probe_done":
+            answered = "yes" if event.get("answered_yes") else "no"
+            expected = "present" if event.get("expected") else "absent"
+            prompt_total = event.get("prompt_total")
+            prompt_suffix = ""
+            if prompt_total and prompt_total > 1:
+                prompt_suffix = f" · prompt {event.get('prompt_index')}/{prompt_total}"
+            title = (
+                f"{event.get('suite', 'ab/sound-id')} · "
+                f"{event.get('pack')}:{event.get('condition')} · "
+                f"{event.get('mixture_name')}{prompt_suffix}"
+            )
+            progress.console.print(
+                Panel(
+                    Group(
+                        f"[bold]Label[/bold] {escape(str(event.get('label')))} "
+                        f"[dim]({expected})[/dim]",
+                        f"[bold]Question[/bold] {escape(str(event.get('prompt', '')))}",
+                        f"[bold]LLM response[/bold] {escape(str(event.get('raw_answer', '')).strip() or '(empty)')}",
+                        f"[bold]Parsed[/bold] {answered}",
+                    ),
+                    title=escape(title),
+                    border_style="green" if event.get("answered_yes") else "yellow",
+                    expand=False,
+                )
+            )
+            return
+        if isinstance(kind, str) and kind.startswith("agent_"):
+            title = (
+                f"{event.get('suite', 'ab/sound-id')} · "
+                f"{event.get('pack')}:{event.get('condition')} · "
+                f"{event.get('mixture_name')} · {event.get('label')}"
+            )
+            body = _format_agent_event(event)
+            progress.console.print(
+                Panel(
+                    body,
+                    title=escape(title),
+                    border_style="blue" if "error" not in body.lower() else "red",
+                    expand=False,
+                )
+            )
+            return
+        if kind == "mixture_done":
+            progress.advance(task_id)
+            return
+        if kind == "done":
+            if task_total is not None:
+                progress.update(task_id, completed=task_total, description="finalizing run")
+            else:
+                progress.update(task_id, description="finalizing run")
+
+    return handle
+
+
+def _format_agent_event(event: dict[str, Any]) -> str:
+    kind = event.get("event")
+    if kind == "agent_llm_start":
+        return "[bold]Agent[/bold] requesting run_python tool call"
+    if kind == "agent_tool_call":
+        code = str(event.get("code", "")).strip() or "(empty)"
+        return f"[bold]run_python code[/bold]\n{escape(_truncate_display(code, 1600))}"
+    if kind == "agent_tool_output":
+        output = str(event.get("output", "")).strip() or "(empty)"
+        return f"[bold]run_python output[/bold]\n{escape(_truncate_display(output, 1600))}"
+    if kind == "agent_final_answer":
+        answer = str(event.get("answer", "")).strip() or "(empty)"
+        return f"[bold]Final LLM answer[/bold] {escape(answer)}"
+    if kind == "agent_direct_answer":
+        answer = str(event.get("answer", "")).strip() or "(empty)"
+        return f"[bold]Direct LLM answer[/bold] {escape(answer)}"
+    return escape(str(event))
+
+
+def _truncate_display(text: str, limit: int) -> str:
+    if len(text) <= limit:
+        return text
+    return text[: limit - 16] + "\n... [truncated]"
+
+
+def _asr_progress_callback(progress: Progress, task_id: TaskID):
+    task_total: int | None = None
+
+    def handle(event: dict[str, Any]) -> None:
+        nonlocal task_total
+        kind = event.get("event")
+        if kind == "start":
+            task_total = event.get("total_steps") or None
+            progress.update(
+                task_id,
+                total=task_total,
+                description=f"running {event.get('suite', 'ab/asr-robust')} · {event.get('model', '')}",
+            )
+            return
+        if kind == "condition_start":
+            progress.update(
+                task_id,
+                description=(
+                    f"clip {event.get('clip_index')}/{event.get('clip_total')} · "
+                    f"{event.get('condition')}"
+                ),
+            )
+            return
+        if kind == "condition_done":
+            progress.advance(task_id)
+            return
+        if kind == "done":
+            if task_total is not None:
+                progress.update(task_id, completed=task_total, description="finalizing run")
+            else:
+                progress.update(task_id, description="finalizing run")
+
+    return handle
 
 
 @app.command("list")
@@ -169,7 +343,7 @@ def info(
 @app.command("run")
 def run(
     suite_id: str,
-    model: str = typer.Option("tiny", "--model", help="Model adapter name"),
+    model: str | None = typer.Option(None, "--model", help="Model adapter name"),
     output: Path | None = typer.Option(None, "--output", help="Path to write run JSON"),
     seed: int = typer.Option(1337, "--seed", help="Deterministic seed"),
     limit: int | None = typer.Option(None, "--limit", help="Limit number of clips/mixtures"),
@@ -207,17 +381,31 @@ def run(
             raise typer.BadParameter(
                 "--mix/--recipes/--pack/--profile/--prompts/--prompt-ensemble only apply to ab/sound-id"
             )
-        normalized_model = model.replace("whisper-", "")
+        model_name = model or "whisper-tiny"
+        normalized_model = model_name.replace("whisper-", "")
         try:
-            result = run_asr_suite(
-                model_name=normalized_model,
-                seed=seed,
-                limit=limit,
-                condition_names=_parse_csv(conditions),
-            )
+            if json_out:
+                result = run_asr_suite(
+                    model_name=normalized_model,
+                    seed=seed,
+                    limit=limit,
+                    condition_names=_parse_csv(conditions),
+                )
+            else:
+                progress = _make_run_progress()
+                with progress:
+                    task_id = progress.add_task("preparing ab/asr-robust", total=None)
+                    result = run_asr_suite(
+                        model_name=normalized_model,
+                        seed=seed,
+                        limit=limit,
+                        condition_names=_parse_csv(conditions),
+                        progress_callback=_asr_progress_callback(progress, task_id),
+                    )
         except ValueError as exc:
             raise typer.BadParameter(str(exc)) from exc
     elif suite_id == sound_id_suite.SUITE_ID:
+        model_name = model or "heuristic-v0"
         custom_specs: list[MixtureSpec] = []
         if mix:
             custom_specs.extend(parse_inline_mix(list(mix)))
@@ -228,17 +416,34 @@ def run(
         except (PromptFormatError, FileNotFoundError) as exc:
             raise typer.BadParameter(str(exc)) from exc
         try:
-            result = sound_id_suite.run_suite(
-                model_name=model,
-                seed=seed,
-                pack_ids=_parse_csv(pack),
-                selected_conditions=_parse_csv(conditions),
-                profile_name=profile,
-                custom_mixtures=custom_specs or None,
-                limit=limit,
-                prompt_spec=prompt_spec,
-                prompt_ensemble=prompt_ensemble,
-            )
+            if json_out:
+                result = sound_id_suite.run_suite(
+                    model_name=model_name,
+                    seed=seed,
+                    pack_ids=_parse_csv(pack),
+                    selected_conditions=_parse_csv(conditions),
+                    profile_name=profile,
+                    custom_mixtures=custom_specs or None,
+                    limit=limit,
+                    prompt_spec=prompt_spec,
+                    prompt_ensemble=prompt_ensemble,
+                )
+            else:
+                progress = _make_run_progress()
+                with progress:
+                    task_id = progress.add_task("preparing ab/sound-id", total=None)
+                    result = sound_id_suite.run_suite(
+                        model_name=model_name,
+                        seed=seed,
+                        pack_ids=_parse_csv(pack),
+                        selected_conditions=_parse_csv(conditions),
+                        profile_name=profile,
+                        custom_mixtures=custom_specs or None,
+                        limit=limit,
+                        prompt_spec=prompt_spec,
+                        prompt_ensemble=prompt_ensemble,
+                        progress_callback=_sound_id_progress_callback(progress, task_id),
+                    )
         except (ValueError, KeyError) as exc:
             raise typer.BadParameter(str(exc)) from exc
     else:
