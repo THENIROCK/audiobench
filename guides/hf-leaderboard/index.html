@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://thenirock.github.io/audiobench/suites/asr-robust/">
+        <link rel="canonical" href="https://thenirock.github.io/audiobench/guides/hf-leaderboard/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../bring-your-own-model/">
       
       
-        <link rel="next" href="../asr-hallucination/">
+        <link rel="next" href="../repro-launch-flow/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>ab/asr-robust - audiobench</title>
+        <title>Hugging Face leaderboard - audiobench</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#abasr-robust" class="md-skip">
+        <a href="#hugging-face-leaderboard-integration" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ab/asr-robust
+              Hugging Face leaderboard
             
           </span>
         </div>
@@ -266,13 +266,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../suites/" class="md-tabs__link">
           
   
   
@@ -312,11 +310,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../guides/bring-your-own-model/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../bring-your-own-model/" class="md-tabs__link">
           
   
   
@@ -455,8 +455,6 @@
       
   
   
-    
-  
   
   
     
@@ -476,23 +474,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../suites/" class="md-nav__link ">
               
   
   
@@ -510,13 +505,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -533,37 +528,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ab/asr-robust
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../suites/asr-robust/" class="md-nav__link">
         
   
   
@@ -579,70 +547,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#conditions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Conditions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#useful-flags" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Useful flags
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adding-a-perturbation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Adding a perturbation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scope" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scope
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -655,7 +559,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../asr-hallucination/" class="md-nav__link">
+      <a href="../../suites/asr-hallucination/" class="md-nav__link">
         
   
   
@@ -683,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sound-id/" class="md-nav__link">
+      <a href="../../suites/sound-id/" class="md-nav__link">
         
   
   
@@ -819,8 +723,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -834,19 +740,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
@@ -864,7 +773,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -882,7 +791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/bring-your-own-model/" class="md-nav__link">
+      <a href="../bring-your-own-model/" class="md-nav__link">
         
   
   
@@ -907,10 +816,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../guides/hf-leaderboard/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hugging Face leaderboard
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -926,6 +862,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-login-once-to-hugging-face" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Login once to Hugging Face
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-deploy-the-space-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Deploy the Space app
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-push-benchmark-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Push benchmark runs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submission-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Submission format
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -938,7 +938,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/repro-launch-flow/" class="md-nav__link">
+      <a href="../repro-launch-flow/" class="md-nav__link">
         
   
   
@@ -1114,10 +1114,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#conditions" class="md-nav__link">
+  <a href="#1-login-once-to-hugging-face" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Conditions
+        1) Login once to Hugging Face
       
     </span>
   </a>
@@ -1125,10 +1125,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#useful-flags" class="md-nav__link">
+  <a href="#2-deploy-the-space-app" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Useful flags
+        2) Deploy the Space app
       
     </span>
   </a>
@@ -1136,10 +1136,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-a-perturbation" class="md-nav__link">
+  <a href="#3-push-benchmark-runs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Adding a perturbation
+        3) Push benchmark runs
       
     </span>
   </a>
@@ -1147,10 +1147,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#scope" class="md-nav__link">
+  <a href="#submission-format" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scope
+        Submission format
       
     </span>
   </a>
@@ -1174,7 +1174,7 @@
 
 
   
-    <a href="https://github.com/THENIROCK/audiobench/edit/main/docs/suites/asr-robust.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/THENIROCK/audiobench/edit/main/docs/guides/hf-leaderboard.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -1182,55 +1182,54 @@
   
 
 
-<h1 id="abasr-robust"><code>ab/asr-robust</code><a class="headerlink" href="#abasr-robust" title="Anchor link to this section">&para;</a></h1>
-<p>Speech recognition under common acoustic perturbations.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>audiobench<span class="w"> </span>run<span class="w"> </span>ab/asr-robust<span class="w"> </span>--model<span class="w"> </span>whisper-tiny
+<h1 id="hugging-face-leaderboard-integration">Hugging Face leaderboard integration<a class="headerlink" href="#hugging-face-leaderboard-integration" title="Anchor link to this section">&para;</a></h1>
+<p><code>audiobench</code> can publish benchmark runs to a Hugging Face dataset, and a Gradio Space can read that dataset as a public leaderboard.</p>
+<h2 id="1-login-once-to-hugging-face">1) Login once to Hugging Face<a class="headerlink" href="#1-login-once-to-hugging-face" title="Anchor link to this section">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>hf<span class="w"> </span>auth<span class="w"> </span>login
 </span></code></pre></div>
-<h2 id="conditions">Conditions<a class="headerlink" href="#conditions" title="Anchor link to this section">&para;</a></h2>
-<p>The suite runs every clip through five conditions:</p>
-<table>
-<thead>
-<tr>
-<th>Condition</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>clean</code></td>
-<td>Untouched reference.</td>
-</tr>
-<tr>
-<td><code>noise-cafe-10db</code></td>
-<td>Mixes in cafe babble at +10 dB SNR.</td>
-</tr>
-<tr>
-<td><code>noise-pink-5db</code></td>
-<td>Mixes in pink noise at +5 dB SNR.</td>
-</tr>
-<tr>
-<td><code>bandlimited-8k</code></td>
-<td>Low-passes to 8 kHz then resamples back, mimicking a narrowband channel.</td>
-</tr>
-<tr>
-<td><code>reverb-medium</code></td>
-<td>Convolves with a medium-room impulse response.</td>
-</tr>
-</tbody>
-</table>
-<p>Reports per-condition WER plus a weighted mean over all conditions. The mean weights each condition equally, not by clip count, so adding clips to a single condition doesn't shift the headline.</p>
-<h2 id="useful-flags">Useful flags<a class="headerlink" href="#useful-flags" title="Anchor link to this section">&para;</a></h2>
-<p>Run only specific conditions and dump machine-readable JSON:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>audiobench<span class="w"> </span>run<span class="w"> </span>ab/asr-robust<span class="w"> </span>--model<span class="w"> </span>whisper-tiny<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--conditions<span class="w"> </span>clean,bandlimited-8k<span class="w"> </span>--pretty-json
+<p>By default, <code>audiobench push</code> auto-targets:</p>
+<p><code>&lt;your-username&gt;/audiobench-leaderboard-submissions</code></p>
+<p>and creates that dataset repo on first upload.</p>
+<h2 id="2-deploy-the-space-app">2) Deploy the Space app<a class="headerlink" href="#2-deploy-the-space-app" title="Anchor link to this section">&para;</a></h2>
+<p>This repo ships a ready-to-deploy Space app in:</p>
+<ul>
+<li><code>spaces/leaderboard/app.py</code></li>
+<li><code>spaces/leaderboard/requirements.txt</code></li>
+<li><code>spaces/leaderboard/README.md</code></li>
+</ul>
+<p>Create a Hugging Face Space (Gradio SDK), copy those files into the Space repo, and set:</p>
+<ul>
+<li><code>AUDIOBENCH_LEADERBOARD_DATASET</code> = your dataset repo id</li>
+<li><code>HF_TOKEN</code> only if the dataset is private</li>
+</ul>
+<p>Optional helper for CLI output links:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AUDIOBENCH_LEADERBOARD_SPACE</span><span class="o">=</span>&lt;org-or-user&gt;/audiobench-leaderboard
 </span></code></pre></div>
-<p>Pre-download the Whisper checkpoint so the next <code>run</code> doesn't pay for it:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>audiobench<span class="w"> </span>warmup<span class="w"> </span>--model<span class="w"> </span>whisper-tiny
+<h2 id="3-push-benchmark-runs">3) Push benchmark runs<a class="headerlink" href="#3-push-benchmark-runs" title="Anchor link to this section">&para;</a></h2>
+<p>Run your benchmark, then upload:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>audiobench<span class="w"> </span>run<span class="w"> </span>ab/sound-id<span class="w"> </span>--model<span class="w"> </span>heuristic-v0<span class="w"> </span>--output<span class="w"> </span>results/sound-id.json
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>audiobench<span class="w"> </span>push<span class="w"> </span>results/sound-id.json<span class="w"> </span>--pretty-json
 </span></code></pre></div>
-<h2 id="adding-a-perturbation">Adding a perturbation<a class="headerlink" href="#adding-a-perturbation" title="Anchor link to this section">&para;</a></h2>
-<p>Open <code>src/audiobench/perturbations.py</code> and add a new entry. Each perturbation is a <code>(name, callable)</code> pair where <code>callable(audio, sample_rate, seed) -&gt; audio</code>. Update the suite manifest to include it. The seed is folded into <code>run_hash</code>, so two runs with the same perturbation list and the same model produce the same hash.</p>
-<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Anchor link to this section">&para;</a></h2>
-<p>English-only data. The reference clips are short read-speech sentences; this isn't a long-form streaming benchmark.</p>
+<p>Useful push options:</p>
+<ul>
+<li><code>--repo &lt;id&gt;</code>: override the auto-selected dataset repo</li>
+<li><code>--space &lt;id&gt;</code>: include Space URL in output</li>
+<li><code>--notes "..."</code></li>
+<li><code>--tags "cpu,demo,zero-shot"</code></li>
+<li><code>--overwrite</code>: replace an existing submission with the same <code>run_hash</code></li>
+<li><code>--dry-run</code>: print the payload without uploading</li>
+</ul>
+<h2 id="submission-format">Submission format<a class="headerlink" href="#submission-format" title="Anchor link to this section">&para;</a></h2>
+<p>Every upload lands at:</p>
+<p><code>submissions/&lt;suite-with-/-replaced-by-__&gt;/&lt;run_hash&gt;.json</code></p>
+<p>Each submission includes:</p>
+<ul>
+<li><code>suite</code>, <code>revision</code>, <code>model</code>, <code>run_hash</code></li>
+<li><code>payload_sha256</code> of the full run payload</li>
+<li>suite-specific leaderboard metrics (<code>weighted_recall</code> / <code>weighted_mean_wer</code> / <code>weighted_hallucination_rate</code>, etc.)</li>
+<li>when present, findings metadata (<code>top_finding_status</code>, <code>validated_findings</code>, top finding effect/q)</li>
+<li>the original run payload for reproducibility audits</li>
+</ul>
 
 
 
@@ -1268,7 +1267,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+          <a href="../bring-your-own-model/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Bring your own model">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1278,20 +1277,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Overview
+                Bring your own model
               </div>
             </div>
           </a>
         
         
           
-          <a href="../asr-hallucination/" class="md-footer__link md-footer__link--next" aria-label="Next: ab/asr-hallucination">
+          <a href="../repro-launch-flow/" class="md-footer__link md-footer__link--next" aria-label="Next: Repro launch flow">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                ab/asr-hallucination
+                Repro launch flow
               </div>
             </div>
             <div class="md-footer__button md-icon">

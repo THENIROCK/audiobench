@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://thenirock.github.io/audiobench/suites/asr-robust/">
+        <link rel="canonical" href="https://thenirock.github.io/audiobench/suites/asr-hallucination/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../asr-robust/">
       
       
-        <link rel="next" href="../asr-hallucination/">
+        <link rel="next" href="../sound-id/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>ab/asr-robust - audiobench</title>
+        <title>ab/asr-hallucination - audiobench</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#abasr-robust" class="md-skip">
+        <a href="#abasr-hallucination" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ab/asr-robust
+              ab/asr-hallucination
             
           </span>
         </div>
@@ -533,6 +533,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../asr-robust/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ab/asr-robust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -552,7 +580,7 @@
   <span class="md-ellipsis">
     
   
-    ab/asr-robust
+    ab/asr-hallucination
   
 
     
@@ -570,7 +598,7 @@
   <span class="md-ellipsis">
     
   
-    ab/asr-robust
+    ab/asr-hallucination
   
 
     
@@ -596,10 +624,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#conditions" class="md-nav__link">
+  <a href="#what-it-measures" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Conditions
+        What it measures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#findings-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Findings pipeline
       
     </span>
   </a>
@@ -618,21 +657,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-a-perturbation" class="md-nav__link">
+  <a href="#output-fields-to-watch" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Adding a perturbation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scope" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scope
+        Output fields to watch
       
     </span>
   </a>
@@ -643,34 +671,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../asr-hallucination/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ab/asr-hallucination
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1114,10 +1114,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#conditions" class="md-nav__link">
+  <a href="#what-it-measures" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Conditions
+        What it measures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#findings-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Findings pipeline
       
     </span>
   </a>
@@ -1136,21 +1147,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-a-perturbation" class="md-nav__link">
+  <a href="#output-fields-to-watch" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Adding a perturbation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scope" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scope
+        Output fields to watch
       
     </span>
   </a>
@@ -1174,7 +1174,7 @@
 
 
   
-    <a href="https://github.com/THENIROCK/audiobench/edit/main/docs/suites/asr-robust.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/THENIROCK/audiobench/edit/main/docs/suites/asr-hallucination.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -1182,55 +1182,42 @@
   
 
 
-<h1 id="abasr-robust"><code>ab/asr-robust</code><a class="headerlink" href="#abasr-robust" title="Anchor link to this section">&para;</a></h1>
-<p>Speech recognition under common acoustic perturbations.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>audiobench<span class="w"> </span>run<span class="w"> </span>ab/asr-robust<span class="w"> </span>--model<span class="w"> </span>whisper-tiny
+<h1 id="abasr-hallucination"><code>ab/asr-hallucination</code><a class="headerlink" href="#abasr-hallucination" title="Anchor link to this section">&para;</a></h1>
+<p>Non-speech stress test for ASR hallucinations.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>audiobench<span class="w"> </span>run<span class="w"> </span>ab/asr-hallucination<span class="w"> </span>--model<span class="w"> </span>whisper-tiny
 </span></code></pre></div>
-<h2 id="conditions">Conditions<a class="headerlink" href="#conditions" title="Anchor link to this section">&para;</a></h2>
-<p>The suite runs every clip through five conditions:</p>
-<table>
-<thead>
-<tr>
-<th>Condition</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>clean</code></td>
-<td>Untouched reference.</td>
-</tr>
-<tr>
-<td><code>noise-cafe-10db</code></td>
-<td>Mixes in cafe babble at +10 dB SNR.</td>
-</tr>
-<tr>
-<td><code>noise-pink-5db</code></td>
-<td>Mixes in pink noise at +5 dB SNR.</td>
-</tr>
-<tr>
-<td><code>bandlimited-8k</code></td>
-<td>Low-passes to 8 kHz then resamples back, mimicking a narrowband channel.</td>
-</tr>
-<tr>
-<td><code>reverb-medium</code></td>
-<td>Convolves with a medium-room impulse response.</td>
-</tr>
-</tbody>
-</table>
-<p>Reports per-condition WER plus a weighted mean over all conditions. The mean weights each condition equally, not by clip count, so adding clips to a single condition doesn't shift the headline.</p>
+<h2 id="what-it-measures">What it measures<a class="headerlink" href="#what-it-measures" title="Anchor link to this section">&para;</a></h2>
+<p>The suite feeds deterministic non-speech clips (silence, music beds, and noise textures) into an ASR model and tracks:</p>
+<ul>
+<li>non-speech hallucination rate</li>
+<li>non-speech empty-output rate</li>
+<li>insertion-heavy behavior (mean inserted tokens)</li>
+<li>per-condition latency/cost/error rates when adapters expose them</li>
+</ul>
+<h2 id="findings-pipeline">Findings pipeline<a class="headerlink" href="#findings-pipeline" title="Anchor link to this section">&para;</a></h2>
+<p>Every run also emits ranked detector findings:</p>
+<ul>
+<li>per-domain hallucination uplift effect sizes</li>
+<li>bootstrap confidence intervals</li>
+<li>Benjamini-Hochberg corrected p-values (<code>adjusted_p_value</code>)</li>
+<li>validation status (<code>validated</code>, <code>candidate</code>, <code>rejected</code>)</li>
+</ul>
+<p>Validation is a discovery/holdout gate. Findings must replicate on deterministic holdout slices before they become <code>validated</code>.</p>
 <h2 id="useful-flags">Useful flags<a class="headerlink" href="#useful-flags" title="Anchor link to this section">&para;</a></h2>
-<p>Run only specific conditions and dump machine-readable JSON:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>audiobench<span class="w"> </span>run<span class="w"> </span>ab/asr-robust<span class="w"> </span>--model<span class="w"> </span>whisper-tiny<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--conditions<span class="w"> </span>clean,bandlimited-8k<span class="w"> </span>--pretty-json
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Restrict to selected domains.</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>audiobench<span class="w"> </span>run<span class="w"> </span>ab/asr-hallucination<span class="w"> </span>--conditions<span class="w"> </span>silence,music<span class="w"> </span>--model<span class="w"> </span>whisper-tiny
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Keep artifacts for comparison/push.</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>audiobench<span class="w"> </span>run<span class="w"> </span>ab/asr-hallucination<span class="w"> </span>--model<span class="w"> </span>whisper-tiny<span class="w"> </span>--output<span class="w"> </span>results/hallucination.json
 </span></code></pre></div>
-<p>Pre-download the Whisper checkpoint so the next <code>run</code> doesn't pay for it:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>audiobench<span class="w"> </span>warmup<span class="w"> </span>--model<span class="w"> </span>whisper-tiny
-</span></code></pre></div>
-<h2 id="adding-a-perturbation">Adding a perturbation<a class="headerlink" href="#adding-a-perturbation" title="Anchor link to this section">&para;</a></h2>
-<p>Open <code>src/audiobench/perturbations.py</code> and add a new entry. Each perturbation is a <code>(name, callable)</code> pair where <code>callable(audio, sample_rate, seed) -&gt; audio</code>. Update the suite manifest to include it. The seed is folded into <code>run_hash</code>, so two runs with the same perturbation list and the same model produce the same hash.</p>
-<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Anchor link to this section">&para;</a></h2>
-<p>English-only data. The reference clips are short read-speech sentences; this isn't a long-form streaming benchmark.</p>
+<h2 id="output-fields-to-watch">Output fields to watch<a class="headerlink" href="#output-fields-to-watch" title="Anchor link to this section">&para;</a></h2>
+<p>In run JSON:</p>
+<ul>
+<li><code>findings</code>: ranked detector outputs with CIs and corrected p-values</li>
+<li><code>top_finding</code>: the highest-ranked candidate</li>
+<li><code>validation_summary</code>: counts plus publishable boolean</li>
+<li><code>findings_methods</code>: bootstrap/correction policy metadata</li>
+</ul>
 
 
 
@@ -1268,7 +1255,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+          <a href="../asr-robust/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ab/asr-robust">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1278,20 +1265,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Overview
+                ab/asr-robust
               </div>
             </div>
           </a>
         
         
           
-          <a href="../asr-hallucination/" class="md-footer__link md-footer__link--next" aria-label="Next: ab/asr-hallucination">
+          <a href="../sound-id/" class="md-footer__link md-footer__link--next" aria-label="Next: ab/sound-id">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                ab/asr-hallucination
+                ab/sound-id
               </div>
             </div>
             <div class="md-footer__button md-icon">

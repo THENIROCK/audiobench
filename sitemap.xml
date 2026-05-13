@@ -2,38 +2,54 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://thenirock.github.io/audiobench/</loc>
-         <lastmod>2026-05-07</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://thenirock.github.io/audiobench/quickstart/</loc>
-         <lastmod>2026-05-07</lastmod>
+         <lastmod>2026-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://thenirock.github.io/audiobench/guides/bring-your-own-model/</loc>
+         <lastmod>2026-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://thenirock.github.io/audiobench/guides/hf-leaderboard/</loc>
+         <lastmod>2026-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://thenirock.github.io/audiobench/guides/repro-launch-flow/</loc>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://thenirock.github.io/audiobench/models/</loc>
-         <lastmod>2026-05-07</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://thenirock.github.io/audiobench/models/qwen2-audio/</loc>
-         <lastmod>2026-05-07</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://thenirock.github.io/audiobench/reference/prompts/</loc>
-         <lastmod>2026-05-07</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://thenirock.github.io/audiobench/reference/reproducibility/</loc>
-         <lastmod>2026-05-07</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://thenirock.github.io/audiobench/suites/</loc>
-         <lastmod>2026-05-07</lastmod>
+         <lastmod>2026-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://thenirock.github.io/audiobench/suites/asr-hallucination/</loc>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://thenirock.github.io/audiobench/suites/asr-robust/</loc>
-         <lastmod>2026-05-07</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://thenirock.github.io/audiobench/suites/sound-id/</loc>
-         <lastmod>2026-05-07</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
 </urlset>

@@ -316,6 +316,28 @@
     
     
       <li class="md-tabs__item">
+        <a href="../guides/bring-your-own-model/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../reference/prompts/" class="md-tabs__link">
           
   
@@ -448,6 +470,8 @@
       
         
       
+        
+      
     
     
     
@@ -520,6 +544,34 @@
     
   
     ab/asr-robust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="asr-hallucination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ab/asr-hallucination
   
 
     
@@ -685,6 +737,8 @@
       
         
       
+        
+      
     
     
     
@@ -708,7 +762,7 @@
   <span class="md-ellipsis">
     
   
-    Reference
+    Guides
   
 
     
@@ -721,6 +775,155 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/bring-your-own-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bring your own model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/hf-leaderboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hugging Face leaderboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/repro-launch-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repro launch flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -874,6 +1077,12 @@
 <td><code>clean</code>, <code>noise-cafe-10db</code>, <code>noise-pink-5db</code>, <code>bandlimited-8k</code>, <code>reverb-medium</code></td>
 </tr>
 <tr>
+<td><a href="asr-hallucination/"><code>ab/asr-hallucination</code></a></td>
+<td>Non-speech hallucination detection with validation gates</td>
+<td><code>whisper-tiny</code></td>
+<td><code>silence</code>, <code>music</code>, <code>noise</code></td>
+</tr>
+<tr>
 <td><a href="sound-id/"><code>ab/sound-id</code></a></td>
 <td>Sound-event identification on labeled mixtures</td>
 <td><code>heuristic-v0</code></td>
@@ -885,11 +1094,13 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>audiobench<span class="w"> </span>list
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>audiobench<span class="w"> </span>info<span class="w"> </span>ab/sound-id
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>audiobench<span class="w"> </span>info<span class="w"> </span>ab/asr-robust
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>audiobench<span class="w"> </span>info<span class="w"> </span>ab/asr-hallucination
 </span></code></pre></div>
 <h2 id="why-two-suites">Why two suites<a class="headerlink" href="#why-two-suites" title="Anchor link to this section">&para;</a></h2>
 <p>The two suites stress different things:</p>
 <ul>
 <li><code>ab/asr-robust</code> is about <strong>graceful degradation under perturbation</strong>. Same content, harder channel. WER under noise tells you whether a model has actually learned a robust acoustic representation or has just overfit to clean studio audio.</li>
+<li><code>ab/asr-hallucination</code> is about <strong>prior-violation detection</strong>. The suite runs non-speech clips, ranks statistically tested findings, and marks whether each finding replicated on holdout.</li>
 <li><code>ab/sound-id</code> is about <strong>multi-label identification under polyphony</strong>. As mixture size grows from <code>solo</code> to <code>quad</code>, the model has to disentangle more concurrent sources. The headline metric (<code>components understood: X / Y</code>) makes the polyphony cost legible at a glance.</li>
 </ul>
 <p>Both suites share the same run-artifact schema, the same <code>compare</code> command, and the same <code>run_hash</code> semantics. Adding a third suite (say <code>ab/diarization</code>) is mostly authoring a new module and registering it in the runner.</p>

@@ -316,6 +316,28 @@
     
     
       <li class="md-tabs__item">
+        <a href="../guides/bring-your-own-model/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../reference/prompts/" class="md-tabs__link">
           
   
@@ -446,6 +468,8 @@
       
         
       
+        
+      
     
     
     
@@ -515,6 +539,34 @@
     
   
     ab/asr-robust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../suites/asr-hallucination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ab/asr-hallucination
   
 
     
@@ -685,6 +737,8 @@
       
         
       
+        
+      
     
     
     
@@ -708,7 +762,7 @@
   <span class="md-ellipsis">
     
   
-    Reference
+    Guides
   
 
     
@@ -721,6 +775,155 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/bring-your-own-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bring your own model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/hf-leaderboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hugging Face leaderboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/repro-launch-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repro launch flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -831,6 +1034,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#bring-your-own-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bring your own adapter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#adding-your-own-adapter" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -899,7 +1113,12 @@
 </tr>
 </tbody>
 </table>
-<p><code>ab/asr-robust</code> uses a different protocol (transcription, not yes/no) and currently ships <code>whisper-tiny</code> and friends from <code>openai-whisper</code>.</p>
+<p><code>ab/asr-robust</code> and <code>ab/asr-hallucination</code> use a transcription protocol (not yes/no) and currently ship <code>whisper-tiny</code> and friends from <code>openai-whisper</code>.</p>
+<p>ASR adapters may return either:</p>
+<ul>
+<li>a transcript string (legacy contract), or</li>
+<li>a mapping with <code>transcript</code> plus optional <code>latency_ms</code>, <code>cost_usd</code>, <code>error</code>.</li>
+</ul>
 <h2 id="how-the-bundled-heuristics-work">How the bundled heuristics work<a class="headerlink" href="#how-the-bundled-heuristics-work" title="Anchor link to this section">&para;</a></h2>
 <p>The bundled heuristics aren't ML models — they're a deterministic spectral matcher. They exist so <code>audiobench</code> runs end-to-end on a fresh laptop with no GPU, no weight downloads, and no network. The algorithm:</p>
 <ol>
@@ -908,6 +1127,11 @@
 <li><strong>Score the probe.</strong> For a question <code>"Do you hear a {label}?"</code>, compute the cosine similarity between the input fingerprint and the reference for <code>{label}</code> (<code>target_score</code>), and the mean cosine similarity to every <em>other</em> known label (<code>baseline</code>). The decision metric is the <strong>discriminative margin</strong> <code>margin = target_score − baseline</code>. Using a margin (rather than the raw similarity) keeps false positives down: in a quad mixture every reference still has decent absolute similarity, but only the components that are actually present beat the rest by a clear margin.</li>
 <li><strong>Threshold the margin.</strong> Answer "yes" if <code>margin &gt;= margin_threshold</code>, else "no".</li>
 </ol>
+<h2 id="bring-your-own-adapter">Bring your own adapter<a class="headerlink" href="#bring-your-own-adapter" title="Anchor link to this section">&para;</a></h2>
+<p>To see model ids available to your current environment:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>audiobench<span class="w"> </span>list-models
+</span></code></pre></div>
+<p>For protocol details and plugin entry points, see <a href="../guides/bring-your-own-model/">Bring your own model</a>.</p>
 <p>The two adapters differ only in two parameters:</p>
 <table>
 <thead>
@@ -935,16 +1159,16 @@
 <p>Because both heuristics are pure functions of the audio fingerprint and the prompt, they're CPU-only, deterministic, and finish a full <code>--profile demo-fast</code> run in well under a second. They're not meant to be competitive with CLAP or Qwen2-Audio — they're meant to make the harness honestly demonstrable on its own.</p>
 <h2 id="adding-your-own-adapter">Adding your own adapter<a class="headerlink" href="#adding-your-own-adapter" title="Anchor link to this section">&para;</a></h2>
 <p>Drop a new module in <code>src/audiobench/models/</code>. Implement the <a href="https://github.com/THENIROCK/audiobench/blob/main/src/audiobench/models/audio_llm.py"><code>AudioLLMAdapter</code></a> protocol:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">AudioLLMAdapter</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">answer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">AudioLLMAdapter</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">answer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
 </span></code></pre></div>
 <p>Then register it in <code>src/audiobench/models/registry.py</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">_make_my_model</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">AudioLLMAdapter</span><span class="p">:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">audiobench.models.my_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">MyAdapter</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">return</span> <span class="n">MyAdapter</span><span class="p">()</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">_FACTORIES</span><span class="p">[</span><span class="s2">&quot;my-model-name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_make_my_model</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">_make_my_model</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">AudioLLMAdapter</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">audiobench.models.my_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">MyAdapter</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="k">return</span> <span class="n">MyAdapter</span><span class="p">()</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">_FACTORIES</span><span class="p">[</span><span class="s2">&quot;my-model-name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_make_my_model</span>
 </span></code></pre></div>
 <p>Heavy imports (torch, transformers, network calls) should live inside the factory or the adapter constructor, not at module top level. The CLI startup imports the registry eagerly, so a torch import at the top of your adapter module slows down every <code>audiobench --help</code>.</p>
 

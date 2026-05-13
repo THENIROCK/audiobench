@@ -308,6 +308,28 @@
   
   
   
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/bring-your-own-model/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
     
   
   
@@ -444,6 +466,8 @@
       
         
       
+        
+      
     
     
     
@@ -513,6 +537,34 @@
     
   
     ab/asr-robust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../suites/asr-hallucination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ab/asr-hallucination
   
 
     
@@ -669,6 +721,157 @@
       
   
   
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/bring-your-own-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bring your own model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/hf-leaderboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hugging Face leaderboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/repro-launch-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repro launch flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -696,10 +899,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
             
   
   
@@ -717,8 +920,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -845,6 +1048,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#findings-reproducibility-policy-abasr-hallucination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Findings reproducibility policy (ab/asr-hallucination)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sharing-a-run" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -942,6 +1156,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#findings-reproducibility-policy-abasr-hallucination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Findings reproducibility policy (ab/asr-hallucination)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sharing-a-run" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1016,10 +1241,29 @@
 <li><code>run_hash</code> — SHA-256 over the canonicalized run payload, including mixture spec and prompt config</li>
 </ul>
 <p>The <code>run_hash</code> is the single value that uniquely identifies a run. If two runs have the same hash, the input audio, prompts, model adapter version, and seeds were identical and you can compare numbers fairly. If they don't match, <code>audiobench compare</code> will tell you exactly which field disagrees.</p>
+<h2 id="findings-reproducibility-policy-abasr-hallucination">Findings reproducibility policy (<code>ab/asr-hallucination</code>)<a class="headerlink" href="#findings-reproducibility-policy-abasr-hallucination" title="Anchor link to this section">&para;</a></h2>
+<p><code>ab/asr-hallucination</code> emits detector findings designed for publishable claims:</p>
+<ul>
+<li>per-domain hallucination uplift effect size</li>
+<li>bootstrap confidence interval</li>
+<li>p-value corrected with Benjamini-Hochberg FDR</li>
+<li>validation gate status (<code>validated</code>, <code>candidate</code>, <code>rejected</code>)</li>
+</ul>
+<p>Validation is deterministic:</p>
+<ul>
+<li>discovery and holdout splits are derived from clip identity + run seed</li>
+<li>discovery must pass corrected significance and directionality checks</li>
+<li>holdout must replicate the direction/effect gate before status becomes <code>validated</code></li>
+</ul>
+<p>These details are included directly in run JSON (<code>findings</code>, <code>top_finding</code>, <code>validation_summary</code>, <code>findings_methods</code>), so an external reviewer can audit the exact evidence path.</p>
 <h2 id="sharing-a-run">Sharing a run<a class="headerlink" href="#sharing-a-run" title="Anchor link to this section">&para;</a></h2>
-<p><code>audiobench push</code> is suite-agnostic and works for both suites; it only reads <code>suite</code>, <code>revision</code>, <code>run_hash</code>. In the MVP it's a local-only "push" stub that prints a signed payload (suite, revision, run_hash, payload_sha256). No network traffic.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>audiobench<span class="w"> </span>push<span class="w"> </span>results/sound-id-heuristic.json<span class="w"> </span>--pretty-json
+<p><code>audiobench push</code> is suite-agnostic and works for all shipped suites. It reads your run JSON, computes <code>payload_sha256</code> over the canonical payload, and uploads a signed submission to a Hugging Face dataset path:</p>
+<p><code>submissions/&lt;suite-with-/-replaced-by-__&gt;/&lt;run_hash&gt;.json</code></p>
+<p>This makes the uploaded score auditable: the leaderboard entry includes the complete run payload and its hash.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>hf<span class="w"> </span>auth<span class="w"> </span>login
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>audiobench<span class="w"> </span>push<span class="w"> </span>results/sound-id-heuristic.json<span class="w"> </span>--pretty-json
 </span></code></pre></div>
+<p>If <code>--repo</code> is omitted, push defaults to <code>&lt;your-username&gt;/audiobench-leaderboard-submissions</code>.</p>
 <h2 id="whats-not-pinned">What's NOT pinned<a class="headerlink" href="#whats-not-pinned" title="Anchor link to this section">&para;</a></h2>
 <ul>
 <li><strong>Model weights for non-bundled adapters.</strong> If <code>clap-base</code> or <code>qwen2-audio-7b</code> upstream re-uploads checkpoints under the same name, your numbers can drift. Pin the checkpoint hash in your own pipeline if this matters to you.</li>
@@ -1030,6 +1274,7 @@
 <p><code>audiobench compare a.json b.json</code> per-suite:</p>
 <ul>
 <li><code>ab/asr-robust</code>: lower WER wins, computed per condition and on the weighted mean.</li>
+<li><code>ab/asr-hallucination</code>: lower hallucination wins, plus top-finding validation status is shown for each run.</li>
 <li><code>ab/sound-id</code>: higher recall wins, lower FPR wins, F1 is reported alongside as a single-number summary.</li>
 </ul>
 <p>By default, <code>compare</code> refuses to compare two <code>ab/sound-id</code> runs whose prompt configs disagree. Use <code>--allow-mismatched-prompt</code> to override; the comparison header will annotate the mismatch.</p>
