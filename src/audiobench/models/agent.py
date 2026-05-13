@@ -24,11 +24,12 @@ class AgentAdapter:
         model: str = DEFAULT_AGENT_MODEL,
         llm: AgentLLM | None = None,
         sandbox: AgentSandbox | None = None,
+        system_prompt: str | None = None,
     ) -> None:
         self.model = model
         self.name = f"agent:{model}"
         self._sandbox = sandbox if sandbox is not None else AgentSandbox()
-        self._llm = llm if llm is not None else make_agent_llm(model)
+        self._llm = llm if llm is not None else make_agent_llm(model, system_prompt=system_prompt)
         self._progress_callback: ProgressCallback | None = None
 
     def set_progress_callback(self, callback: ProgressCallback | None) -> None:

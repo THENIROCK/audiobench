@@ -32,6 +32,7 @@ dependencies = [
   "scipy>=1.11,<2.0",
   "soundfile>=0.12,<1.0",
   "PyYAML>=6.0,<7.0",
+  "simple-term-menu>=1.6,<2.0",
   "jiwer>=3.0,<5.0",
   "openai-whisper>=20231117",
 ]

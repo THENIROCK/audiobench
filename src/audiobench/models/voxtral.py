@@ -22,7 +22,7 @@ _PROMPT_PREFIX = (
     "Listen to the audio and answer with only the word yes or no. "
 )
 
-_DEFAULT_MODEL = "mistral-small-audio-latest"
+_DEFAULT_MODEL = "voxtral-small-latest"
 
 
 class VoxtralAdapter:
@@ -59,7 +59,7 @@ class VoxtralAdapter:
 
         buffer = io.BytesIO()
         sf.write(buffer, audio_array, int(sample_rate), format="WAV")
-        audio_b64 = base64.b64encode(buffer.getvalue()).decode("ascii")
+        audio_b64 = "data:audio/wav;base64," + base64.b64encode(buffer.getvalue()).decode("ascii")
 
         response = self._client.chat.complete(
             model=self._model,

@@ -20,6 +20,16 @@ SYSTEM_PROMPT = (
     'the word "yes" or "no". Nothing else.'
 )
 
+SYSTEM_PROMPT_OPEN = (
+    "You are an audio analysis agent. An audio file is available at "
+    "/input/audio.wav inside your sandbox.\n\n"
+    "You have one tool: run_python. Use it to write and execute a Python "
+    "script that analyzes the audio. Available libraries: numpy, scipy, "
+    "librosa, soundfile, matplotlib.\n\n"
+    "After receiving the tool output, answer the user's question concisely. "
+    "Give only the answer — no explanation."
+)
+
 RUN_PYTHON_TOOL = {
     "name": "run_python",
     "description": (
@@ -57,14 +67,15 @@ class AgentLLM(Protocol):
     def final_answer(self, tool_output: str) -> str: ...
 
 
-def make_agent_llm(model: str = DEFAULT_AGENT_MODEL) -> AgentLLM:
+def make_agent_llm(model: str = DEFAULT_AGENT_MODEL, *, system_prompt: str | None = None) -> AgentLLM:
+    prompt = system_prompt if system_prompt is not None else SYSTEM_PROMPT
     normalized = model.strip()
     if normalized.startswith("claude-"):
-        return AnthropicAgentLLM(normalized)
+        return AnthropicAgentLLM(normalized, system_prompt=prompt)
     if normalized.startswith(("gpt-", "o")):
-        return OpenAIAgentLLM(normalized)
+        return OpenAIAgentLLM(normalized, system_prompt=prompt)
     if normalized.startswith("gemini-"):
-        return GeminiAgentLLM(normalized)
+        return GeminiAgentLLM(normalized, system_prompt=prompt)
     raise RuntimeError(
         "cannot infer provider for agent model {!r}; use a model id beginning "
         "with claude-, gpt-, o, or gemini-".format(model)
@@ -72,7 +83,7 @@ def make_agent_llm(model: str = DEFAULT_AGENT_MODEL) -> AgentLLM:
 
 
 class AnthropicAgentLLM:
-    def __init__(self, model: str) -> None:
+    def __init__(self, model: str, *, system_prompt: str = SYSTEM_PROMPT) -> None:
         try:
             import anthropic
         except ImportError as exc:
@@ -85,6 +96,7 @@ class AnthropicAgentLLM:
             raise RuntimeError("agent with a Claude model requires ANTHROPIC_API_KEY.")
         self._client = anthropic.Anthropic()
         self._model = model
+        self._system_prompt = system_prompt
         self._messages: list[dict[str, object]] = []
         self._last_content: object | None = None
         self._last_tool_id: str | None = None
@@ -94,7 +106,7 @@ class AnthropicAgentLLM:
         response = self._client.messages.create(
             model=self._model,
             max_tokens=4096,
-            system=SYSTEM_PROMPT,
+            system=self._system_prompt,
             tools=[_anthropic_tool()],
             tool_choice={"type": "tool", "name": "run_python"},
             messages=self._messages,
@@ -129,7 +141,7 @@ class AnthropicAgentLLM:
                         "type": "text",
                         "text": (
                             "Based only on the run_python output, answer the original "
-                            "question with exactly one word: yes or no."
+                            "question concisely."
                         ),
                     },
                 ],
@@ -137,8 +149,8 @@ class AnthropicAgentLLM:
         ]
         response = self._client.messages.create(
             model=self._model,
-            max_tokens=8,
-            system=SYSTEM_PROMPT,
+            max_tokens=256,
+            system=self._system_prompt,
             messages=messages,
         )
         text = _content_text(response.content).strip()
@@ -153,7 +165,7 @@ class AnthropicAgentLLM:
 
 
 class OpenAIAgentLLM:
-    def __init__(self, model: str) -> None:
+    def __init__(self, model: str, *, system_prompt: str = SYSTEM_PROMPT) -> None:
         try:
             from openai import OpenAI
         except ImportError as exc:
@@ -166,13 +178,14 @@ class OpenAIAgentLLM:
             raise RuntimeError("agent with an OpenAI model requires OPENAI_API_KEY.")
         self._client = OpenAI()
         self._model = model
+        self._system_prompt = system_prompt
         self._messages: list[dict[str, object]] = []
         self._assistant_message: dict[str, object] | None = None
         self._tool_call_id: str | None = None
 
     def request_tool(self, prompt: str) -> LLMResponse:
         self._messages = [
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": self._system_prompt},
             {"role": "user", "content": prompt},
         ]
         response = self._client.chat.completions.create(
@@ -206,13 +219,13 @@ class OpenAIAgentLLM:
         response = self._client.chat.completions.create(
             model=self._model,
             messages=messages,
-            max_tokens=8,
+            max_tokens=256,
         )
         return (response.choices[0].message.content or "").strip()
 
 
 class GeminiAgentLLM:
-    def __init__(self, model: str) -> None:
+    def __init__(self, model: str, *, system_prompt: str = SYSTEM_PROMPT) -> None:
         try:
             from google import genai
             from google.genai import types
@@ -227,6 +240,7 @@ class GeminiAgentLLM:
         self._types = types
         self._client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
         self._model = model
+        self._system_prompt = system_prompt
         self._prompt = ""
         self._function_call = None
 
@@ -236,7 +250,7 @@ class GeminiAgentLLM:
             model=self._model,
             contents=[prompt],
             config=self._types.GenerateContentConfig(
-                system_instruction=SYSTEM_PROMPT,
+                system_instruction=self._system_prompt,
                 tools=[
                     self._types.Tool(
                         function_declarations=[
@@ -275,7 +289,7 @@ class GeminiAgentLLM:
                     response={"id": call_id, "result": tool_output},
                 ),
             ],
-            config=self._types.GenerateContentConfig(system_instruction=SYSTEM_PROMPT),
+            config=self._types.GenerateContentConfig(system_instruction=self._system_prompt),
         )
         return (response.text or "").strip()
 

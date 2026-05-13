@@ -710,5 +710,13 @@ def push(
     console.print("push is a local stub in MVP mode; no data was sent.")
 
 
+@app.command()
+def demo() -> None:
+    """Interactive demo mode — YC pitch."""
+    from audiobench.demo import run_demo
+
+    run_demo()
+
+
 if __name__ == "__main__":
     app()

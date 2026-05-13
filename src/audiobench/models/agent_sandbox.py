@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 DEFAULT_IMAGE = "audiobench-agent-sandbox:latest"
-DEFAULT_TIMEOUT_SECONDS = 30
+DEFAULT_TIMEOUT_SECONDS = 120
 MAX_OUTPUT_CHARS = 4096
 
 
