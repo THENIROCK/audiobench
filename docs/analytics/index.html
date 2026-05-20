@@ -19,15 +19,47 @@
   <header class="flex items-end justify-between mb-10">
     <div>
       <h1 class="text-3xl font-semibold tracking-tight">audiobench</h1>
-      <p class="text-slate-400 mt-1">PyPI + GitHub + Hugging Face, in one view.</p>
+      <p class="text-slate-400 mt-1">PyPI, GitHub, mentions, geo, and opt-in CLI usage.</p>
     </div>
     <div class="text-right text-xs text-slate-500">
       <div>Generated <span id="generated_at"></span></div>
-      <div>Sources: pypistats.org / GitHub Traffic API / HF Hub API</div>
+      <div>Sources: pypistats / GitHub / HN / Reddit / Bluesky / GoatCounter / CLI telemetry</div>
     </div>
   </header>
 
   <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="kpis"></section>
+
+  <section class="mb-8">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Where from (mentions)</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4" id="growth_kpis"></div>
+  </section>
+
+  <section class="card rounded-xl p-5 mb-8">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Mentions feed (latest 25)</h2>
+    <table class="w-full text-sm" id="tbl_mentions"></table>
+  </section>
+
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Geography (PyPI installs)</h2>
+      <div class="chart-box" style="height:280px;"><canvas id="chart_geo"></canvas></div>
+      <p class="text-xs text-slate-500 mt-2" id="geo_note"></p>
+    </div>
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Docs site (GoatCounter)</h2>
+      <div id="goatcounter_panel" class="text-sm text-slate-400"></div>
+    </div>
+  </section>
+
+  <section class="card rounded-xl p-5 mb-8">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Real-use telemetry (opt-in CLI)</h2>
+    <div id="telemetry_panel"></div>
+  </section>
+
+  <section class="card rounded-xl p-5 mb-8" id="gsc_section" style="display:none">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Search queries (Google Search Console)</h2>
+    <table class="w-full text-sm" id="tbl_gsc"></table>
+  </section>
 
   <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
     <div class="card rounded-xl p-5 lg:col-span-3">
@@ -75,12 +107,12 @@
   </section>
 
   <footer class="text-center text-xs text-slate-500 pb-8">
-    No personal data collected. PyPI provides no referrer or user data; this is the maximum we can know.
+    CLI telemetry is opt-in only. PyPI provides no install referrer. See docs/reference/telemetry.md.
   </footer>
 </div>
 
 <script>
-const DATA = {"generated_at": "2026-05-20T01:56:16+00:00", "project": {"pypi": "audiobench", "github": "THENIROCK/audiobench", "created_at": "2026-05-05T03:11:30Z"}, "kpis": {"downloads_last_day": 0, "downloads_last_week": 49, "downloads_last_month": 267, "downloads_total_180d": 267, "github_stars": 2, "github_forks": 0, "github_watchers": 0, "github_open_issues": 0, "views_14d": 23, "unique_visitors_14d": 9, "clones_14d": 144, "unique_cloners_14d": 79}, "series": {"downloads_daily": [{"date": "2026-05-07", "downloads": 177}, {"date": "2026-05-08", "downloads": 10}, {"date": "2026-05-09", "downloads": 11}, {"date": "2026-05-10", "downloads": 2}, {"date": "2026-05-11", "downloads": 2}, {"date": "2026-05-12", "downloads": 16}, {"date": "2026-05-13", "downloads": 3}, {"date": "2026-05-14", "downloads": 16}, {"date": "2026-05-15", "downloads": 8}, {"date": "2026-05-16", "downloads": 4}, {"date": "2026-05-17", "downloads": 4}, {"date": "2026-05-18", "downloads": 14}], "views_daily": [{"timestamp": "2026-05-05T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-06T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-07T00:00:00Z", "count": 22, "uniques": 9}, {"timestamp": "2026-05-08T00:00:00Z", "count": 1, "uniques": 1}, {"timestamp": "2026-05-09T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-10T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-11T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-12T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-13T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-14T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-15T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-16T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-17T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-18T00:00:00Z", "count": 0, "uniques": 0}], "clones_daily": [{"timestamp": "2026-05-05T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-06T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-07T00:00:00Z", "count": 96, "uniques": 52}, {"timestamp": "2026-05-08T00:00:00Z", "count": 11, "uniques": 7}, {"timestamp": "2026-05-09T00:00:00Z", "count": 2, "uniques": 1}, {"timestamp": "2026-05-10T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-11T00:00:00Z", "count": 4, "uniques": 4}, {"timestamp": "2026-05-12T00:00:00Z", "count": 1, "uniques": 1}, {"timestamp": "2026-05-13T00:00:00Z", "count": 24, "uniques": 9}, {"timestamp": "2026-05-14T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-15T00:00:00Z", "count": 3, "uniques": 3}, {"timestamp": "2026-05-16T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-17T00:00:00Z", "count": 1, "uniques": 1}, {"timestamp": "2026-05-18T00:00:00Z", "count": 2, "uniques": 2}]}, "breakdowns": {"by_python_minor": [["Unknown / mirrors", 223], ["3.10", 20], ["3.11", 12], ["3.12", 10], ["3.13", 2]], "by_os": [["Unknown / mirrors", 223], ["Linux", 32], ["Darwin", 12]], "referrers": [{"referrer": "github.com", "count": 4, "uniques": 2}, {"referrer": "thenirock.github.io", "count": 2, "uniques": 2}, {"referrer": "pypi.org", "count": 1, "uniques": 1}], "paths": [{"path": "/THENIROCK/audiobench", "title": "Overview", "count": 10, "uniques": 5}, {"path": "/THENIROCK/audiobench/blob/main/CHANGELOG.md", "title": "/blob/main/CHANGELOG.md", "count": 3, "uniques": 3}, {"path": "/THENIROCK/audiobench/issues", "title": "/issues", "count": 1, "uniques": 1}]}, "hf": []};
+const DATA = {"generated_at": "2026-05-20T05:56:08+00:00", "project": {"pypi": "audiobench", "github": "THENIROCK/audiobench", "created_at": "2026-05-05T03:11:30Z"}, "kpis": {"downloads_last_day": 0, "downloads_last_week": 49, "downloads_last_month": 267, "downloads_total_180d": 267, "github_stars": 2, "github_forks": 0, "github_watchers": 0, "github_open_issues": 0, "views_14d": 23, "unique_visitors_14d": 9, "clones_14d": 144, "unique_cloners_14d": 79}, "series": {"downloads_daily": [{"date": "2026-05-07", "downloads": 177}, {"date": "2026-05-08", "downloads": 10}, {"date": "2026-05-09", "downloads": 11}, {"date": "2026-05-10", "downloads": 2}, {"date": "2026-05-11", "downloads": 2}, {"date": "2026-05-12", "downloads": 16}, {"date": "2026-05-13", "downloads": 3}, {"date": "2026-05-14", "downloads": 16}, {"date": "2026-05-15", "downloads": 8}, {"date": "2026-05-16", "downloads": 4}, {"date": "2026-05-17", "downloads": 4}, {"date": "2026-05-18", "downloads": 14}], "views_daily": [{"timestamp": "2026-05-05T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-06T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-07T00:00:00Z", "count": 22, "uniques": 9}, {"timestamp": "2026-05-08T00:00:00Z", "count": 1, "uniques": 1}, {"timestamp": "2026-05-09T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-10T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-11T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-12T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-13T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-14T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-15T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-16T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-17T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-18T00:00:00Z", "count": 0, "uniques": 0}], "clones_daily": [{"timestamp": "2026-05-05T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-06T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-07T00:00:00Z", "count": 96, "uniques": 52}, {"timestamp": "2026-05-08T00:00:00Z", "count": 11, "uniques": 7}, {"timestamp": "2026-05-09T00:00:00Z", "count": 2, "uniques": 1}, {"timestamp": "2026-05-10T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-11T00:00:00Z", "count": 4, "uniques": 4}, {"timestamp": "2026-05-12T00:00:00Z", "count": 1, "uniques": 1}, {"timestamp": "2026-05-13T00:00:00Z", "count": 24, "uniques": 9}, {"timestamp": "2026-05-14T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-15T00:00:00Z", "count": 3, "uniques": 3}, {"timestamp": "2026-05-16T00:00:00Z", "count": 0, "uniques": 0}, {"timestamp": "2026-05-17T00:00:00Z", "count": 1, "uniques": 1}, {"timestamp": "2026-05-18T00:00:00Z", "count": 2, "uniques": 2}]}, "breakdowns": {"by_python_minor": [["Unknown / mirrors", 223], ["3.10", 20], ["3.11", 12], ["3.12", 10], ["3.13", 2]], "by_os": [["Unknown / mirrors", 223], ["Linux", 32], ["Darwin", 12]], "referrers": [{"referrer": "github.com", "count": 4, "uniques": 2}, {"referrer": "thenirock.github.io", "count": 2, "uniques": 2}, {"referrer": "pypi.org", "count": 1, "uniques": 1}], "paths": [{"path": "/THENIROCK/audiobench", "title": "Overview", "count": 10, "uniques": 5}, {"path": "/THENIROCK/audiobench/blob/main/CHANGELOG.md", "title": "/blob/main/CHANGELOG.md", "count": 3, "uniques": 3}, {"path": "/THENIROCK/audiobench/issues", "title": "/issues", "count": 1, "uniques": 1}]}, "hf": [], "growth": {"mentions": {"collected_at": "2026-05-20T05:55:50+00:00", "query": "audiobench", "counts": {"hn": 0, "reddit": 3, "bluesky": 0, "github": 22, "libraries.io": 0, "total": 25}, "items": [{"source": "reddit", "url": "https://www.reddit.com/r/WebsiteLaunches/comments/1t5h4fv/daily_top_10_most_upvoted_sites_from_yesterday/", "title": "\ud83d\udcca Daily Top 10 - Most Upvoted Sites from Yesterday (May 6, 2026)", "author": "antiochIst", "ts": "2026-05-06T16:00:03+00:00", "snippet": "**The top 10 most upvoted sites from yesterday on [Website Launches](https://websitelaunches.com)**\n\n---\n\n*32 total upvotes across all sites* \ud83d\udd25\n\n---\n\n**#1 \ud83c\udfc6** **watchorwander.com** *(4 upvotes)*  \n\ud83d\ude80 Video &amp; Streaming  \nWatch Or Wander is an entertainment review platform created by and for people"}, {"source": "github", "url": "https://github.com/ricklon/talkbot/issues/37", "title": "feat: LLM-judge benchmark with pass^k, TTS quality scoring, and conversation endurance", "author": "rianders", "ts": "2026-03-10T15:55:14Z", "snippet": "ricklon/talkbot"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/234", "title": "Latest 15 Papers - January 15, 2026", "author": "github-actions[bot]", "ts": "2026-01-14T16:55:20Z", "snippet": "bddk520/DailyArXiv"}, {"source": "github", "url": "https://github.com/xrose3159/DailyArXiv/issues/57", "title": "Latest 15 Papers - January 14, 2026", "author": "github-actions[bot]", "ts": "2026-01-13T16:56:58Z", "snippet": "xrose3159/DailyArXiv"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/233", "title": "Latest 15 Papers - January 14, 2026", "author": "github-actions[bot]", "ts": "2026-01-13T16:56:14Z", "snippet": "bddk520/DailyArXiv"}, {"source": "reddit", "url": "https://www.reddit.com/r/synthesizers/comments/1pjgl7r/audiobench_a_handson_macos_tool_for_learning_dsp/", "title": "AudioBench: a hands-on macOS tool for learning DSP, signal flow, and sound design", "author": "the_aurchitect", "ts": "2025-12-10T22:26:43+00:00", "snippet": "Hi everyone! I\u2019ve just launched **AudioBench**, a modular audio laboratory for macOS that lets you build and visualize audio signal flows in real time. It\u2019s designed for musicians, engineers, educators, and DSP learners \u2014 basically anyone who wants to understand how sound works by experimenting with"}, {"source": "reddit", "url": "https://www.reddit.com/r/DSP/comments/1pjgi3y/audiobench_a_handson_macos_tool_for_learning_dsp/", "title": "AudioBench: a hands-on macOS tool for learning DSP, signal flow, and sound design", "author": "the_aurchitect", "ts": "2025-12-10T22:23:15+00:00", "snippet": "Hi everyone! I\u2019ve just launched **AudioBench**, a modular audio laboratory for macOS that lets you build and visualize audio signal flows in real time. It\u2019s designed for musicians, engineers, educators, and DSP learners \u2014 basically anyone who wants to understand how sound works by experimenting with"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/218", "title": "Latest 20 Papers - November 17, 2025", "author": "github-actions[bot]", "ts": "2025-11-16T16:41:54Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/217", "title": "Latest 20 Papers - November 16, 2025", "author": "github-actions[bot]", "ts": "2025-11-16T08:32:42Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/216", "title": "Latest 20 Papers - November 15, 2025", "author": "github-actions[bot]", "ts": "2025-11-15T08:31:42Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/Tencent-Hunyuan/HunyuanVideo-Foley/issues/19", "title": "About evaluation on vggsound and other benchmark", "author": "explore-aigc", "ts": "2025-09-01T16:15:31Z", "snippet": "Tencent-Hunyuan/HunyuanVideo-Foley"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/77", "title": "Latest 15 Papers - May 28, 2025", "author": "github-actions[bot]", "ts": "2025-05-27T16:47:08Z", "snippet": "bddk520/DailyArXiv"}, {"source": "github", "url": "https://github.com/set-path/DailyArXiv/issues/33", "title": "Papers - May 26, 2025", "author": "github-actions[bot]", "ts": "2025-05-25T16:45:40Z", "snippet": "set-path/DailyArXiv"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/9", "title": "'bash examples/eval_SALMONN_7B.sh' ?", "author": "greatnoble", "ts": "2025-05-01T05:18:48Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/xiaomi-research/r1-aqa/issues/3", "title": "Only evaluate on MMAU?", "author": "shanhaidexiamo", "ts": "2025-03-17T07:54:12Z", "snippet": "xiaomi-research/r1-aqa"}, {"source": "github", "url": "https://github.com/Sakshi113/MMAU/issues/9", "title": "HF Dataset and Evaluation with AudioBench", "author": "BinWang28", "ts": "2025-03-12T15:03:04Z", "snippet": "Sakshi113/MMAU"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/5", "title": "To be fixed", "author": "BinWang28", "ts": "2025-02-19T08:47:32Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/4", "title": "Evaluation on speech output tasks", "author": "Ashbajawed", "ts": "2025-01-29T00:03:44Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/janhq/ichigo/issues/163", "title": "exp: pip install ichigo", "author": "tuanlda78202", "ts": "2025-01-20T06:29:47Z", "snippet": "janhq/ichigo"}, {"source": "github", "url": "https://github.com/janhq/ichigo/issues/145", "title": "task: Train and test text2semantic under decoder only framework for ichigo v0.5", "author": "tikikun", "ts": "2024-11-28T02:38:07Z", "snippet": "janhq/ichigo"}, {"source": "github", "url": "https://github.com/janhq/ichigo/issues/98", "title": "Reproducing the OpenHermes and Alpaca Audio Evals", "author": "Helw150", "ts": "2024-10-23T20:25:45Z", "snippet": "janhq/ichigo"}, {"source": "github", "url": "https://github.com/janhq/ichigo/issues/66", "title": "run: v0.3 phase 3 teach model to say \"i cannot hear/understand you\"", "author": "bachvudinh", "ts": "2024-09-20T02:42:03Z", "snippet": "janhq/ichigo"}, {"source": "github", "url": "https://github.com/tangwen-qian/DailyArXiv/issues/110", "title": "Latest 15 Papers - September 05, 2024", "author": "github-actions[bot]", "ts": "2024-09-04T16:43:55Z", "snippet": "tangwen-qian/DailyArXiv"}, {"source": "github", "url": "https://github.com/LAION-AI/CLAP/issues/137", "title": "can't load the pretrained checkpoints", "author": "naarkhoo", "ts": "2024-01-04T15:14:55Z", "snippet": "LAION-AI/CLAP"}, {"source": "github", "url": "https://github.com/juce-framework/JUCE/issues/768", "title": "Fitted text does not fill the specified width.", "author": "someguynamedjosh", "ts": "2020-07-30T05:39:21Z", "snippet": "juce-framework/JUCE"}], "feed": [{"source": "reddit", "url": "https://www.reddit.com/r/WebsiteLaunches/comments/1t5h4fv/daily_top_10_most_upvoted_sites_from_yesterday/", "title": "\ud83d\udcca Daily Top 10 - Most Upvoted Sites from Yesterday (May 6, 2026)", "author": "antiochIst", "ts": "2026-05-06T16:00:03+00:00", "snippet": "**The top 10 most upvoted sites from yesterday on [Website Launches](https://websitelaunches.com)**\n\n---\n\n*32 total upvotes across all sites* \ud83d\udd25\n\n---\n\n**#1 \ud83c\udfc6** **watchorwander.com** *(4 upvotes)*  \n\ud83d\ude80 Video &amp; Streaming  \nWatch Or Wander is an entertainment review platform created by and for people"}, {"source": "github", "url": "https://github.com/ricklon/talkbot/issues/37", "title": "feat: LLM-judge benchmark with pass^k, TTS quality scoring, and conversation endurance", "author": "rianders", "ts": "2026-03-10T15:55:14Z", "snippet": "ricklon/talkbot"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/234", "title": "Latest 15 Papers - January 15, 2026", "author": "github-actions[bot]", "ts": "2026-01-14T16:55:20Z", "snippet": "bddk520/DailyArXiv"}, {"source": "github", "url": "https://github.com/xrose3159/DailyArXiv/issues/57", "title": "Latest 15 Papers - January 14, 2026", "author": "github-actions[bot]", "ts": "2026-01-13T16:56:58Z", "snippet": "xrose3159/DailyArXiv"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/233", "title": "Latest 15 Papers - January 14, 2026", "author": "github-actions[bot]", "ts": "2026-01-13T16:56:14Z", "snippet": "bddk520/DailyArXiv"}, {"source": "reddit", "url": "https://www.reddit.com/r/synthesizers/comments/1pjgl7r/audiobench_a_handson_macos_tool_for_learning_dsp/", "title": "AudioBench: a hands-on macOS tool for learning DSP, signal flow, and sound design", "author": "the_aurchitect", "ts": "2025-12-10T22:26:43+00:00", "snippet": "Hi everyone! I\u2019ve just launched **AudioBench**, a modular audio laboratory for macOS that lets you build and visualize audio signal flows in real time. It\u2019s designed for musicians, engineers, educators, and DSP learners \u2014 basically anyone who wants to understand how sound works by experimenting with"}, {"source": "reddit", "url": "https://www.reddit.com/r/DSP/comments/1pjgi3y/audiobench_a_handson_macos_tool_for_learning_dsp/", "title": "AudioBench: a hands-on macOS tool for learning DSP, signal flow, and sound design", "author": "the_aurchitect", "ts": "2025-12-10T22:23:15+00:00", "snippet": "Hi everyone! I\u2019ve just launched **AudioBench**, a modular audio laboratory for macOS that lets you build and visualize audio signal flows in real time. It\u2019s designed for musicians, engineers, educators, and DSP learners \u2014 basically anyone who wants to understand how sound works by experimenting with"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/218", "title": "Latest 20 Papers - November 17, 2025", "author": "github-actions[bot]", "ts": "2025-11-16T16:41:54Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/217", "title": "Latest 20 Papers - November 16, 2025", "author": "github-actions[bot]", "ts": "2025-11-16T08:32:42Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/216", "title": "Latest 20 Papers - November 15, 2025", "author": "github-actions[bot]", "ts": "2025-11-15T08:31:42Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/Tencent-Hunyuan/HunyuanVideo-Foley/issues/19", "title": "About evaluation on vggsound and other benchmark", "author": "explore-aigc", "ts": "2025-09-01T16:15:31Z", "snippet": "Tencent-Hunyuan/HunyuanVideo-Foley"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/77", "title": "Latest 15 Papers - May 28, 2025", "author": "github-actions[bot]", "ts": "2025-05-27T16:47:08Z", "snippet": "bddk520/DailyArXiv"}, {"source": "github", "url": "https://github.com/set-path/DailyArXiv/issues/33", "title": "Papers - May 26, 2025", "author": "github-actions[bot]", "ts": "2025-05-25T16:45:40Z", "snippet": "set-path/DailyArXiv"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/9", "title": "'bash examples/eval_SALMONN_7B.sh' ?", "author": "greatnoble", "ts": "2025-05-01T05:18:48Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/xiaomi-research/r1-aqa/issues/3", "title": "Only evaluate on MMAU?", "author": "shanhaidexiamo", "ts": "2025-03-17T07:54:12Z", "snippet": "xiaomi-research/r1-aqa"}, {"source": "github", "url": "https://github.com/Sakshi113/MMAU/issues/9", "title": "HF Dataset and Evaluation with AudioBench", "author": "BinWang28", "ts": "2025-03-12T15:03:04Z", "snippet": "Sakshi113/MMAU"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/5", "title": "To be fixed", "author": "BinWang28", "ts": "2025-02-19T08:47:32Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/4", "title": "Evaluation on speech output tasks", "author": "Ashbajawed", "ts": "2025-01-29T00:03:44Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/janhq/ichigo/issues/163", "title": "exp: pip install ichigo", "author": "tuanlda78202", "ts": "2025-01-20T06:29:47Z", "snippet": "janhq/ichigo"}, {"source": "github", "url": "https://github.com/janhq/ichigo/issues/145", "title": "task: Train and test text2semantic under decoder only framework for ichigo v0.5", "author": "tikikun", "ts": "2024-11-28T02:38:07Z", "snippet": "janhq/ichigo"}, {"source": "github", "url": "https://github.com/janhq/ichigo/issues/98", "title": "Reproducing the OpenHermes and Alpaca Audio Evals", "author": "Helw150", "ts": "2024-10-23T20:25:45Z", "snippet": "janhq/ichigo"}, {"source": "github", "url": "https://github.com/janhq/ichigo/issues/66", "title": "run: v0.3 phase 3 teach model to say \"i cannot hear/understand you\"", "author": "bachvudinh", "ts": "2024-09-20T02:42:03Z", "snippet": "janhq/ichigo"}, {"source": "github", "url": "https://github.com/tangwen-qian/DailyArXiv/issues/110", "title": "Latest 15 Papers - September 05, 2024", "author": "github-actions[bot]", "ts": "2024-09-04T16:43:55Z", "snippet": "tangwen-qian/DailyArXiv"}, {"source": "github", "url": "https://github.com/LAION-AI/CLAP/issues/137", "title": "can't load the pretrained checkpoints", "author": "naarkhoo", "ts": "2024-01-04T15:14:55Z", "snippet": "LAION-AI/CLAP"}, {"source": "github", "url": "https://github.com/juce-framework/JUCE/issues/768", "title": "Fitted text does not fill the specified width.", "author": "someguynamedjosh", "ts": "2020-07-30T05:39:21Z", "snippet": "juce-framework/JUCE"}]}, "goatcounter": null, "gsc": null, "bigquery": null}, "telemetry": {"_empty": true, "_reason": "[Errno 8] nodename nor servname provided, or not known"}};
 
 document.getElementById("generated_at").textContent = DATA.generated_at + " UTC";
 
@@ -192,6 +224,105 @@ table("tbl_paths", (DATA.breakdowns.paths || []).slice(0, 10), [
   { key: "count",   label: "Views", fmt: fmt },
   { key: "uniques", label: "Unique", fmt: fmt },
 ]);
+
+const growth = DATA.growth || {};
+const mcounts = (growth.mentions || {}).counts || {};
+const growthDefs = [
+  ["Hacker News", mcounts.hn || 0, "Algolia search"],
+  ["Reddit", mcounts.reddit || 0, "search API"],
+  ["Bluesky", mcounts.bluesky || 0, "public API"],
+  ["GitHub issues", mcounts.github || 0, "gh search"],
+  ["PyPI dependents", mcounts["libraries.io"] || 0, "libraries.io"],
+];
+document.getElementById("growth_kpis").innerHTML = growthDefs.map(([label, val, sub]) => `
+  <div class="card rounded-xl p-5">
+    <div class="text-xs uppercase tracking-wider text-slate-400">${label}</div>
+    <div class="kpi-num text-3xl font-semibold mt-2">${fmt(val)}</div>
+    <div class="text-xs text-slate-500 mt-1">${sub}</div>
+  </div>
+`).join("");
+
+const feed = (growth.mentions || {}).feed || [];
+table("tbl_mentions", feed, [
+  { key: "source", label: "Source" },
+  { key: "ts", label: "When" },
+  { key: "title", label: "Title" },
+  { key: "author", label: "Author" },
+]);
+
+const bq = growth.bigquery || {};
+const byCountry = Object.entries(bq.by_country || {});
+const geoNote = document.getElementById("geo_note");
+if (!byCountry.length) {
+  geoNote.textContent = "No BigQuery geo snapshot yet. Run: python scripts/analytics/bigquery_snapshot.py";
+  new Chart(document.getElementById("chart_geo"), {
+    type: "bar",
+    data: { labels: ["—"], datasets: [{ data: [0], backgroundColor: "#64748b" }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } },
+  });
+} else {
+  geoNote.textContent = `Last ${bq.lookback_days || 30}d · ${fmt(bq.total_downloads)} pip installs (filtered)`;
+  new Chart(document.getElementById("chart_geo"), {
+    type: "bar",
+    data: {
+      labels: byCountry.slice(0, 12).map(r => r[0]),
+      datasets: [{ data: byCountry.slice(0, 12).map(r => r[1]), backgroundColor: "#6366f1" }],
+    },
+    options: {
+      indexAxis: "y", responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { beginAtZero: true } },
+    },
+  });
+}
+
+const gc = growth.goatcounter || {};
+const gcPanel = document.getElementById("goatcounter_panel");
+if (gc._skipped) {
+  gcPanel.innerHTML = `<p>${gc._reason}. See docs/guides/analytics-setup.md</p>`;
+} else if (gc._error) {
+  gcPanel.innerHTML = `<p class="text-red-400">${gc._error}</p>`;
+} else {
+  const refs = (gc.by_referrer || []).map(r => `<li>${r[0]}: ${fmt(r[1])}</li>`).join("");
+  const countries = (gc.by_country || []).map(r => `<li>${r[0]}: ${fmt(r[1])}</li>`).join("");
+  gcPanel.innerHTML = `
+    <p class="mb-2">Pageviews (${gc.days || 30}d): <span class="kpi-num text-lg text-white">${fmt(gc.pageviews)}</span></p>
+    <div class="grid grid-cols-2 gap-4">
+      <div><div class="text-xs uppercase text-slate-500 mb-1">Top referrers</div><ul class="text-xs">${refs || "<li>—</li>"}</ul></div>
+      <div><div class="text-xs uppercase text-slate-500 mb-1">Top countries</div><ul class="text-xs">${countries || "<li>—</li>"}</ul></div>
+    </div>`;
+}
+
+const tel = DATA.telemetry || {};
+const telPanel = document.getElementById("telemetry_panel");
+if (tel._empty || tel._error) {
+  telPanel.innerHTML = `<p class="text-slate-500">No opt-in CLI data yet. Users see a first-run prompt; events appear here after deploy + opt-in.</p>`;
+} else {
+  const dau = (tel.daily_active || []).slice(-7);
+  const err = tel.cmd_stats || {};
+  const errRate = err.total ? ((err.failed || 0) / err.total * 100).toFixed(1) : "0";
+  telPanel.innerHTML = `
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+      <div><div class="text-xs text-slate-400">DAU (latest day)</div><div class="kpi-num text-2xl">${fmt(dau.length ? dau[dau.length-1].dau : 0)}</div></div>
+      <div><div class="text-xs text-slate-400">Events (30d window)</div><div class="kpi-num text-2xl">${fmt((tel.daily_active||[]).reduce((s,r)=>s+(r.events||0),0))}</div></div>
+      <div><div class="text-xs text-slate-400">Cmd error rate</div><div class="kpi-num text-2xl">${errRate}%</div></div>
+      <div><div class="text-xs text-slate-400">Window</div><div class="kpi-num text-2xl">${tel.window_days || 30}d</div></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+      <div><div class="uppercase text-slate-500 mb-1">Top suites</div>${(tel.top_suites||[]).map(r=>`<div>${r.name}: ${r.count}</div>`).join("")||"—"}</div>
+      <div><div class="uppercase text-slate-500 mb-1">Top adapters</div>${(tel.top_adapters||[]).map(r=>`<div>${r.name}: ${r.count}</div>`).join("")||"—"}</div>
+      <div><div class="uppercase text-slate-500 mb-1">Versions</div>${(tel.top_versions||[]).map(r=>`<div>${r.name}: ${r.count}</div>`).join("")||"—"}</div>
+    </div>`;
+}
+
+const gsc = growth.gsc || {};
+if (gsc.by_query && gsc.by_query.length) {
+  document.getElementById("gsc_section").style.display = "block";
+  table("tbl_gsc", gsc.by_query.map(([q,c])=>({query:q,clicks:c})), [
+    { key: "query", label: "Query" },
+    { key: "clicks", label: "Clicks", fmt: fmt },
+  ]);
+}
 
 const hfRoot = document.getElementById("hf");
 if (!DATA.hf || !DATA.hf.length) {

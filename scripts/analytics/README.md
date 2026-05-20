@@ -12,7 +12,9 @@ we can legitimately collect are:
 | BigQuery `pypi`         | Per-download rows: country, installer, distro, CPU        | Free quota   |
 | GoatCounter (docs site) | Page views, country, referrer for `docs/`                 | JS pixel     |
 | GitHub Traffic API      | Top referrers and paths (last 14 days)                    | `gh` CLI     |
-| HF Space analytics      | Space views and unique visitors                           | HF dashboard |
+| HN / Reddit / Bluesky   | Public mentions + GitHub issue cross-refs                 | Public APIs  |
+| CLI telemetry (opt-in) | Real command usage: suites, adapters, DAU                | CF Worker    |
+| Google Search Console   | Search queries driving traffic (optional)                 | OAuth        |
 
 This folder covers the first two. The docs-site analytics are wired into
 `mkdocs.yml`. GitHub Traffic is a one-liner shown at the bottom.

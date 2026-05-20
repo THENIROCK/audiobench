@@ -1,26 +1,21 @@
 """Pull everything we can about audiobench right now and render one HTML page.
 
 Sources:
-- pypistats.org      (recent / overall / python_minor / system, last ~180 days)
-- GitHub Traffic API (views, clones, referrers, paths, last 14 days) via `gh`
-- GitHub repo API    (stars, forks, watchers, open issues, age) via `gh`
-- HF Hub API         (Space + dataset + model download/like counts) via HTTP
-
-Outputs:
-- analytics/dashboard-data.json   (raw merged blob, useful for audits)
-- analytics/dashboard.html        (self-contained, opens in any browser)
+- pypistats.org, GitHub Traffic, HF Hub
+- Public mentions (HN, Reddit, Bluesky, GitHub issues, libraries.io)
+- Optional snapshots: BigQuery geo, GoatCounter, GSC, CLI telemetry summary
 
 Usage:
     python scripts/analytics/dashboard.py
-    python scripts/analytics/dashboard.py --open
-
-No GCP / no secrets / no network calls beyond the three public APIs above.
+    python scripts/analytics/dashboard.py --site --open
 """
 
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
+import os
 import subprocess
 import sys
 import time
@@ -33,10 +28,14 @@ from typing import Any
 
 PYPI_PROJECT = "audiobench"
 GH_REPO = "THENIROCK/audiobench"
-HF_TARGETS: list[tuple[str, str]] = [
-]
+HF_TARGETS: list[tuple[str, str]] = []
 HF_AUTHOR = "THENIROCK"
 USER_AGENT = "audiobench-analytics/1.0"
+SNAPSHOTS_DIR = Path("analytics/snapshots")
+TELEMETRY_SUMMARY_URL = os.environ.get(
+    "AUDIOBENCH_TELEMETRY_SUMMARY_URL",
+    "https://audiobench-telemetry.thenirock.workers.dev/v1/summary",
+)
 
 
 def _http_json(url: str, attempts: int = 4) -> Any:
@@ -92,6 +91,65 @@ def collect_github() -> dict[str, Any]:
         "referrers": _gh(f"repos/{GH_REPO}/traffic/popular/referrers"),
         "paths": _gh(f"repos/{GH_REPO}/traffic/popular/paths"),
     }
+
+
+def _load_json(path: Path) -> Any:
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def _latest_file(glob_pattern: str) -> Path | None:
+    matches = sorted(SNAPSHOTS_DIR.glob(glob_pattern))
+    return matches[-1] if matches else None
+
+
+def load_snapshot_mentions() -> dict[str, Any] | None:
+    path = SNAPSHOTS_DIR / "mentions" / "latest.json"
+    if path.exists():
+        return _load_json(path)
+    return None
+
+
+def collect_mentions() -> dict[str, Any]:
+    cached = load_snapshot_mentions()
+    if cached and cached.get("items"):
+        return cached
+    spec = importlib.util.spec_from_file_location(
+        "mentions",
+        Path(__file__).with_name("mentions.py"),
+    )
+    if spec is None or spec.loader is None:
+        return {"counts": {}, "items": [], "feed": []}
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.collect_all()
+
+
+def load_bigquery_summary() -> dict[str, Any] | None:
+    bq_dir = SNAPSHOTS_DIR / "bigquery"
+    if not bq_dir.is_dir():
+        return None
+    summaries = sorted(bq_dir.glob("*-summary.json"))
+    return _load_json(summaries[-1]) if summaries else None
+
+
+def load_goatcounter() -> dict[str, Any] | None:
+    return _load_json(SNAPSHOTS_DIR / "goatcounter" / "latest.json")
+
+
+def load_gsc() -> dict[str, Any] | None:
+    return _load_json(SNAPSHOTS_DIR / "gsc" / "latest.json")
+
+
+def collect_telemetry_summary() -> dict[str, Any]:
+    data = _http_json(TELEMETRY_SUMMARY_URL, attempts=2)
+    if isinstance(data, dict) and not data.get("_error"):
+        return data
+    return {"_empty": True, "_reason": data.get("_error", "no data yet")}
 
 
 def collect_hf() -> list[dict[str, Any]]:
@@ -194,6 +252,13 @@ def aggregate(raw: dict[str, Any]) -> dict[str, Any]:
             "paths": paths,
         },
         "hf": raw["hf"],
+        "growth": {
+            "mentions": raw.get("mentions") or {},
+            "goatcounter": raw.get("goatcounter"),
+            "gsc": raw.get("gsc"),
+            "bigquery": raw.get("bigquery"),
+        },
+        "telemetry": raw.get("telemetry") or {},
     }
 
 
@@ -218,15 +283,47 @@ HTML_TEMPLATE = r"""<!doctype html>
   <header class="flex items-end justify-between mb-10">
     <div>
       <h1 class="text-3xl font-semibold tracking-tight">audiobench</h1>
-      <p class="text-slate-400 mt-1">PyPI + GitHub + Hugging Face, in one view.</p>
+      <p class="text-slate-400 mt-1">PyPI, GitHub, mentions, geo, and opt-in CLI usage.</p>
     </div>
     <div class="text-right text-xs text-slate-500">
       <div>Generated <span id="generated_at"></span></div>
-      <div>Sources: pypistats.org / GitHub Traffic API / HF Hub API</div>
+      <div>Sources: pypistats / GitHub / HN / Reddit / Bluesky / GoatCounter / CLI telemetry</div>
     </div>
   </header>
 
   <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="kpis"></section>
+
+  <section class="mb-8">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Where from (mentions)</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4" id="growth_kpis"></div>
+  </section>
+
+  <section class="card rounded-xl p-5 mb-8">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Mentions feed (latest 25)</h2>
+    <table class="w-full text-sm" id="tbl_mentions"></table>
+  </section>
+
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Geography (PyPI installs)</h2>
+      <div class="chart-box" style="height:280px;"><canvas id="chart_geo"></canvas></div>
+      <p class="text-xs text-slate-500 mt-2" id="geo_note"></p>
+    </div>
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Docs site (GoatCounter)</h2>
+      <div id="goatcounter_panel" class="text-sm text-slate-400"></div>
+    </div>
+  </section>
+
+  <section class="card rounded-xl p-5 mb-8">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Real-use telemetry (opt-in CLI)</h2>
+    <div id="telemetry_panel"></div>
+  </section>
+
+  <section class="card rounded-xl p-5 mb-8" id="gsc_section" style="display:none">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Search queries (Google Search Console)</h2>
+    <table class="w-full text-sm" id="tbl_gsc"></table>
+  </section>
 
   <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
     <div class="card rounded-xl p-5 lg:col-span-3">
@@ -274,7 +371,7 @@ HTML_TEMPLATE = r"""<!doctype html>
   </section>
 
   <footer class="text-center text-xs text-slate-500 pb-8">
-    No personal data collected. PyPI provides no referrer or user data; this is the maximum we can know.
+    CLI telemetry is opt-in only. PyPI provides no install referrer. See docs/reference/telemetry.md.
   </footer>
 </div>
 
@@ -392,6 +489,105 @@ table("tbl_paths", (DATA.breakdowns.paths || []).slice(0, 10), [
   { key: "uniques", label: "Unique", fmt: fmt },
 ]);
 
+const growth = DATA.growth || {};
+const mcounts = (growth.mentions || {}).counts || {};
+const growthDefs = [
+  ["Hacker News", mcounts.hn || 0, "Algolia search"],
+  ["Reddit", mcounts.reddit || 0, "search API"],
+  ["Bluesky", mcounts.bluesky || 0, "public API"],
+  ["GitHub issues", mcounts.github || 0, "gh search"],
+  ["PyPI dependents", mcounts["libraries.io"] || 0, "libraries.io"],
+];
+document.getElementById("growth_kpis").innerHTML = growthDefs.map(([label, val, sub]) => `
+  <div class="card rounded-xl p-5">
+    <div class="text-xs uppercase tracking-wider text-slate-400">${label}</div>
+    <div class="kpi-num text-3xl font-semibold mt-2">${fmt(val)}</div>
+    <div class="text-xs text-slate-500 mt-1">${sub}</div>
+  </div>
+`).join("");
+
+const feed = (growth.mentions || {}).feed || [];
+table("tbl_mentions", feed, [
+  { key: "source", label: "Source" },
+  { key: "ts", label: "When" },
+  { key: "title", label: "Title" },
+  { key: "author", label: "Author" },
+]);
+
+const bq = growth.bigquery || {};
+const byCountry = Object.entries(bq.by_country || {});
+const geoNote = document.getElementById("geo_note");
+if (!byCountry.length) {
+  geoNote.textContent = "No BigQuery geo snapshot yet. Run: python scripts/analytics/bigquery_snapshot.py";
+  new Chart(document.getElementById("chart_geo"), {
+    type: "bar",
+    data: { labels: ["—"], datasets: [{ data: [0], backgroundColor: "#64748b" }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } },
+  });
+} else {
+  geoNote.textContent = `Last ${bq.lookback_days || 30}d · ${fmt(bq.total_downloads)} pip installs (filtered)`;
+  new Chart(document.getElementById("chart_geo"), {
+    type: "bar",
+    data: {
+      labels: byCountry.slice(0, 12).map(r => r[0]),
+      datasets: [{ data: byCountry.slice(0, 12).map(r => r[1]), backgroundColor: "#6366f1" }],
+    },
+    options: {
+      indexAxis: "y", responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { beginAtZero: true } },
+    },
+  });
+}
+
+const gc = growth.goatcounter || {};
+const gcPanel = document.getElementById("goatcounter_panel");
+if (gc._skipped) {
+  gcPanel.innerHTML = `<p>${gc._reason}. See docs/guides/analytics-setup.md</p>`;
+} else if (gc._error) {
+  gcPanel.innerHTML = `<p class="text-red-400">${gc._error}</p>`;
+} else {
+  const refs = (gc.by_referrer || []).map(r => `<li>${r[0]}: ${fmt(r[1])}</li>`).join("");
+  const countries = (gc.by_country || []).map(r => `<li>${r[0]}: ${fmt(r[1])}</li>`).join("");
+  gcPanel.innerHTML = `
+    <p class="mb-2">Pageviews (${gc.days || 30}d): <span class="kpi-num text-lg text-white">${fmt(gc.pageviews)}</span></p>
+    <div class="grid grid-cols-2 gap-4">
+      <div><div class="text-xs uppercase text-slate-500 mb-1">Top referrers</div><ul class="text-xs">${refs || "<li>—</li>"}</ul></div>
+      <div><div class="text-xs uppercase text-slate-500 mb-1">Top countries</div><ul class="text-xs">${countries || "<li>—</li>"}</ul></div>
+    </div>`;
+}
+
+const tel = DATA.telemetry || {};
+const telPanel = document.getElementById("telemetry_panel");
+if (tel._empty || tel._error) {
+  telPanel.innerHTML = `<p class="text-slate-500">No opt-in CLI data yet. Users see a first-run prompt; events appear here after deploy + opt-in.</p>`;
+} else {
+  const dau = (tel.daily_active || []).slice(-7);
+  const err = tel.cmd_stats || {};
+  const errRate = err.total ? ((err.failed || 0) / err.total * 100).toFixed(1) : "0";
+  telPanel.innerHTML = `
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+      <div><div class="text-xs text-slate-400">DAU (latest day)</div><div class="kpi-num text-2xl">${fmt(dau.length ? dau[dau.length-1].dau : 0)}</div></div>
+      <div><div class="text-xs text-slate-400">Events (30d window)</div><div class="kpi-num text-2xl">${fmt((tel.daily_active||[]).reduce((s,r)=>s+(r.events||0),0))}</div></div>
+      <div><div class="text-xs text-slate-400">Cmd error rate</div><div class="kpi-num text-2xl">${errRate}%</div></div>
+      <div><div class="text-xs text-slate-400">Window</div><div class="kpi-num text-2xl">${tel.window_days || 30}d</div></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+      <div><div class="uppercase text-slate-500 mb-1">Top suites</div>${(tel.top_suites||[]).map(r=>`<div>${r.name}: ${r.count}</div>`).join("")||"—"}</div>
+      <div><div class="uppercase text-slate-500 mb-1">Top adapters</div>${(tel.top_adapters||[]).map(r=>`<div>${r.name}: ${r.count}</div>`).join("")||"—"}</div>
+      <div><div class="uppercase text-slate-500 mb-1">Versions</div>${(tel.top_versions||[]).map(r=>`<div>${r.name}: ${r.count}</div>`).join("")||"—"}</div>
+    </div>`;
+}
+
+const gsc = growth.gsc || {};
+if (gsc.by_query && gsc.by_query.length) {
+  document.getElementById("gsc_section").style.display = "block";
+  table("tbl_gsc", gsc.by_query.map(([q,c])=>({query:q,clicks:c})), [
+    { key: "query", label: "Query" },
+    { key: "clicks", label: "Clicks", fmt: fmt },
+  ]);
+}
+
 const hfRoot = document.getElementById("hf");
 if (!DATA.hf || !DATA.hf.length) {
   hfRoot.innerHTML = `<div class="text-slate-500 text-sm">No HF targets configured.</div>`;
@@ -457,8 +653,25 @@ def main() -> int:
     github = collect_github()
     print("pulling hugging face ...")
     hf = collect_hf()
+    print("pulling mentions ...")
+    mentions = collect_mentions()
+    print("loading snapshots (bigquery / goatcounter / gsc) ...")
+    bigquery = load_bigquery_summary()
+    goatcounter = load_goatcounter()
+    gsc = load_gsc()
+    print("pulling telemetry summary ...")
+    telemetry = collect_telemetry_summary()
 
-    raw = {"pypistats": pypistats, "github": github, "hf": hf}
+    raw = {
+        "pypistats": pypistats,
+        "github": github,
+        "hf": hf,
+        "mentions": mentions,
+        "bigquery": bigquery,
+        "goatcounter": goatcounter,
+        "gsc": gsc,
+        "telemetry": telemetry,
+    }
     merged = aggregate(raw)
 
     html_path = args.out_dir / args.filename
