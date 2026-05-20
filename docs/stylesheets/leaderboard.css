@@ -1,0 +1,94 @@
+.ab-leaderboard__status {
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 1rem;
+}
+
+.ab-leaderboard__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.ab-leaderboard__suite-card {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  padding: 1rem 1.1rem 1.1rem;
+  background: var(--md-default-bg-color);
+}
+
+.ab-leaderboard__suite-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+
+.ab-leaderboard__suite-hint {
+  font-size: 0.8rem;
+  color: var(--md-default-fg-color--light);
+  margin: 0 0 0.75rem;
+}
+
+.ab-leaderboard__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ab-leaderboard__row {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr auto;
+  gap: 0.5rem 0.65rem;
+  align-items: baseline;
+  padding: 0.45rem 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  font-size: 0.875rem;
+}
+
+.ab-leaderboard__row:first-child {
+  border-top: none;
+}
+
+.ab-leaderboard__row--first .ab-leaderboard__rank {
+  color: var(--md-primary-fg-color);
+  font-weight: 700;
+}
+
+.ab-leaderboard__rank {
+  font-variant-numeric: tabular-nums;
+  color: var(--md-default-fg-color--light);
+  font-weight: 500;
+}
+
+.ab-leaderboard__model {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ab-leaderboard__scores {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ab-leaderboard__score--primary {
+  font-weight: 600;
+}
+
+.ab-leaderboard__score--secondary {
+  font-size: 0.78rem;
+  color: var(--md-default-fg-color--light);
+  font-weight: 400;
+}
+
+.ab-leaderboard__empty {
+  font-size: 0.85rem;
+  color: var(--md-default-fg-color--light);
+  margin: 0;
+}
