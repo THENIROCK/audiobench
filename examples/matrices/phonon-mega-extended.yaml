@@ -1,0 +1,28 @@
+# Phonon mega benchmark — extended cells (heavy / remote). Opt-in only.
+# Requires more compute or AUDIOBENCH_QWEN_ENDPOINT for qwen2-audio-7b.
+
+output_dir: results/phonon-mega-extended
+seed: 1337
+
+cells:
+  - suite: ab/asr-robust
+    model: whisper-medium
+    limit: 20
+    name: asr-robust::whisper-medium
+  - suite: ab/asr-robust
+    model: whisper-large
+    limit: 20
+    name: asr-robust::whisper-large
+  - suite: ab/asr-hallucination
+    model: whisper-medium
+    limit: 20
+    name: asr-hallucination::whisper-medium
+  - suite: ab/asr-hallucination
+    model: whisper-large
+    limit: 20
+    name: asr-hallucination::whisper-large
+
+  - suite: ab/sound-id
+    model: qwen2-audio-7b
+    profile: demo-fast
+    name: sound-id::qwen2-audio-7b [remote Modal endpoint]

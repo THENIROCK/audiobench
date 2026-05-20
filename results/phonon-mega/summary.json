@@ -1,0 +1,236 @@
+{
+  "cell_count": 9,
+  "cells": [
+    {
+      "cell": {
+        "conditions": null,
+        "limit": null,
+        "model": "heuristic-v0",
+        "name": "sound-id::heuristic-v0 [first-party baseline]",
+        "pack": null,
+        "profile": "demo-fast",
+        "seed": null,
+        "suite": "ab/sound-id"
+      },
+      "duration_s": 0.117,
+      "error": null,
+      "headline": {
+        "components_present": 30,
+        "components_understood": 14,
+        "weighted_fpr": 0.06666666666666667,
+        "weighted_recall": 0.4666666666666667
+      },
+      "index": 0,
+      "output_path": "results/phonon-mega/00-sound-id__heuristic-v0 [first-party baseline]-79af3a1f.json",
+      "run_hash": "79af3a1f00adc0ed2e7bffeae2735d22dc00a2018a93fa42d01efb74c71c4018",
+      "status": "ok"
+    },
+    {
+      "cell": {
+        "conditions": null,
+        "limit": null,
+        "model": "heuristic-weak",
+        "name": "sound-id::heuristic-weak [diagnostic floor]",
+        "pack": null,
+        "profile": "demo-fast",
+        "seed": null,
+        "suite": "ab/sound-id"
+      },
+      "duration_s": 0.104,
+      "error": null,
+      "headline": {
+        "components_present": 30,
+        "components_understood": 9,
+        "weighted_fpr": 0.0,
+        "weighted_recall": 0.3
+      },
+      "index": 1,
+      "output_path": "results/phonon-mega/01-sound-id__heuristic-weak [diagnostic floor]-1a19811c.json",
+      "run_hash": "1a19811c944be1a239dd61e13503d9b19749185fac5847631eda68404b7995f3",
+      "status": "ok"
+    },
+    {
+      "cell": {
+        "conditions": null,
+        "limit": null,
+        "model": "clap-base",
+        "name": "sound-id::clap-base",
+        "pack": null,
+        "profile": "demo-fast",
+        "seed": null,
+        "suite": "ab/sound-id"
+      },
+      "duration_s": 102.322,
+      "error": null,
+      "headline": {
+        "components_present": 30,
+        "components_understood": 15,
+        "weighted_fpr": 0.3,
+        "weighted_recall": 0.5
+      },
+      "index": 2,
+      "output_path": "results/phonon-mega/02-sound-id__clap-base-eb5d5db7.json",
+      "run_hash": "eb5d5db77226f727c67595de87aa90839c1fd0ad5da9d492d4929ff9e8891cde",
+      "status": "ok"
+    },
+    {
+      "cell": {
+        "conditions": null,
+        "limit": 20,
+        "model": "whisper-tiny",
+        "name": "asr-robust::whisper-tiny",
+        "pack": null,
+        "profile": null,
+        "seed": null,
+        "suite": "ab/asr-robust"
+      },
+      "duration_s": 7.3761,
+      "error": null,
+      "headline": {
+        "per_condition_wer": {
+          "bandlimited-8k": 3.6363636363636362,
+          "clean": 1.8181818181818181,
+          "noise-cafe-10db": 6.363636363636363,
+          "noise-pink-5db": 5.454545454545454,
+          "reverb-medium": 1.8181818181818181
+        },
+        "weighted_mean_wer": 3.818181818181818
+      },
+      "index": 3,
+      "output_path": "results/phonon-mega/03-asr-robust__whisper-tiny-4d2f9b56.json",
+      "run_hash": "4d2f9b56bdae7d111074d0fb7e2a35d87948a3f73b39fdc24df907f04ebdd6d2",
+      "status": "ok"
+    },
+    {
+      "cell": {
+        "conditions": null,
+        "limit": 20,
+        "model": "whisper-base",
+        "name": "asr-robust::whisper-base",
+        "pack": null,
+        "profile": null,
+        "seed": null,
+        "suite": "ab/asr-robust"
+      },
+      "duration_s": 12.2062,
+      "error": null,
+      "headline": {
+        "per_condition_wer": {
+          "bandlimited-8k": 2.727272727272727,
+          "clean": 1.8181818181818181,
+          "noise-cafe-10db": 3.6363636363636362,
+          "noise-pink-5db": 6.363636363636363,
+          "reverb-medium": 1.8181818181818181
+        },
+        "weighted_mean_wer": 3.2727272727272725
+      },
+      "index": 4,
+      "output_path": "results/phonon-mega/04-asr-robust__whisper-base-f67092bb.json",
+      "run_hash": "f67092bbf789fd9dbff51fed5ce5e7ad6edfea3d7d5950940fe15c59dc9eed06",
+      "status": "ok"
+    },
+    {
+      "cell": {
+        "conditions": null,
+        "limit": 20,
+        "model": "whisper-small",
+        "name": "asr-robust::whisper-small",
+        "pack": null,
+        "profile": null,
+        "seed": null,
+        "suite": "ab/asr-robust"
+      },
+      "duration_s": 36.5106,
+      "error": null,
+      "headline": {
+        "per_condition_wer": {
+          "bandlimited-8k": 2.727272727272727,
+          "clean": 1.8181818181818181,
+          "noise-cafe-10db": 5.454545454545454,
+          "noise-pink-5db": 7.2727272727272725,
+          "reverb-medium": 1.8181818181818181
+        },
+        "weighted_mean_wer": 3.818181818181818
+      },
+      "index": 5,
+      "output_path": "results/phonon-mega/05-asr-robust__whisper-small-887ed3ac.json",
+      "run_hash": "887ed3ac830dcdef81fa295998dbd228c1f393bdc697dce6c654cf698938de60",
+      "status": "ok"
+    },
+    {
+      "cell": {
+        "conditions": null,
+        "limit": 20,
+        "model": "whisper-tiny",
+        "name": "asr-hallucination::whisper-tiny [OpenAI-known weakness]",
+        "pack": null,
+        "profile": null,
+        "seed": null,
+        "suite": "ab/asr-hallucination"
+      },
+      "duration_s": 1.4936,
+      "error": null,
+      "headline": {
+        "non_speech_hallucination_rate": 0.0,
+        "top_finding_status": "rejected",
+        "weighted_hallucination_rate": 0.0
+      },
+      "index": 6,
+      "output_path": "results/phonon-mega/06-asr-hallucination__whisper-tiny [OpenAI-known weakness]-19c8e99c.json",
+      "run_hash": "19c8e99c6e060a65ca4769bfa79ea6ebcb20d45e5dee1978c62e0dc08a6e9b79",
+      "status": "ok"
+    },
+    {
+      "cell": {
+        "conditions": null,
+        "limit": 20,
+        "model": "whisper-base",
+        "name": "asr-hallucination::whisper-base [OpenAI-known weakness]",
+        "pack": null,
+        "profile": null,
+        "seed": null,
+        "suite": "ab/asr-hallucination"
+      },
+      "duration_s": 2.536,
+      "error": null,
+      "headline": {
+        "non_speech_hallucination_rate": 0.0,
+        "top_finding_status": "rejected",
+        "weighted_hallucination_rate": 0.0
+      },
+      "index": 7,
+      "output_path": "results/phonon-mega/07-asr-hallucination__whisper-base [OpenAI-known weakness]-b9e2a80f.json",
+      "run_hash": "b9e2a80f60efab59c4aa6ca32a564769456eefc165c4628776bd5ffd225e9686",
+      "status": "ok"
+    },
+    {
+      "cell": {
+        "conditions": null,
+        "limit": 20,
+        "model": "whisper-small",
+        "name": "asr-hallucination::whisper-small [OpenAI-known weakness]",
+        "pack": null,
+        "profile": null,
+        "seed": null,
+        "suite": "ab/asr-hallucination"
+      },
+      "duration_s": 7.4869,
+      "error": null,
+      "headline": {
+        "non_speech_hallucination_rate": 0.6,
+        "top_finding_status": "candidate",
+        "weighted_hallucination_rate": 0.6
+      },
+      "index": 8,
+      "output_path": "results/phonon-mega/08-asr-hallucination__whisper-small [OpenAI-known weakness]-5fec74da.json",
+      "run_hash": "5fec74da8342554664a1ec9a61ef5d966fbbf0fa9e9f91fd08ae86df076a6857",
+      "status": "ok"
+    }
+  ],
+  "error_count": 0,
+  "gate_failed_count": 0,
+  "ok_count": 9,
+  "output_dir": "results/phonon-mega",
+  "schema": "audiobench.matrix.v1",
+  "seed": 1337
+}

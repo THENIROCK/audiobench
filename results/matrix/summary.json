@@ -1,0 +1,30 @@
+{
+  "cell_count": 1,
+  "cells": [
+    {
+      "cell": {
+        "conditions": null,
+        "limit": null,
+        "model": "qwen2-audio-7b",
+        "name": null,
+        "pack": null,
+        "profile": null,
+        "seed": null,
+        "suite": "ab/sound-id"
+      },
+      "duration_s": 7.79,
+      "error": "RuntimeError: qwen2-audio-7b requires either AUDIOBENCH_QWEN_ENDPOINT to point at a remote inference server, or the local `transformers` + `torch` stack. Install the local stack with `pip install \"audiobench[qwen]\"` (or `pip install transformers torch` from source) and have a Qwen2-Audio checkpoint available. See README for setup details.",
+      "headline": {},
+      "index": 0,
+      "output_path": null,
+      "run_hash": null,
+      "status": "error"
+    }
+  ],
+  "error_count": 1,
+  "gate_failed_count": 0,
+  "ok_count": 0,
+  "output_dir": "results/matrix",
+  "schema": "audiobench.matrix.v1",
+  "seed": 1337
+}

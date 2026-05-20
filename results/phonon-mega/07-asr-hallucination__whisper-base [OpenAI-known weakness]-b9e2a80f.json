@@ -1,0 +1,705 @@
+{
+  "clip_count": 10,
+  "condition_key": "domain",
+  "conditions": [
+    "silence",
+    "music",
+    "noise"
+  ],
+  "findings": [
+    {
+      "adjusted_p_value": 1.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "detector": "domain_hallucination_uplift",
+      "discovery": {
+        "clip_count_domain": 3,
+        "clip_count_other": 4,
+        "domain_rate": 0.0,
+        "other_rate": 0.0,
+        "testable": true
+      },
+      "effect_size": 0.0,
+      "holdout": {
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "clip_count_domain": 1,
+        "clip_count_other": 2,
+        "domain_rate": 0.0,
+        "effect_size": 0.0,
+        "other_rate": 0.0,
+        "p_value": 1.0,
+        "testable": true
+      },
+      "id": "hallucination-rate:noise",
+      "metric": "non_speech_hallucination_rate",
+      "p_value": 1.0,
+      "rank": 1,
+      "slice": {
+        "domain": "noise"
+      },
+      "status": "rejected",
+      "title": "noise hallucination uplift",
+      "validation_notes": "failed discovery significance gate"
+    },
+    {
+      "adjusted_p_value": 1.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "detector": "domain_hallucination_uplift",
+      "discovery": {
+        "clip_count_domain": 2,
+        "clip_count_other": 5,
+        "domain_rate": 0.0,
+        "other_rate": 0.0,
+        "testable": true
+      },
+      "effect_size": 0.0,
+      "holdout": {
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "clip_count_domain": 1,
+        "clip_count_other": 2,
+        "domain_rate": 0.0,
+        "effect_size": 0.0,
+        "other_rate": 0.0,
+        "p_value": 1.0,
+        "testable": true
+      },
+      "id": "hallucination-rate:music",
+      "metric": "non_speech_hallucination_rate",
+      "p_value": 1.0,
+      "rank": 2,
+      "slice": {
+        "domain": "music"
+      },
+      "status": "rejected",
+      "title": "music hallucination uplift",
+      "validation_notes": "failed discovery significance gate"
+    },
+    {
+      "adjusted_p_value": 1.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "detector": "domain_hallucination_uplift",
+      "discovery": {
+        "clip_count_domain": 2,
+        "clip_count_other": 5,
+        "domain_rate": 0.0,
+        "other_rate": 0.0,
+        "testable": true
+      },
+      "effect_size": 0.0,
+      "holdout": {
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "clip_count_domain": 1,
+        "clip_count_other": 2,
+        "domain_rate": 0.0,
+        "effect_size": 0.0,
+        "other_rate": 0.0,
+        "p_value": 1.0,
+        "testable": true
+      },
+      "id": "hallucination-rate:silence",
+      "metric": "non_speech_hallucination_rate",
+      "p_value": 1.0,
+      "rank": 3,
+      "slice": {
+        "domain": "silence"
+      },
+      "status": "rejected",
+      "title": "silence hallucination uplift",
+      "validation_notes": "failed discovery significance gate"
+    }
+  ],
+  "findings_methods": {
+    "bootstrap_resamples": 2000,
+    "confidence": 0.95,
+    "discovery_alpha": 0.05,
+    "holdout_alpha": 0.05,
+    "holdout_fraction": 0.3,
+    "multiple_testing": "benjamini-hochberg"
+  },
+  "hallucination_rate": 0.0,
+  "headline": {
+    "insertion_rate": 0.0,
+    "mean_inserted_tokens": 0.0,
+    "mean_token_delta": 0.0,
+    "mean_truncated_tokens": 0.0,
+    "non_speech_count": 10,
+    "non_speech_empty_rate": 1.0,
+    "non_speech_hallucination_rate": 0.0,
+    "non_speech_mean_inserted_tokens": 0.0,
+    "sample_count": 10,
+    "speech_count": 0,
+    "truncation_rate": 0.0
+  },
+  "manifest_hash": "1388ac706f18d54cb37238b016124ec58c3169abefcb376a32d9726118fd28bf",
+  "model": "whisper-base",
+  "per_clip_hypotheses": [
+    {
+      "clip_id": "silence-short-a",
+      "condition_details": {
+        "silence": {
+          "transcript": ""
+        }
+      },
+      "hypotheses": {
+        "silence": ""
+      },
+      "metadata": {
+        "accent": null,
+        "domain": "silence",
+        "duration_s": 1.8,
+        "language": "none",
+        "noise_type": "none",
+        "slice_tags": [
+          "near-silence",
+          "short"
+        ],
+        "snr_db": null
+      },
+      "reference": ""
+    },
+    {
+      "clip_id": "silence-short-b",
+      "condition_details": {
+        "silence": {
+          "transcript": ""
+        }
+      },
+      "hypotheses": {
+        "silence": ""
+      },
+      "metadata": {
+        "accent": null,
+        "domain": "silence",
+        "duration_s": 2.2,
+        "language": "none",
+        "noise_type": "room-tone",
+        "slice_tags": [
+          "room-tone",
+          "short"
+        ],
+        "snr_db": null
+      },
+      "reference": ""
+    },
+    {
+      "clip_id": "silence-long-a",
+      "condition_details": {
+        "silence": {
+          "transcript": ""
+        }
+      },
+      "hypotheses": {
+        "silence": ""
+      },
+      "metadata": {
+        "accent": null,
+        "domain": "silence",
+        "duration_s": 4.0,
+        "language": "none",
+        "noise_type": "none",
+        "slice_tags": [
+          "near-silence",
+          "long"
+        ],
+        "snr_db": null
+      },
+      "reference": ""
+    },
+    {
+      "clip_id": "music-bed-a",
+      "condition_details": {
+        "music": {
+          "transcript": ""
+        }
+      },
+      "hypotheses": {
+        "music": ""
+      },
+      "metadata": {
+        "accent": null,
+        "domain": "music",
+        "duration_s": 3.2,
+        "language": "none",
+        "noise_type": "instrumental-synth",
+        "slice_tags": [
+          "instrumental",
+          "mid"
+        ],
+        "snr_db": null
+      },
+      "reference": ""
+    },
+    {
+      "clip_id": "music-bed-b",
+      "condition_details": {
+        "music": {
+          "transcript": ""
+        }
+      },
+      "hypotheses": {
+        "music": ""
+      },
+      "metadata": {
+        "accent": null,
+        "domain": "music",
+        "duration_s": 5.0,
+        "language": "none",
+        "noise_type": "instrumental-synth",
+        "slice_tags": [
+          "instrumental",
+          "long"
+        ],
+        "snr_db": null
+      },
+      "reference": ""
+    },
+    {
+      "clip_id": "music-bed-c",
+      "condition_details": {
+        "music": {
+          "transcript": ""
+        }
+      },
+      "hypotheses": {
+        "music": ""
+      },
+      "metadata": {
+        "accent": null,
+        "domain": "music",
+        "duration_s": 2.6,
+        "language": "none",
+        "noise_type": "instrumental-synth",
+        "slice_tags": [
+          "instrumental",
+          "short"
+        ],
+        "snr_db": null
+      },
+      "reference": ""
+    },
+    {
+      "clip_id": "noise-white-a",
+      "condition_details": {
+        "noise": {
+          "transcript": ""
+        }
+      },
+      "hypotheses": {
+        "noise": ""
+      },
+      "metadata": {
+        "accent": null,
+        "domain": "noise",
+        "duration_s": 2.4,
+        "language": "none",
+        "noise_type": "white",
+        "slice_tags": [
+          "steady",
+          "short"
+        ],
+        "snr_db": 5.0
+      },
+      "reference": ""
+    },
+    {
+      "clip_id": "noise-pink-a",
+      "condition_details": {
+        "noise": {
+          "transcript": ""
+        }
+      },
+      "hypotheses": {
+        "noise": ""
+      },
+      "metadata": {
+        "accent": null,
+        "domain": "noise",
+        "duration_s": 2.9,
+        "language": "none",
+        "noise_type": "pink",
+        "slice_tags": [
+          "steady",
+          "mid"
+        ],
+        "snr_db": 0.0
+      },
+      "reference": ""
+    },
+    {
+      "clip_id": "noise-cafe-a",
+      "condition_details": {
+        "noise": {
+          "transcript": ""
+        }
+      },
+      "hypotheses": {
+        "noise": ""
+      },
+      "metadata": {
+        "accent": null,
+        "domain": "noise",
+        "duration_s": 3.8,
+        "language": "none",
+        "noise_type": "cafe",
+        "slice_tags": [
+          "modulated",
+          "long"
+        ],
+        "snr_db": -5.0
+      },
+      "reference": ""
+    },
+    {
+      "clip_id": "noise-room-a",
+      "condition_details": {
+        "noise": {
+          "transcript": ""
+        }
+      },
+      "hypotheses": {
+        "noise": ""
+      },
+      "metadata": {
+        "accent": null,
+        "domain": "noise",
+        "duration_s": 4.5,
+        "language": "none",
+        "noise_type": "hvac",
+        "slice_tags": [
+          "low-frequency",
+          "long"
+        ],
+        "snr_db": -12.0
+      },
+      "reference": ""
+    }
+  ],
+  "per_clip_results": [
+    {
+      "clip_id": "silence-short-a",
+      "generator": "silence_floor",
+      "id": 1,
+      "metadata": {
+        "accent": null,
+        "domain": "silence",
+        "duration_s": 1.8,
+        "language": "none",
+        "noise_type": "none",
+        "slice_tags": [
+          "near-silence",
+          "short"
+        ],
+        "snr_db": null
+      },
+      "reference": "",
+      "result": {
+        "transcript": ""
+      }
+    },
+    {
+      "clip_id": "silence-short-b",
+      "generator": "room_tone",
+      "id": 2,
+      "metadata": {
+        "accent": null,
+        "domain": "silence",
+        "duration_s": 2.2,
+        "language": "none",
+        "noise_type": "room-tone",
+        "slice_tags": [
+          "room-tone",
+          "short"
+        ],
+        "snr_db": null
+      },
+      "reference": "",
+      "result": {
+        "transcript": ""
+      }
+    },
+    {
+      "clip_id": "silence-long-a",
+      "generator": "silence_floor",
+      "id": 3,
+      "metadata": {
+        "accent": null,
+        "domain": "silence",
+        "duration_s": 4.0,
+        "language": "none",
+        "noise_type": "none",
+        "slice_tags": [
+          "near-silence",
+          "long"
+        ],
+        "snr_db": null
+      },
+      "reference": "",
+      "result": {
+        "transcript": ""
+      }
+    },
+    {
+      "clip_id": "music-bed-a",
+      "generator": "music_bed",
+      "id": 4,
+      "metadata": {
+        "accent": null,
+        "domain": "music",
+        "duration_s": 3.2,
+        "language": "none",
+        "noise_type": "instrumental-synth",
+        "slice_tags": [
+          "instrumental",
+          "mid"
+        ],
+        "snr_db": null
+      },
+      "reference": "",
+      "result": {
+        "transcript": ""
+      }
+    },
+    {
+      "clip_id": "music-bed-b",
+      "generator": "music_bed",
+      "id": 5,
+      "metadata": {
+        "accent": null,
+        "domain": "music",
+        "duration_s": 5.0,
+        "language": "none",
+        "noise_type": "instrumental-synth",
+        "slice_tags": [
+          "instrumental",
+          "long"
+        ],
+        "snr_db": null
+      },
+      "reference": "",
+      "result": {
+        "transcript": ""
+      }
+    },
+    {
+      "clip_id": "music-bed-c",
+      "generator": "music_bed",
+      "id": 6,
+      "metadata": {
+        "accent": null,
+        "domain": "music",
+        "duration_s": 2.6,
+        "language": "none",
+        "noise_type": "instrumental-synth",
+        "slice_tags": [
+          "instrumental",
+          "short"
+        ],
+        "snr_db": null
+      },
+      "reference": "",
+      "result": {
+        "transcript": ""
+      }
+    },
+    {
+      "clip_id": "noise-white-a",
+      "generator": "white_noise",
+      "id": 7,
+      "metadata": {
+        "accent": null,
+        "domain": "noise",
+        "duration_s": 2.4,
+        "language": "none",
+        "noise_type": "white",
+        "slice_tags": [
+          "steady",
+          "short"
+        ],
+        "snr_db": 5.0
+      },
+      "reference": "",
+      "result": {
+        "transcript": ""
+      }
+    },
+    {
+      "clip_id": "noise-pink-a",
+      "generator": "pink_noise",
+      "id": 8,
+      "metadata": {
+        "accent": null,
+        "domain": "noise",
+        "duration_s": 2.9,
+        "language": "none",
+        "noise_type": "pink",
+        "slice_tags": [
+          "steady",
+          "mid"
+        ],
+        "snr_db": 0.0
+      },
+      "reference": "",
+      "result": {
+        "transcript": ""
+      }
+    },
+    {
+      "clip_id": "noise-cafe-a",
+      "generator": "cafe_noise",
+      "id": 9,
+      "metadata": {
+        "accent": null,
+        "domain": "noise",
+        "duration_s": 3.8,
+        "language": "none",
+        "noise_type": "cafe",
+        "slice_tags": [
+          "modulated",
+          "long"
+        ],
+        "snr_db": -5.0
+      },
+      "reference": "",
+      "result": {
+        "transcript": ""
+      }
+    },
+    {
+      "clip_id": "noise-room-a",
+      "generator": "room_tone",
+      "id": 10,
+      "metadata": {
+        "accent": null,
+        "domain": "noise",
+        "duration_s": 4.5,
+        "language": "none",
+        "noise_type": "hvac",
+        "slice_tags": [
+          "low-frequency",
+          "long"
+        ],
+        "snr_db": -12.0
+      },
+      "reference": "",
+      "result": {
+        "transcript": ""
+      }
+    }
+  ],
+  "per_condition_metrics": {
+    "music": {
+      "insertion_rate": 0.0,
+      "mean_inserted_tokens": 0.0,
+      "mean_token_delta": 0.0,
+      "mean_truncated_tokens": 0.0,
+      "non_speech_count": 3,
+      "non_speech_empty_rate": 1.0,
+      "non_speech_hallucination_rate": 0.0,
+      "non_speech_mean_inserted_tokens": 0.0,
+      "sample_count": 3,
+      "speech_count": 0,
+      "truncation_rate": 0.0
+    },
+    "noise": {
+      "insertion_rate": 0.0,
+      "mean_inserted_tokens": 0.0,
+      "mean_token_delta": 0.0,
+      "mean_truncated_tokens": 0.0,
+      "non_speech_count": 4,
+      "non_speech_empty_rate": 1.0,
+      "non_speech_hallucination_rate": 0.0,
+      "non_speech_mean_inserted_tokens": 0.0,
+      "sample_count": 4,
+      "speech_count": 0,
+      "truncation_rate": 0.0
+    },
+    "silence": {
+      "insertion_rate": 0.0,
+      "mean_inserted_tokens": 0.0,
+      "mean_token_delta": 0.0,
+      "mean_truncated_tokens": 0.0,
+      "non_speech_count": 3,
+      "non_speech_empty_rate": 1.0,
+      "non_speech_hallucination_rate": 0.0,
+      "non_speech_mean_inserted_tokens": 0.0,
+      "sample_count": 3,
+      "speech_count": 0,
+      "truncation_rate": 0.0
+    }
+  },
+  "per_condition_runtime": {
+    "music": {
+      "error_rate": 0.0,
+      "mean_cost_usd": null,
+      "mean_latency_ms": null
+    },
+    "noise": {
+      "error_rate": 0.0,
+      "mean_cost_usd": null,
+      "mean_latency_ms": null
+    },
+    "silence": {
+      "error_rate": 0.0,
+      "mean_cost_usd": null,
+      "mean_latency_ms": null
+    }
+  },
+  "revision": "0.1.0",
+  "run_hash": "b9e2a80f60efab59c4aa6ca32a564769456eefc165c4628776bd5ffd225e9686",
+  "seed": 1337,
+  "suite": "ab/asr-hallucination",
+  "top_finding": {
+    "adjusted_p_value": 1.0,
+    "ci_lower": 0.0,
+    "ci_upper": 0.0,
+    "detector": "domain_hallucination_uplift",
+    "discovery": {
+      "clip_count_domain": 3,
+      "clip_count_other": 4,
+      "domain_rate": 0.0,
+      "other_rate": 0.0,
+      "testable": true
+    },
+    "effect_size": 0.0,
+    "holdout": {
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "clip_count_domain": 1,
+      "clip_count_other": 2,
+      "domain_rate": 0.0,
+      "effect_size": 0.0,
+      "other_rate": 0.0,
+      "p_value": 1.0,
+      "testable": true
+    },
+    "id": "hallucination-rate:noise",
+    "metric": "non_speech_hallucination_rate",
+    "p_value": 1.0,
+    "rank": 1,
+    "slice": {
+      "domain": "noise"
+    },
+    "status": "rejected",
+    "title": "noise hallucination uplift",
+    "validation_notes": "failed discovery significance gate"
+  },
+  "validation_summary": {
+    "publishable": false,
+    "reproducibility_checklist": {
+      "clip_identity_present": true,
+      "domain_metadata_present": true,
+      "transcript_present": true
+    },
+    "status_counts": {
+      "candidate": 0,
+      "rejected": 3,
+      "validated": 0
+    }
+  },
+  "weighted_hallucination_rate": 0.0
+}

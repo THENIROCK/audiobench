@@ -1,0 +1,49 @@
+# Phonon mega benchmark — laptop-runnable cells.
+# Run: scripts/run_phonon_mega.sh
+# Publish: audiobench push results/phonon-mega/*.json --author Phonon --tags phonon-mega-v1
+
+output_dir: results/phonon-mega
+seed: 1337
+
+cells:
+  # ab/sound-id — yes/no probe protocol
+  - suite: ab/sound-id
+    model: heuristic-v0
+    profile: demo-fast
+    name: "sound-id::heuristic-v0 [first-party baseline]"
+  - suite: ab/sound-id
+    model: heuristic-weak
+    profile: demo-fast
+    name: "sound-id::heuristic-weak [diagnostic floor]"
+  - suite: ab/sound-id
+    model: clap-base
+    profile: demo-fast
+    name: sound-id::clap-base
+
+  # ab/asr-robust — transcription protocol
+  - suite: ab/asr-robust
+    model: whisper-tiny
+    limit: 20
+    name: asr-robust::whisper-tiny
+  - suite: ab/asr-robust
+    model: whisper-base
+    limit: 20
+    name: asr-robust::whisper-base
+  - suite: ab/asr-robust
+    model: whisper-small
+    limit: 20
+    name: asr-robust::whisper-small
+
+  # ab/asr-hallucination — non-speech stress test
+  - suite: ab/asr-hallucination
+    model: whisper-tiny
+    limit: 20
+    name: "asr-hallucination::whisper-tiny [OpenAI-known weakness]"
+  - suite: ab/asr-hallucination
+    model: whisper-base
+    limit: 20
+    name: "asr-hallucination::whisper-base [OpenAI-known weakness]"
+  - suite: ab/asr-hallucination
+    model: whisper-small
+    limit: 20
+    name: "asr-hallucination::whisper-small [OpenAI-known weakness]"

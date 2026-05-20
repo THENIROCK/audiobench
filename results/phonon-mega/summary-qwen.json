@@ -1,0 +1,35 @@
+{
+  "cell_count": 1,
+  "cells": [
+    {
+      "cell": {
+        "conditions": null,
+        "limit": null,
+        "model": "qwen2-audio-7b",
+        "name": "sound-id::qwen2-audio-7b [remote Modal endpoint]",
+        "pack": null,
+        "profile": "demo-fast",
+        "seed": null,
+        "suite": "ab/sound-id"
+      },
+      "duration_s": 67.9977,
+      "error": null,
+      "headline": {
+        "components_present": 30,
+        "components_understood": 24,
+        "weighted_fpr": 0.7666666666666667,
+        "weighted_recall": 0.8
+      },
+      "index": 0,
+      "output_path": "results/phonon-mega/00-sound-id__qwen2-audio-7b [remote Modal endpoint]-d6a10bd2.json",
+      "run_hash": "d6a10bd214d4c86d2e8b4ee7f634b23f57a3882c00299233d1cac0fc9ce36476",
+      "status": "ok"
+    }
+  ],
+  "error_count": 0,
+  "gate_failed_count": 0,
+  "ok_count": 1,
+  "output_dir": "results/phonon-mega",
+  "schema": "audiobench.matrix.v1",
+  "seed": 1337
+}

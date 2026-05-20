@@ -1,0 +1,11 @@
+# Phonon mega benchmark — Qwen2-Audio via remote endpoint only.
+# Run: scripts/run_phonon_mega_qwen.sh
+
+output_dir: results/phonon-mega
+seed: 1337
+
+cells:
+  - suite: ab/sound-id
+    model: qwen2-audio-7b
+    profile: demo-fast
+    name: sound-id::qwen2-audio-7b [remote Modal endpoint]
