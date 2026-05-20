@@ -8,6 +8,10 @@ __pycache__/
 .venv/
 .eggs/
 
+# Editor / IDE
+.cursor/
+.pytest_cache/
+
 # Build artifacts
 /dist/
 /build/
