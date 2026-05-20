@@ -9,7 +9,12 @@
 | `clap-base` | CPU, lazy import | LAION-CLAP zero-shot. Requires `pip install laion-clap`. First run downloads weights. |
 | [`qwen2-audio-7b`](qwen2-audio.md) | GPU local **or** remote endpoint | Qwen2-Audio-Instruct via HuggingFace `transformers`. ~16 GB VRAM locally; remote API mode runs anywhere. |
 
-`ab/asr-robust` uses a different protocol (transcription, not yes/no) and currently ships `whisper-tiny` and friends from `openai-whisper`.
+`ab/asr-robust` and `ab/asr-hallucination` use a transcription protocol (not yes/no) and currently ship `whisper-tiny` and friends from `openai-whisper`.
+
+ASR adapters may return either:
+
+- a transcript string (legacy contract), or
+- a mapping with `transcript` plus optional `latency_ms`, `cost_usd`, `error`.
 
 ## How the bundled heuristics work
 
@@ -19,6 +24,16 @@ The bundled heuristics aren't ML models — they're a deterministic spectral mat
 2. **Pre-compute one fingerprint per known label** by running the same recipe on the canonical procedural clip for each of the demo pack's 10 labels. These reference fingerprints are built once at import time.
 3. **Score the probe.** For a question `"Do you hear a {label}?"`, compute the cosine similarity between the input fingerprint and the reference for `{label}` (`target_score`), and the mean cosine similarity to every *other* known label (`baseline`). The decision metric is the **discriminative margin** `margin = target_score − baseline`. Using a margin (rather than the raw similarity) keeps false positives down: in a quad mixture every reference still has decent absolute similarity, but only the components that are actually present beat the rest by a clear margin.
 4. **Threshold the margin.** Answer "yes" if `margin >= margin_threshold`, else "no".
+
+## Bring your own adapter
+
+To see model ids available to your current environment:
+
+```bash
+audiobench list-models
+```
+
+For protocol details and plugin entry points, see [Bring your own model](../guides/bring-your-own-model.md).
 
 The two adapters differ only in two parameters:
 

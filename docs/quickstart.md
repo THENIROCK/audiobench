@@ -73,6 +73,14 @@ audiobench run ab/asr-robust --model whisper-tiny
 
 Conditions: `clean`, `noise-cafe-10db`, `noise-pink-5db`, `bandlimited-8k`, `reverb-medium`. Reports per-condition WER and a weighted mean.
 
+## First run: `ab/asr-hallucination`
+
+```bash
+audiobench run ab/asr-hallucination --model whisper-tiny
+```
+
+Conditions: `silence`, `music`, `noise`. The summary includes ranked findings with bootstrap CIs, multiple-testing-corrected q-values, and validation status (`validated`, `candidate`, `rejected`).
+
 ## Compare two models
 
 ```bash
@@ -81,7 +89,7 @@ audiobench run ab/sound-id --model heuristic-weak  --output results/sound-id-wea
 audiobench compare results/sound-id-heuristic.json results/sound-id-weak.json
 ```
 
-`compare` dispatches on the suite id in each run JSON, so the same command works for `ab/asr-robust` (lower-WER-wins) and `ab/sound-id` (higher-recall-wins, lower-FPR-wins).
+`compare` dispatches on the suite id in each run JSON, so the same command works for `ab/asr-robust` (lower-WER-wins), `ab/asr-hallucination` (lower hallucination wins, findings status surfaced), and `ab/sound-id` (higher-recall-wins, lower-FPR-wins).
 
 For a live-presentation-friendly profile (~30 mixtures, finishes in under 90 s on a laptop):
 
@@ -91,9 +99,48 @@ audiobench run ab/sound-id --profile demo-fast --model heuristic-weak --output r
 audiobench compare results/demo-heuristic.json results/demo-weak.json
 ```
 
+## Publish a run to the leaderboard
+
+Login once to Hugging Face:
+
+```bash
+hf auth login
+```
+
+Then upload any run JSON:
+
+```bash
+audiobench push results/sound-id-heuristic.json --pretty-json
+```
+
+If you do not pass `--repo`, `audiobench push` automatically uses
+`<your-username>/audiobench-leaderboard-submissions`.
+
+## Benchmark your own model in 3 steps
+
+1. Implement an adapter (`answer(...)` for sound-id, `transcribe(...)` for ASR).
+2. Register it in `audiobench`, or ship it as a plugin via entry points.
+3. Run it with your adapter id.
+
+```bash
+# Discover available adapter ids and ASR patterns.
+audiobench list-models
+
+# Your own sound-id adapter.
+audiobench run ab/sound-id --model my-sound-model
+
+# Your own ASR adapter.
+audiobench run ab/asr-robust --model my-asr-model
+```
+
+See [Bring your own model](guides/bring-your-own-model.md) for a minimal adapter stub and plugin setup.
+
 ## What's next
 
 - [`ab/sound-id`](suites/sound-id.md) — full reference, including packs, custom mixtures, and recipe files.
 - [`ab/asr-robust`](suites/asr-robust.md) — perturbation list and WER reporting.
+- [`ab/asr-hallucination`](suites/asr-hallucination.md) — non-speech hallucination metrics plus validated findings.
 - [Models](models/index.md) — bundled adapters and how to plug in your own.
 - [qwen2-audio-7b without a local GPU](models/qwen2-audio.md) — Modal recipe, Colab fallback.
+- [Hugging Face leaderboard integration](guides/hf-leaderboard.md) — publish run JSON artifacts to a Space-backed leaderboard.
+- [Reproducible controversy launch flow](guides/repro-launch-flow.md) — policy and rerun checklist before publishing a claim.

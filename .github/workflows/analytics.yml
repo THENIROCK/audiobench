@@ -1,0 +1,80 @@
+name: analytics
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    name: weekly analytics snapshot
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: pypistats snapshot
+        run: |
+          python scripts/analytics/pypistats_snapshot.py
+
+      - name: GitHub Traffic snapshot
+        env:
+          GH_TOKEN: ${{ secrets.GH_TRAFFIC_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p analytics/snapshots/github
+          today=$(date +%F)
+          gh api repos/${{ github.repository }}/traffic/popular/referrers \
+            > "analytics/snapshots/github/${today}-referrers.json" || true
+          gh api repos/${{ github.repository }}/traffic/popular/paths \
+            > "analytics/snapshots/github/${today}-paths.json" || true
+          gh api repos/${{ github.repository }}/traffic/views \
+            > "analytics/snapshots/github/${today}-views.json" || true
+
+      - name: BigQuery snapshot (optional)
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          if [ -z "$GCP_SA_KEY" ]; then
+            echo "GCP_SA_KEY not set; skipping BigQuery snapshot"
+            exit 0
+          fi
+          echo "$GCP_SA_KEY" > /tmp/gcp-sa.json
+          export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-sa.json
+          pip install google-cloud-bigquery
+          python scripts/analytics/bigquery_snapshot.py --days 30
+
+      - name: Commit snapshot
+        run: |
+          if [ -z "$(git status --porcelain analytics/)" ]; then
+            echo "no analytics changes to commit"
+            exit 0
+          fi
+          git config user.name  "audiobench-bot"
+          git config user.email "audiobench-bot@users.noreply.github.com"
+          git add analytics/
+          git commit -m "chore(analytics): weekly snapshot $(date +%F)"
+          git push
+
+      - name: Install docs extras
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[docs]"
+
+      - name: Regenerate dashboard
+        env:
+          GH_TOKEN: ${{ secrets.GH_TRAFFIC_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/analytics/dashboard.py --site
+
+      - name: Publish docs (mkdocs gh-deploy)
+        run: |
+          git config user.name  "audiobench-bot"
+          git config user.email "audiobench-bot@users.noreply.github.com"
+          mkdocs gh-deploy --force --clean --message "deploy: weekly analytics refresh $(date +%F)"

@@ -19,13 +19,37 @@ Every `audiobench run` writes a JSON artifact with:
 
 The `run_hash` is the single value that uniquely identifies a run. If two runs have the same hash, the input audio, prompts, model adapter version, and seeds were identical and you can compare numbers fairly. If they don't match, `audiobench compare` will tell you exactly which field disagrees.
 
+## Findings reproducibility policy (`ab/asr-hallucination`)
+
+`ab/asr-hallucination` emits detector findings designed for publishable claims:
+
+- per-domain hallucination uplift effect size
+- bootstrap confidence interval
+- p-value corrected with Benjamini-Hochberg FDR
+- validation gate status (`validated`, `candidate`, `rejected`)
+
+Validation is deterministic:
+
+- discovery and holdout splits are derived from clip identity + run seed
+- discovery must pass corrected significance and directionality checks
+- holdout must replicate the direction/effect gate before status becomes `validated`
+
+These details are included directly in run JSON (`findings`, `top_finding`, `validation_summary`, `findings_methods`), so an external reviewer can audit the exact evidence path.
+
 ## Sharing a run
 
-`audiobench push` is suite-agnostic and works for both suites; it only reads `suite`, `revision`, `run_hash`. In the MVP it's a local-only "push" stub that prints a signed payload (suite, revision, run_hash, payload_sha256). No network traffic.
+`audiobench push` is suite-agnostic and works for all shipped suites. It reads your run JSON, computes `payload_sha256` over the canonical payload, and uploads a signed submission to a Hugging Face dataset path:
+
+`submissions/<suite-with-/-replaced-by-__>/<run_hash>.json`
+
+This makes the uploaded score auditable: the leaderboard entry includes the complete run payload and its hash.
 
 ```bash
+hf auth login
 audiobench push results/sound-id-heuristic.json --pretty-json
 ```
+
+If `--repo` is omitted, push defaults to `<your-username>/audiobench-leaderboard-submissions`.
 
 ## What's NOT pinned
 
@@ -38,6 +62,7 @@ audiobench push results/sound-id-heuristic.json --pretty-json
 `audiobench compare a.json b.json` per-suite:
 
 - `ab/asr-robust`: lower WER wins, computed per condition and on the weighted mean.
+- `ab/asr-hallucination`: lower hallucination wins, plus top-finding validation status is shown for each run.
 - `ab/sound-id`: higher recall wins, lower FPR wins, F1 is reported alongside as a single-number summary.
 
 By default, `compare` refuses to compare two `ab/sound-id` runs whose prompt configs disagree. Use `--allow-mismatched-prompt` to override; the comparison header will annotate the mismatch.
