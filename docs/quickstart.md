@@ -2,22 +2,34 @@
 
 ## Install
 
-audiobench is an editable Python package. Python 3.10 or later.
+Python 3.10 or later. Use a virtual environment so CLI dependencies do not mix with system packages.
+
+### From PyPI
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate
-pip install -e .
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install audiobench
+audiobench --help
 ```
 
-Confirm the CLI is on your `PATH`:
+Optional extras: `pip install "audiobench[gui]"`, `"audiobench[clap]"`, `"audiobench[qwen]"`.
+
+### From source (development)
+
+Clone the [repository](https://github.com/THENIROCK/audiobench) and install in editable mode:
 
 ```bash
+git clone https://github.com/THENIROCK/audiobench.git
+cd audiobench
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
 audiobench --help
 ```
 
 ??? warning "macOS + Python 3.13: `ModuleNotFoundError: No module named 'audiobench'`"
-    If `audiobench --help` raises `ModuleNotFoundError: No module named 'audiobench'` immediately after `pip install -e .`, this is a known macOS + pip + Python 3.13 `site.py` interaction (Python issue [#127012](https://github.com/python/cpython/issues/127012) / pip issue [#13153](https://github.com/pypa/pip/issues/13153)).
+    If `audiobench --help` raises `ModuleNotFoundError: No module named 'audiobench'` immediately after `pip install -e .` (editable install from a clone), this is a known macOS + pip + Python 3.13 `site.py` interaction (Python issue [#127012](https://github.com/python/cpython/issues/127012) / pip issue [#13153](https://github.com/pypa/pip/issues/13153)). A plain `pip install audiobench` from PyPI is not affected.
 
     pip-installed files inherit a `com.apple.provenance` xattr that carries the `UF_HIDDEN` flag, and Python 3.13's `site.py` skips `.pth` files with that flag, so the editable-install pointer never lands on `sys.path`. Clear the flag on the venv's `site-packages`:
 
@@ -38,6 +50,21 @@ audiobench --help
     ```
 
     Verify with `find .venv -type f -flags +dataless | wc -l` (should print `0`).
+
+## Local GUI (optional)
+
+For composing matrix-based testing sessions and browsing results by session,
+you can open a local Gradio app instead of using the terminal:
+
+```bash
+pip install "audiobench[gui]"   # or: pip install -e ".[gui]" from a clone
+audiobench --gui
+```
+
+A browser tab opens with **Test Builder** (compose `matrix.yaml`) and
+**Results** (sessions under `results/` with their per-cell run JSONs) as the
+two main views. All other CLI verbs are also available as forms. See the
+[Local GUI guide](guides/gui.md) for the full tour.
 
 ## First run: `ab/sound-id` on the demo pack
 

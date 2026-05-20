@@ -2,6 +2,28 @@
 
 `audiobench` can publish benchmark runs to a Hugging Face dataset, and a Gradio Space can read that dataset as a public leaderboard.
 
+## Per-user vs shared leaderboard
+
+`audiobench push` has two useful modes:
+
+- **Per-user (default):** pushes to `<your-username>/audiobench-leaderboard-submissions`.
+- **Shared dashboard:** push to one shared dataset repo, such as `THENIROCK/audiobench-leaderboard-submissions`.
+
+Set the shared repo once for your shell session:
+
+```bash
+export AUDIOBENCH_LEADERBOARD_DATASET=THENIROCK/audiobench-leaderboard-submissions
+audiobench push results/run.json --author "YourOrg"
+```
+
+Or override per command:
+
+```bash
+audiobench push results/run.json --repo THENIROCK/audiobench-leaderboard-submissions --author "YourOrg"
+```
+
+To upload to the shared org dataset, your Hugging Face token must have write access to that dataset (org member or dataset collaborator). Without write permission, push will fail.
+
 ## 1) Login once to Hugging Face
 
 ```bash
@@ -48,8 +70,20 @@ Useful push options:
 - `--space <id>`: include Space URL in output
 - `--notes "..."`
 - `--tags "cpu,demo,zero-shot"`
+- `--author "Phonon"`: benchmark author (`authored_by`), distinct from the HF uploader (`submitted_by`)
 - `--overwrite`: replace an existing submission with the same `run_hash`
 - `--dry-run`: print the payload without uploading
+
+## Submit your results
+
+To publish community results to the shared dashboard:
+
+```bash
+export AUDIOBENCH_LEADERBOARD_DATASET=THENIROCK/audiobench-leaderboard-submissions
+audiobench push results/run.json --author "YourOrg"
+```
+
+`--author` is optional but recommended so users can filter by submitter intent. Official Phonon mega runs use `authored_by: Phonon` for the curated docs view, while the full HF Space shows all submissions in the shared dataset.
 
 ## Submission format
 

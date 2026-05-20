@@ -50,22 +50,31 @@ theme:
 
 nav:
   - Home: index.md
+  - Leaderboard: leaderboard.md
   - Quickstart: quickstart.md
   - Suites:
       - Overview: suites/index.md
       - ab/asr-robust: suites/asr-robust.md
       - ab/asr-hallucination: suites/asr-hallucination.md
       - ab/sound-id: suites/sound-id.md
+      - ab/fidelity-roundtrip: suites/fidelity-roundtrip.md
+      - ab/psychoacoustic-masking: suites/psychoacoustic-masking.md
+      - ab/phase-coherence: suites/phase-coherence.md
+      - ab/sed-urban: suites/sed-urban.md
+      - ab/diarization-cw: suites/diarization-cw.md
   - Models:
       - Overview: models/index.md
       - qwen2-audio-7b: models/qwen2-audio.md
   - Guides:
+      - Phonon mega benchmark: guides/phonon-mega.md
       - Bring your own model: guides/bring-your-own-model.md
       - Hugging Face leaderboard: guides/hf-leaderboard.md
       - Repro launch flow: guides/repro-launch-flow.md
+      - Analytics setup: guides/analytics-setup.md
   - Reference:
       - Prompt protocol: reference/prompts.md
       - Reproducibility: reference/reproducibility.md
+      - Telemetry: reference/telemetry.md
   - Analytics: analytics/index.html
 
 markdown_extensions:
@@ -115,7 +124,11 @@ extra:
     - icon: fontawesome/solid/globe
       link: https://audiobench.dev
 
+extra_css:
+  - stylesheets/leaderboard.css
+
 extra_javascript:
   - javascripts/analytics.js
+  - javascripts/leaderboard.js
 
 copyright: Copyright &copy; 2026 audiobench

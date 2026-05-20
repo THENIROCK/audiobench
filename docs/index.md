@@ -11,6 +11,7 @@ hide:
 A single clean-set metric hides failure modes. audiobench reports performance across realistic perturbations and mixtures — so you find out where a model actually breaks, not just how it scores on the easy slice.
 
 [Get started](quickstart.md){ .md-button .md-button--primary }
+[View rankings](leaderboard.md){ .md-button }
 [View on GitHub](https://github.com/THENIROCK/audiobench){ .md-button }
 
 ---
@@ -43,6 +44,25 @@ A single clean-set metric hides failure modes. audiobench reports performance ac
 
     [:octicons-arrow-right-24: Suite reference](suites/sound-id.md)
 
+-   :material-waveform:{ .lg .middle } **Signal suites**
+
+    ---
+
+    Reference-aware fidelity, psychoacoustic masking, and stereo phase checks for any `AudioProcessor` adapter (codec, DSP chain, plug-in, neural enhancement).
+
+    [:octicons-arrow-right-24: Fidelity](suites/fidelity-roundtrip.md) ·
+    [Psychoacoustics](suites/psychoacoustic-masking.md) ·
+    [Phase](suites/phase-coherence.md)
+
+-   :material-timeline-clock-outline:{ .lg .middle } **Temporal task suites**
+
+    ---
+
+    Frame-level event detection (IoU-matched F1) and speaker diarization (NIST DER with Hungarian alignment and a 0.25 s collar).
+
+    [:octicons-arrow-right-24: SED](suites/sed-urban.md) ·
+    [Diarization](suites/diarization-cw.md)
+
 -   :material-cube-outline:{ .lg .middle } **Model adapters**
 
     ---
@@ -66,7 +86,7 @@ A single clean-set metric hides failure modes. audiobench reports performance ac
 ## In one command
 
 ```bash
-pip install -e .
+pip install audiobench
 audiobench run ab/sound-id --model heuristic-v0
 ```
 
@@ -112,29 +132,34 @@ The complete adapter and plugin setup lives in [Bring your own model](guides/bri
 
 ## Telemetry and privacy
 
-audiobench is a CLI you run on your own machine. We want to keep it that way.
+**Default:** audiobench does not phone home. Model adapters you choose (Whisper,
+Qwen, etc.) may download weights from Hugging Face — that is separate from
+audiobench telemetry.
 
-**What the CLI collects:** nothing. `audiobench` never connects to an
-audiobench-owned server. The only network traffic comes from model adapters
-you opt into (for example, downloading Whisper weights from Hugging Face).
-There is no run id, no machine id, no IP logging, no opt-out flag because
-there is nothing to opt out of.
+**First run (interactive terminal):** you may see a one-time prompt asking
+whether to share anonymous usage stats (command name, suite, adapter,
+duration, success/failure). Default is **no**. Nothing is sent unless you
+accept or set `AUDIOBENCH_TELEMETRY=1`.
 
-**What this docs site collects:** anonymous page-view counts via
-[GoatCounter](https://www.goatcounter.com/), which is cookieless and does
-not store IP addresses. We see aggregate country, referrer, browser, and
-which pages get read. We do not see individuals, sessions, or fingerprints.
-The script honours `Do Not Track` and Global Privacy Control.
+**What we never collect:** audio, transcripts, run JSON, file paths, IP
+addresses, or credentials. See the full schema in
+[Telemetry reference](reference/telemetry.md).
 
-**What PyPI gives us:** download counts only, sliced by Python version, OS,
-and (via the public BigQuery dataset) country and installer. No identities,
-no referrers. See [scripts/analytics/](https://github.com/THENIROCK/audiobench/tree/main/scripts/analytics)
-for the queries we run.
+**Opt out anytime:**
 
-### Help us understand who you are
+```bash
+export AUDIOBENCH_TELEMETRY=0
+# or delete ~/.config/audiobench/consent.json
+```
 
-If you use audiobench and have 60 seconds, the survey below is the single
-biggest help. It is voluntary, anonymous by default, and we publish the
-aggregated results in the changelog.
+**Docs site:** cookieless [GoatCounter](https://www.goatcounter.com/) page
+views (aggregate country + referrer only). Honours Do Not Track.
 
+**PyPI:** download counts by Python/OS; country breakdown via public BigQuery
+when we run the snapshot job. No install referrer from PyPI.
+
+**Public dashboard:** [Analytics](analytics/index.html) merges PyPI, GitHub,
+mentions (HN / Reddit / Bluesky), and opt-in CLI aggregates.
+
+[Analytics setup guide](guides/analytics-setup.md) ·
 [Take the 3-question survey](https://tally.so/r/dW8edA){ .md-button }
