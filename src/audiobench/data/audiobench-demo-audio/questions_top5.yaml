@@ -1,0 +1,76 @@
+# AudioBench Top 5 — Expert-Level Audio Understanding
+# Each question requires combining audio perception with domain knowledge.
+# A model that can only hear OR only reason will fail.
+
+version: expert-v1
+
+clips:
+  - id: atc_callsign
+    file: defense_aerospace/atco2_atc_communication.wav
+    question: "What is the aircraft callsign being addressed in this ATC communication?"
+    type: short_answer
+    answer: "OKF-AO"
+    accept_also: ["OKFAO", "Oscar Kilo Foxtrot Alfa Oscar"]
+    difficulty: hard
+    domain: Defense and Aerospace
+    requires:
+      - Parsing speech through heavy radio static and squelch
+      - Knowing NATO phonetic alphabet (Oscar=O, Kilo=K, Foxtrot=F, Alfa=A)
+      - Understanding ATC communication structure (callsign comes first)
+    why_models_fail: "Must map phonetic words to letters AND know that the first element of an ATC instruction is always the callsign. Most models will transcribe the phonetics literally without assembling the callsign."
+
+  - id: gunshot_firing_mode
+    file: criminal_investigations/sesa_gunshot_000.wav
+    question: "Based on the rate of fire, is this weapon being fired in semi-automatic mode (one shot per trigger pull) or automatic/burst mode (continuous fire from a single trigger pull)?"
+    type: multiple_choice
+    options: ["semi-automatic", "automatic or burst"]
+    answer: "semi-automatic"
+    difficulty: hard
+    domain: Criminal Investigations and Public Safety
+    requires:
+      - Estimating inter-shot intervals (~200-300ms gaps = semi-auto; <100ms = auto)
+      - Knowing that semi-automatic fire has irregular spacing (human trigger timing) vs automatic fire which is metronomically even
+      - Hearing that each shot has a distinct onset with slight timing variance
+    why_models_fail: "Requires knowing the temporal boundary between semi-auto and full-auto fire rates (~600rpm+), AND perceiving the slight irregularity in timing that indicates individual trigger pulls."
+
+  - id: heart_murmur_phase
+    file: healthcare/heart_sound_M_ESM_RUSB.wav
+    question: "The abnormal sound in this cardiac recording occurs between S1 and S2 (during ventricular contraction) rather than between S2 and the next S1 (during filling). What type of murmur timing does this indicate?"
+    type: multiple_choice
+    options: ["systolic murmur", "diastolic murmur", "continuous murmur"]
+    answer: "systolic murmur"
+    difficulty: hard
+    domain: Healthcare + Medical
+    requires:
+      - Identifying S1 (lub) and S2 (dub) heart sounds in a stethoscope recording
+      - Hearing that the extra turbulent sound falls between S1→S2 (systole) not S2→S1 (diastole)
+      - Knowing that systole is the contraction/ejection phase and murmurs here indicate valve regurgitation or stenosis
+    why_models_fail: "Must parse an extremely low-frequency contact-mic recording, identify the cardiac cycle phases by ear, locate the murmur in time, then apply clinical terminology. Most models will guess or refuse."
+
+  - id: deepfake_scene_manipulation
+    file: media_misinformation/scenefake_deepfake_audio.wav
+    question: "This audio has been forensically manipulated. The speech content is genuine, but what aspect has been altered: the speaker's voice identity, the words spoken, or the acoustic environment/background scene?"
+    type: multiple_choice
+    options: ["voice identity (voice conversion)", "words spoken (text-to-speech)", "acoustic environment (scene manipulation)"]
+    answer: "acoustic environment (scene manipulation)"
+    difficulty: hard
+    domain: Media, Journalism, and Misinformation
+    requires:
+      - Knowing that deepfakes aren't only voice cloning — scene manipulation is a distinct attack
+      - Listening for inconsistencies between foreground speech acoustics and background environmental sound
+      - Noticing that the speech sounds natural but the environmental context may not match the reverb/room characteristics of the voice
+    why_models_fail: "Even told this is manipulated, models default to 'voice cloning' as the deepfake type. Scene manipulation (altering the background while keeping speech intact) is an underrepresented attack type that requires understanding acoustic scene coherence."
+
+  - id: bird_family_vocalization
+    file: environmental_wildlife/xc1_bird_recording.mp3
+    question: "Based on the vocalization pattern — short melodic phrases with rapid pitch modulation — which bird family does this most likely belong to: Corvidae (crows/jays — harsh, unmusical calls), Strigidae (owls — low hooting), or Thraupidae (tanagers/finches — high-pitched warbling song)?"
+    type: multiple_choice
+    options: ["Corvidae (crows, jays)", "Strigidae (owls)", "Thraupidae (tanagers, finches)"]
+    answer: "Thraupidae (tanagers, finches)"
+    difficulty: hard
+    domain: Environmental + Wildlife
+    requires:
+      - Hearing the rapid pitch-modulated warbling pattern (not harsh, not hooting)
+      - Knowing that Thraupidae produce complex melodic songs with rapid frequency sweeps
+      - Ruling out Corvidae (would be harsher, lower) and Strigidae (would be slower, repetitive hooting)
+    why_models_fail: "Requires both perceiving the acoustic character of the call AND knowing taxonomic vocal signatures. Models might identify 'bird song' but mapping vocalization style to family-level taxonomy is genuine expertise."

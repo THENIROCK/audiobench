@@ -4,7 +4,7 @@ import json
 from dataclasses import dataclass
 from importlib.resources import files
 from pathlib import Path
-from typing import Callable
+from typing import Any, Callable
 
 import soundfile as sf
 
@@ -31,6 +31,7 @@ CONDITIONS: list[Condition] = [
     Condition("bandlimited-8k", bandlimited_8k),
     Condition("reverb-medium", reverb_medium),
 ]
+ProgressCallback = Callable[[dict[str, Any]], None]
 
 
 def _manifest_path() -> Path:
@@ -48,6 +49,7 @@ def run_suite(
     seed: int,
     limit: int | None = None,
     condition_names: list[str] | None = None,
+    progress_callback: ProgressCallback | None = None,
 ) -> dict:
     manifest = load_manifest()
     clips = manifest["clips"][:limit] if limit else manifest["clips"]
@@ -66,18 +68,44 @@ def run_suite(
     per_clip_hypotheses: list[dict] = []
 
     data_dir = _manifest_path().parent / "clips"
-    for clip in clips:
+    total_steps = clip_count * len(selected_conditions)
+    _emit_progress(
+        progress_callback,
+        "start",
+        suite=SUITE_ID,
+        model=model_name,
+        clips=clip_count,
+        conditions=[item.name for item in selected_conditions],
+        total_steps=total_steps,
+    )
+    for clip_index, clip in enumerate(clips, start=1):
         clip_path = data_dir / clip["file"]
         audio, sample_rate = sf.read(clip_path)
         ref = clip["text"]
         condition_outputs: dict[str, str] = {}
         for condition in selected_conditions:
+            _emit_progress(
+                progress_callback,
+                "condition_start",
+                clip_id=clip["id"],
+                clip_index=clip_index,
+                clip_total=clip_count,
+                condition=condition.name,
+            )
             condition_seed = int(manifest["condition_seeds"][condition.name]) + int(clip["id"])
             perturbed, perturbed_sr = condition.transform(audio, int(sample_rate), condition_seed)
             hyp = transcriber.transcribe(perturbed, perturbed_sr)
             condition_refs[condition.name].append(ref)
             condition_hyps[condition.name].append(hyp)
             condition_outputs[condition.name] = hyp
+            _emit_progress(
+                progress_callback,
+                "condition_done",
+                clip_id=clip["id"],
+                clip_index=clip_index,
+                clip_total=clip_count,
+                condition=condition.name,
+            )
         per_clip_hypotheses.append(
             {
                 "clip_id": clip["id"],
@@ -107,6 +135,7 @@ def run_suite(
         config=config,
         hypotheses=per_clip_hypotheses,
     )
+    _emit_progress(progress_callback, "done", run_hash=digest_run)
     return {
         "suite": SUITE_ID,
         "revision": SUITE_REVISION,
@@ -120,3 +149,12 @@ def run_suite(
         "per_clip_hypotheses": per_clip_hypotheses,
         "run_hash": digest_run,
     }
+
+
+def _emit_progress(
+    callback: ProgressCallback | None,
+    event: str,
+    **payload: Any,
+) -> None:
+    if callback is not None:
+        callback({"event": event, **payload})

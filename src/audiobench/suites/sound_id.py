@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import random
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Any, Callable, Iterable
 
 import numpy as np
 
@@ -44,6 +44,7 @@ CONDITIONS: list[tuple[str, int]] = [
 ]
 
 CUSTOM_CONDITION = "custom"
+ProgressCallback = Callable[[dict[str, Any]], None]
 
 
 @dataclass
@@ -172,6 +173,7 @@ def run_suite(
     model: AudioLLMAdapter | None = None,
     prompt_spec: PromptSpec | None = None,
     prompt_ensemble: int | None = None,
+    progress_callback: ProgressCallback | None = None,
 ) -> dict:
     profile = get_profile(profile_name) if profile_name else None
     if prompt_spec is None:
@@ -197,9 +199,38 @@ def run_suite(
     per_mixture_records: list[dict] = []
     custom_outcomes: list[ProbeOutcome] = []
     custom_records_count = 0
+    default_mixtures_by_pack: dict[str, list[tuple[str, MixtureSpec]]] = {}
+    if not custom_mixtures:
+        for runtime in runtimes:
+            seed_for_pack = rng_seed ^ sha256_int(runtime.manifest.id)
+            default_mixtures = _draw_default_mixtures(
+                runtime.manifest,
+                profile=profile,
+                selected_conditions=selected_conditions,
+                seed=seed_for_pack,
+            )
+            if limit is not None:
+                default_mixtures = default_mixtures[: max(1, int(limit))]
+            default_mixtures_by_pack[runtime.manifest.id] = default_mixtures
+
+    total_mixtures = (
+        len(custom_mixtures or [])
+        if custom_mixtures
+        else sum(len(items) for items in default_mixtures_by_pack.values())
+    )
+    _emit_progress(
+        progress_callback,
+        "start",
+        suite=SUITE_ID,
+        model=adapter.name,
+        packs=[rt.manifest.id for rt in runtimes],
+        total_mixtures=total_mixtures,
+    )
+    mixture_index = 0
 
     if custom_mixtures:
         for index, spec in enumerate(custom_mixtures):
+            mixture_index += 1
             spec_pack = spec.pack or runtimes[0].manifest.id
             if spec_pack not in runtime_by_pack:
                 spec_pack = runtimes[0].manifest.id
@@ -217,6 +248,15 @@ def run_suite(
             mixture_audio, mixture_sr = mix_sources(
                 sources, snr_db=spec.snr_db, label_levels=_label_levels_dict(spec)
             )
+            _emit_progress(
+                progress_callback,
+                "mixture_start",
+                pack=spec_pack,
+                condition=CUSTOM_CONDITION,
+                mixture_name=spec.name,
+                mixture_index=mixture_index,
+                total_mixtures=total_mixtures,
+            )
             probes = build_probes(
                 spec=prompt_spec,
                 present=present,
@@ -225,7 +265,16 @@ def run_suite(
                 seed=mixture_seed ^ 0xA5A5,
                 ensemble=prompt_ensemble,
             )
-            outcomes, probe_records = _run_probes(adapter, mixture_audio, mixture_sr, probes)
+            outcomes, probe_records = _run_probes(
+                adapter,
+                mixture_audio,
+                mixture_sr,
+                probes,
+                progress_callback=progress_callback,
+                pack=spec_pack,
+                condition=CUSTOM_CONDITION,
+                mixture_name=spec.name,
+            )
             custom_outcomes.extend(outcomes)
             custom_records_count += 1
             per_mixture_records.append(
@@ -238,6 +287,15 @@ def run_suite(
                     "sources": source_ids,
                     "probes": probe_records,
                 }
+            )
+            _emit_progress(
+                progress_callback,
+                "mixture_done",
+                pack=spec_pack,
+                condition=CUSTOM_CONDITION,
+                mixture_name=spec.name,
+                mixture_index=mixture_index,
+                total_mixtures=total_mixtures,
             )
 
     skip_default_mixtures = bool(custom_mixtures)
@@ -268,15 +326,12 @@ def run_suite(
             continue
 
         seed_for_pack = rng_seed ^ sha256_int(manifest.id)
-        default_mixtures = _draw_default_mixtures(
-            manifest, profile=profile, selected_conditions=selected_conditions, seed=seed_for_pack
-        )
-        if limit is not None:
-            default_mixtures = default_mixtures[: max(1, int(limit))]
+        default_mixtures = default_mixtures_by_pack.get(manifest.id, [])
 
         per_condition_outcomes: dict[str, list[ProbeOutcome]] = {}
         all_outcomes: list[ProbeOutcome] = []
         for condition_name, spec in default_mixtures:
+            mixture_index += 1
             mixture_seed = seed_for_pack ^ sha256_int(spec.name)
             variants = _select_clip_variants(spec=spec, resolver=runtime.resolver, seed=mixture_seed)
             sources = []
@@ -288,6 +343,15 @@ def run_suite(
             mixture_audio, mixture_sr = mix_sources(
                 sources, snr_db=spec.snr_db, label_levels=_label_levels_dict(spec)
             )
+            _emit_progress(
+                progress_callback,
+                "mixture_start",
+                pack=manifest.id,
+                condition=condition_name,
+                mixture_name=spec.name,
+                mixture_index=mixture_index,
+                total_mixtures=total_mixtures,
+            )
             probes = build_probes(
                 spec=prompt_spec,
                 present=list(spec.labels),
@@ -296,7 +360,16 @@ def run_suite(
                 seed=mixture_seed ^ 0x5A5A,
                 ensemble=prompt_ensemble,
             )
-            outcomes, probe_records = _run_probes(adapter, mixture_audio, mixture_sr, probes)
+            outcomes, probe_records = _run_probes(
+                adapter,
+                mixture_audio,
+                mixture_sr,
+                probes,
+                progress_callback=progress_callback,
+                pack=manifest.id,
+                condition=condition_name,
+                mixture_name=spec.name,
+            )
             per_condition_outcomes.setdefault(condition_name, []).extend(outcomes)
             all_outcomes.extend(outcomes)
             per_mixture_records.append(
@@ -309,6 +382,15 @@ def run_suite(
                     "sources": source_ids,
                     "probes": probe_records,
                 }
+            )
+            _emit_progress(
+                progress_callback,
+                "mixture_done",
+                pack=manifest.id,
+                condition=condition_name,
+                mixture_name=spec.name,
+                mixture_index=mixture_index,
+                total_mixtures=total_mixtures,
             )
 
         per_condition = {
@@ -391,6 +473,7 @@ def run_suite(
         config=config,
         hypotheses=per_mixture_records,
     )
+    _emit_progress(progress_callback, "done", run_hash=digest_run)
 
     return {
         "suite": SUITE_ID,
@@ -425,15 +508,60 @@ def _run_probes(
     audio: np.ndarray,
     sample_rate: int,
     probes: list[Probe],
+    *,
+    progress_callback: ProgressCallback | None = None,
+    pack: str | None = None,
+    condition: str | None = None,
+    mixture_name: str | None = None,
 ) -> tuple[list[ProbeOutcome], list[dict]]:
     outcomes: list[ProbeOutcome] = []
     records: list[dict] = []
     for probe in probes:
         paraphrase_results: list[dict] = []
         per_paraphrase_yes: list[bool] = []
-        for prompt in probe.prompts:
-            raw = adapter.answer(audio, sample_rate, prompt)
+        for prompt_index, prompt in enumerate(probe.prompts, start=1):
+            _emit_progress(
+                progress_callback,
+                "probe_start",
+                pack=pack,
+                condition=condition,
+                mixture_name=mixture_name,
+                label=probe.label,
+                prompt_index=prompt_index,
+                prompt_total=len(probe.prompts),
+            )
+            reset_adapter_progress = _set_adapter_progress_callback(
+                adapter,
+                progress_callback,
+                suite=SUITE_ID,
+                pack=pack,
+                condition=condition,
+                mixture_name=mixture_name,
+                label=probe.label,
+                prompt=prompt,
+                prompt_index=prompt_index,
+                prompt_total=len(probe.prompts),
+            )
+            try:
+                raw = adapter.answer(audio, sample_rate, prompt)
+            finally:
+                reset_adapter_progress()
             yes = parse_yes_no(raw)
+            _emit_progress(
+                progress_callback,
+                "probe_done",
+                suite=SUITE_ID,
+                pack=pack,
+                condition=condition,
+                mixture_name=mixture_name,
+                label=probe.label,
+                expected=probe.expected,
+                prompt=prompt,
+                raw_answer=raw,
+                answered_yes=yes,
+                prompt_index=prompt_index,
+                prompt_total=len(probe.prompts),
+            )
             per_paraphrase_yes.append(yes)
             paraphrase_results.append(
                 {"prompt": prompt, "raw_answer": raw, "answered_yes": yes}
@@ -456,6 +584,31 @@ def _run_probes(
             }
         )
     return outcomes, records
+
+
+def _emit_progress(
+    callback: ProgressCallback | None,
+    event: str,
+    **payload: Any,
+) -> None:
+    if callback is not None:
+        callback({"event": event, **payload})
+
+
+def _set_adapter_progress_callback(
+    adapter: AudioLLMAdapter,
+    callback: ProgressCallback | None,
+    **context: Any,
+) -> Callable[[], None]:
+    setter = getattr(adapter, "set_progress_callback", None)
+    if callback is None or setter is None:
+        return lambda: None
+
+    def emit(event: dict[str, Any]) -> None:
+        callback({**context, **event})
+
+    setter(emit)
+    return lambda: setter(None)
 
 
 def _serializable_manifest(manifest: PackManifest) -> dict:

@@ -1,0 +1,164 @@
+# AudioBench Demo Questions — Hand-Crafted "High IQ" Audio Understanding
+# Each question requires genuine audio comprehension, not just label matching.
+
+version: demo-v1
+
+clips:
+  - id: criminal_gunshots
+    file: criminal_investigations/sesa_gunshot_000.wav
+    source_dataset: SESA (Zenodo 3519845)
+    ground_truth_label: "gunshot"
+    questions:
+      - question: "How many individual gunshots can you count in this recording?"
+        type: counting
+        answer: 13
+        tolerance: 2
+        difficulty: medium
+        rationale: "Tests temporal event counting — models tend to hallucinate counts"
+
+      - question: "Is there any audible sound of bullet impact between the shots?"
+        type: yes_no
+        answer: "no"
+        difficulty: easy
+        rationale: "Tests absence detection — only the discharge sound is present, no impact"
+
+      - question: "Does the final shot ring out longer than the others?"
+        type: yes_no
+        answer: "yes"
+        difficulty: medium
+        rationale: "Tests temporal attention to the end of the clip — the last shot has a longer resonance tail"
+
+  - id: healthcare_heart
+    file: healthcare/heart_sound_M_ESM_RUSB.wav
+    source_dataset: HLS-CMDS (UCI 1202)
+    ground_truth_label: "Early Systolic Murmur, RUSB"
+    questions:
+      - question: "Is this a recording of a heartbeat?"
+        type: yes_no
+        answer: "yes"
+        difficulty: easy
+        rationale: "Basic identification through a stethoscope contact mic — low rumbling rhythmic pattern"
+
+      - question: "Is there a rhythmic abnormality or extra sound between the normal heart beats?"
+        type: yes_no
+        answer: "yes"
+        difficulty: hard
+        rationale: "The murmur creates an additional sound during systole. Requires distinguishing normal S1/S2 from murmur"
+
+      - question: "Is this recorded with a contact microphone placed against the body, or a room microphone at a distance?"
+        type: multiple_choice
+        options: ["contact microphone", "room microphone"]
+        answer: "contact microphone"
+        difficulty: easy
+        rationale: "Very low frequency, muted character, no room reverb — clearly a stethoscope/contact mic"
+
+  - id: defense_atc
+    file: defense_aerospace/atco2_atc_communication.wav
+    source_dataset: ATCO2 (HuggingFace Jzuluaga/atco2_corpus_1h)
+    ground_truth_label: "oscar kilo foxtrot alfa oscar taxi to holding point runway two seven via alfa charlie"
+    questions:
+      - question: "What runway number is referenced in this communication?"
+        type: short_answer
+        answer: "27"
+        difficulty: medium
+        rationale: "Requires parsing NATO phonetic + aviation terminology from noisy radio"
+
+      - question: "Is this an instruction to take off, land, or taxi?"
+        type: multiple_choice
+        options: ["take off", "land", "taxi"]
+        answer: "taxi"
+        difficulty: medium
+        rationale: "Tests comprehension of aviation context through radio static"
+
+      - question: "Is there radio static or interference in this recording?"
+        type: yes_no
+        answer: "yes"
+        difficulty: easy
+        rationale: "Obvious HF radio artifacts throughout"
+
+  - id: wildlife_bird
+    file: environmental_wildlife/xc1_bird_recording.mp3
+    source_dataset: "Xeno-canto (XC1)"
+    ground_truth_label: "Collared Warbling Finch (Poospiza hispaniolensis)"
+    questions:
+      - question: "Is this a recording of a single bird species or multiple species calling?"
+        type: multiple_choice
+        options: ["single species", "multiple species"]
+        answer: "single species"
+        difficulty: medium
+        rationale: "Tests whether model can distinguish one consistent vocalization pattern from a chorus"
+
+      - question: "Would you describe this bird's call as a warble (melodic, varying pitch) or a monotone repeated note?"
+        type: multiple_choice
+        options: ["warble", "monotone repeated note"]
+        answer: "warble"
+        difficulty: medium
+        rationale: "The species name literally contains 'warbling' — the call has characteristic pitch variation"
+
+  - id: emotions_speech
+    file: audio_music_emotions/ravdess_happy_speech_actor01.wav
+    source_dataset: RAVDESS (Zenodo 1188976)
+    ground_truth_label: "happy, normal intensity, statement 1"
+    questions:
+      - question: "What words are being spoken in this clip?"
+        type: short_answer
+        answer: "Kids are talking by the door"
+        difficulty: easy
+        rationale: "Basic speech recognition — clear male voice"
+
+      - question: "What emotion is the speaker expressing?"
+        type: multiple_choice
+        options: ["angry", "sad", "happy", "fearful"]
+        answer: "happy"
+        difficulty: hard
+        rationale: "Subtle — user described it as 'vague', light inflection. Models may struggle with acted emotion"
+
+      - question: "Does the speaker place emphasis on any particular word?"
+        type: short_answer
+        answer: "door"
+        difficulty: hard
+        rationale: "User noted 'light inflection on door' — tests prosodic attention"
+
+  - id: deepfake_speech
+    file: media_misinformation/scenefake_deepfake_audio.wav
+    source_dataset: SceneFake (Zenodo 7663324)
+    ground_truth_label: "fake (acoustic scene manipulation)"
+    questions:
+      - question: "What is the speaker saying?"
+        type: short_answer
+        answer: "they should take their mobile phones"
+        difficulty: easy
+        rationale: "Basic transcription — British female voice"
+
+      - question: "Is there any background environmental sound, or is this a clean studio recording?"
+        type: multiple_choice
+        options: ["background noise present", "clean studio recording"]
+        answer: "background noise present"
+        difficulty: easy
+        rationale: "User noted environmental noise + boy whining in background"
+
+      - question: "Does this audio sound like natural human speech, or does it have synthetic or manipulated qualities?"
+        type: multiple_choice
+        options: ["natural speech", "synthetic or manipulated"]
+        answer: "synthetic or manipulated"
+        difficulty: hard
+        rationale: "The ground truth is 'fake' but user said 'sounds pretty human' — genuine challenge"
+
+  - id: industrial_fan
+    file: industrial_maintenance/mimii_fan_abnormal_00000000.wav
+    source_dataset: MIMII (Zenodo 3384388)
+    ground_truth_label: "fan, abnormal"
+    questions:
+      - question: "Is this a recording of a machine or of a natural environment?"
+        type: multiple_choice
+        options: ["machine", "natural environment"]
+        answer: "machine"
+        difficulty: medium
+        rationale: "User said 'arguably an industrial fan' — the mechanical quality should be detectable"
+
+      - question: "Does this machine sound like it is operating normally, or does it exhibit an unusual pattern?"
+        type: multiple_choice
+        options: ["normal operation", "unusual/abnormal pattern"]
+        answer: "unusual/abnormal pattern"
+        difficulty: hard
+        rationale: "Ground truth is 'abnormal' but even the human listener couldn't tell. True challenge question"
