@@ -40,7 +40,11 @@ jobs:
       - name: Refresh analytics dashboard
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOATCOUNTER_API_TOKEN: ${{ secrets.GOATCOUNTER_API_TOKEN }}
+          GOATCOUNTER_SITE: ${{ vars.GOATCOUNTER_SITE || 'audiobench' }}
         run: |
+          python scripts/analytics/mentions.py || true
+          python scripts/analytics/goatcounter_pull.py || true
           python scripts/analytics/dashboard.py --site
 
       - name: Build site (strict)
