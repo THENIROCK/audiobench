@@ -1,0 +1,183 @@
+{
+  "suite": "ab/asr-hallucination",
+  "revision": "0.1.0",
+  "default_seed": 1337,
+  "sample_rate": 16000,
+  "conditions": [
+    "silence",
+    "music",
+    "noise"
+  ],
+  "clips": [
+    {
+      "id": 1,
+      "clip_id": "silence-short-a",
+      "generator": "silence_floor",
+      "duration_s": 1.8,
+      "domain": "silence",
+      "noise_type": "none",
+      "snr_db": null,
+      "language": "none",
+      "accent": null,
+      "reference": "",
+      "slice_tags": [
+        "near-silence",
+        "short"
+      ],
+      "seed": 101
+    },
+    {
+      "id": 2,
+      "clip_id": "silence-short-b",
+      "generator": "room_tone",
+      "duration_s": 2.2,
+      "domain": "silence",
+      "noise_type": "room-tone",
+      "snr_db": null,
+      "language": "none",
+      "accent": null,
+      "reference": "",
+      "slice_tags": [
+        "room-tone",
+        "short"
+      ],
+      "seed": 102
+    },
+    {
+      "id": 3,
+      "clip_id": "silence-long-a",
+      "generator": "silence_floor",
+      "duration_s": 4.0,
+      "domain": "silence",
+      "noise_type": "none",
+      "snr_db": null,
+      "language": "none",
+      "accent": null,
+      "reference": "",
+      "slice_tags": [
+        "near-silence",
+        "long"
+      ],
+      "seed": 103
+    },
+    {
+      "id": 4,
+      "clip_id": "music-bed-a",
+      "generator": "music_bed",
+      "duration_s": 3.2,
+      "domain": "music",
+      "noise_type": "instrumental-synth",
+      "snr_db": null,
+      "language": "none",
+      "accent": null,
+      "reference": "",
+      "slice_tags": [
+        "instrumental",
+        "mid"
+      ],
+      "seed": 201
+    },
+    {
+      "id": 5,
+      "clip_id": "music-bed-b",
+      "generator": "music_bed",
+      "duration_s": 5.0,
+      "domain": "music",
+      "noise_type": "instrumental-synth",
+      "snr_db": null,
+      "language": "none",
+      "accent": null,
+      "reference": "",
+      "slice_tags": [
+        "instrumental",
+        "long"
+      ],
+      "seed": 202
+    },
+    {
+      "id": 6,
+      "clip_id": "music-bed-c",
+      "generator": "music_bed",
+      "duration_s": 2.6,
+      "domain": "music",
+      "noise_type": "instrumental-synth",
+      "snr_db": null,
+      "language": "none",
+      "accent": null,
+      "reference": "",
+      "slice_tags": [
+        "instrumental",
+        "short"
+      ],
+      "seed": 203
+    },
+    {
+      "id": 7,
+      "clip_id": "noise-white-a",
+      "generator": "white_noise",
+      "duration_s": 2.4,
+      "domain": "noise",
+      "noise_type": "white",
+      "snr_db": 5.0,
+      "language": "none",
+      "accent": null,
+      "reference": "",
+      "slice_tags": [
+        "steady",
+        "short"
+      ],
+      "seed": 301
+    },
+    {
+      "id": 8,
+      "clip_id": "noise-pink-a",
+      "generator": "pink_noise",
+      "duration_s": 2.9,
+      "domain": "noise",
+      "noise_type": "pink",
+      "snr_db": 0.0,
+      "language": "none",
+      "accent": null,
+      "reference": "",
+      "slice_tags": [
+        "steady",
+        "mid"
+      ],
+      "seed": 302
+    },
+    {
+      "id": 9,
+      "clip_id": "noise-cafe-a",
+      "generator": "cafe_noise",
+      "duration_s": 3.8,
+      "domain": "noise",
+      "noise_type": "cafe",
+      "snr_db": -5.0,
+      "language": "none",
+      "accent": null,
+      "reference": "",
+      "slice_tags": [
+        "modulated",
+        "long"
+      ],
+      "seed": 303
+    },
+    {
+      "id": 10,
+      "clip_id": "noise-room-a",
+      "generator": "room_tone",
+      "duration_s": 4.5,
+      "domain": "noise",
+      "noise_type": "hvac",
+      "snr_db": -12.0,
+      "language": "none",
+      "accent": null,
+      "reference": "",
+      "slice_tags": [
+        "low-frequency",
+        "long"
+      ],
+      "seed": 304
+    }
+  ]
+}

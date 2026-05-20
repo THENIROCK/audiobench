@@ -1,8 +1,10 @@
 """Cross-suite ``audiobench compare`` rendering.
 
-Dispatches on the ``suite`` field in each run JSON. asr-robust uses
-lower-WER-wins; sound-id uses higher-recall-wins / lower-FPR-wins. Both write
-a console table and produce a JSON summary.
+Dispatches on the ``suite`` field in each run JSON:
+- asr-robust: lower WER wins
+- asr-hallucination: lower hallucination wins (+ finding status)
+- sound-id: higher recall wins / lower FPR wins
+All modes write console tables and produce JSON summaries.
 """
 
 from __future__ import annotations
@@ -47,6 +49,26 @@ def _format_winner(winner: str, a_name: str, b_name: str) -> str:
     return winner
 
 
+def _format_validation_status(status: str) -> str:
+    if status == "validated":
+        return "[green]validated[/green]"
+    if status == "candidate":
+        return "[yellow]candidate[/yellow]"
+    if status == "rejected":
+        return "[red]rejected[/red]"
+    return status
+
+
+def _top_finding(run: dict) -> dict | None:
+    top = run.get("top_finding")
+    if isinstance(top, dict) and top:
+        return top
+    findings = run.get("findings") or []
+    if findings and isinstance(findings[0], dict):
+        return findings[0]
+    return None
+
+
 class CompareMismatchError(ValueError):
     """Raised when two runs cannot be compared because of incompatible config."""
 
@@ -71,7 +93,94 @@ def render_run_pair(
             console=console or Console(),
             allow_mismatched_prompt=allow_mismatched_prompt,
         )
+    if left_suite == "ab/asr-hallucination":
+        return _render_asr_hallucination(left, right, console=console or Console())
+    if left_suite in {
+        "ab/fidelity-roundtrip",
+        "ab/psychoacoustic-masking",
+        "ab/phase-coherence",
+        "ab/sed-urban",
+        "ab/diarization-cw",
+    }:
+        return _render_signal(left, right, console=console or Console())
     return _render_asr_robust(left, right, console=console or Console())
+
+
+_SIGNAL_HEADLINES = {
+    "ab/fidelity-roundtrip": [
+        ("weighted_si_sdr_db", "weighted SI-SDR (dB)", False),
+        ("max_true_peak_dbtp", "max true peak (dBTP)", True),
+        ("mean_loudness_delta_lu", "mean loudness Δ (LU)", True),
+    ],
+    "ab/psychoacoustic-masking": [
+        ("masking_respect_score", "masking respect score", False),
+        ("mean_in_band_snr_delta_db", "mean in-band SNR Δ (dB)", True),
+        ("mean_inaudible_energy_delta_db", "mean inaudible energy Δ (dB)", True),
+    ],
+    "ab/phase-coherence": [
+        ("phase_coherence_score", "phase coherence score", False),
+        ("mean_polarity_score", "mean polarity score", False),
+    ],
+    "ab/sed-urban": [
+        ("event_f1_iou50", "event-F1 @ IoU 0.5", False),
+        ("event_precision_iou50", "event precision", False),
+        ("event_recall_iou50", "event recall", False),
+        ("segment_f1_1s", "segment-F1 (1s)", False),
+    ],
+    "ab/diarization-cw": [
+        ("der", "DER", True),
+        ("miss_rate", "miss rate", True),
+        ("false_alarm_rate", "false-alarm rate", True),
+        ("confusion_rate", "confusion rate", True),
+        ("mean_speaker_count_error", "speaker-count error", True),
+    ],
+}
+
+
+def _render_signal(left: dict, right: dict, *, console: Console) -> dict[str, Any]:
+    suite = left.get("suite", "")
+    a_name = str(left.get("model"))
+    b_name = str(right.get("model"))
+    headlines = _SIGNAL_HEADLINES.get(suite, [])
+    table = Table(show_header=True, header_style="bold", box=None)
+    table.add_column("metric")
+    table.add_column(a_name, justify="right")
+    table.add_column(b_name, justify="right")
+    table.add_column("delta (B - A)", justify="right")
+    table.add_column("winner")
+    summary: dict[str, Any] = {"suite": suite, "a": a_name, "b": b_name, "metrics": {}}
+    left_headline = left.get("headline", {}) or {}
+    right_headline = right.get("headline", {}) or {}
+    for key, label, lower_better in headlines:
+        a_val = left_headline.get(key)
+        b_val = right_headline.get(key)
+        if a_val is None or b_val is None:
+            continue
+        a_val_f = float(a_val)
+        b_val_f = float(b_val)
+        delta = b_val_f - a_val_f
+        compare_a = abs(a_val_f) if lower_better else a_val_f
+        compare_b = abs(b_val_f) if lower_better else b_val_f
+        winner = _winner(compare_a, compare_b, a_name, b_name, lower_better=lower_better)
+        if lower_better:
+            delta_text = _delta_color_lower_better(delta)
+        else:
+            delta_text = _delta_color_higher_better(delta)
+        table.add_row(
+            label,
+            f"{a_val_f:.3f}",
+            f"{b_val_f:.3f}",
+            delta_text,
+            _format_winner(winner, a_name, b_name),
+        )
+        summary["metrics"][key] = {
+            "a": a_val_f,
+            "b": b_val_f,
+            "delta": delta,
+            "winner": winner,
+        }
+    console.print(table)
+    return summary
 
 
 def _check_prompt_compat(left: dict, right: dict) -> None:
@@ -147,6 +256,104 @@ def _render_asr_robust(left: dict, right: dict, *, console: Console) -> dict[str
         "weighted_mean_delta": weighted_mean_delta,
         "per_condition_delta": deltas,
         "per_condition_winner": winners,
+    }
+
+
+def _render_asr_hallucination(left: dict, right: dict, *, console: Console) -> dict[str, Any]:
+    conditions: list[str] = []
+    seen: set[str] = set()
+    for name in left.get("conditions", []) + right.get("conditions", []):
+        if name not in seen:
+            seen.add(name)
+            conditions.append(name)
+
+    deltas: dict[str, float] = {}
+    winners: dict[str, str] = {}
+    a_name = str(left.get("model"))
+    b_name = str(right.get("model"))
+
+    table = Table(show_header=True, header_style="bold", box=None)
+    table.add_column("domain")
+    table.add_column(f"{a_name} hallucination", justify="right")
+    table.add_column(f"{b_name} hallucination", justify="right")
+    table.add_column("Δ (b-a)", justify="right")
+    table.add_column("winner", justify="left")
+
+    for condition in conditions:
+        a_val = (left.get("per_condition_metrics", {}).get(condition) or {}).get("non_speech_hallucination_rate")
+        b_val = (right.get("per_condition_metrics", {}).get(condition) or {}).get("non_speech_hallucination_rate")
+        if a_val is None or b_val is None:
+            continue
+        delta = float(b_val) - float(a_val)
+        deltas[condition] = delta
+        winner = _winner(float(a_val), float(b_val), a_name, b_name, lower_better=True)
+        winners[condition] = winner
+        table.add_row(
+            condition,
+            f"{float(a_val):.2f}",
+            f"{float(b_val):.2f}",
+            _delta_color_lower_better(delta),
+            _format_winner(winner, a_name, b_name),
+        )
+
+    weighted_delta = float(right.get("weighted_hallucination_rate", 0.0)) - float(
+        left.get("weighted_hallucination_rate", 0.0)
+    )
+    mean_winner = _winner(
+        float(left.get("weighted_hallucination_rate", 0.0)),
+        float(right.get("weighted_hallucination_rate", 0.0)),
+        a_name,
+        b_name,
+        lower_better=True,
+    )
+    table.add_row(
+        "weighted",
+        f"{float(left.get('weighted_hallucination_rate', 0.0)):.2f}",
+        f"{float(right.get('weighted_hallucination_rate', 0.0)):.2f}",
+        _delta_color_lower_better(weighted_delta),
+        _format_winner(mean_winner, a_name, b_name),
+    )
+    console.print(table)
+    top_left = _top_finding(left)
+    top_right = _top_finding(right)
+    if top_left or top_right:
+        findings_table = Table(show_header=True, header_style="bold", box=None)
+        findings_table.add_column("run")
+        findings_table.add_column("top finding")
+        findings_table.add_column("effect Δ", justify="right")
+        findings_table.add_column("q", justify="right")
+        findings_table.add_column("status")
+        if top_left:
+            findings_table.add_row(
+                f"A ({a_name})",
+                str(top_left.get("title", top_left.get("id", "—"))),
+                f"{float(top_left.get('effect_size', 0.0)):+.3f}",
+                f"{float(top_left.get('adjusted_p_value', 1.0)):.3f}",
+                _format_validation_status(str(top_left.get("status", "unknown"))),
+            )
+        if top_right:
+            findings_table.add_row(
+                f"B ({b_name})",
+                str(top_right.get("title", top_right.get("id", "—"))),
+                f"{float(top_right.get('effect_size', 0.0)):+.3f}",
+                f"{float(top_right.get('adjusted_p_value', 1.0)):.3f}",
+                _format_validation_status(str(top_right.get("status", "unknown"))),
+            )
+        console.print()
+        console.print(findings_table)
+    left_status = (top_left or {}).get("status")
+    right_status = (top_right or {}).get("status")
+    return {
+        "suite": left.get("suite"),
+        "model_a": a_name,
+        "model_b": b_name,
+        "weighted_hallucination_delta": weighted_delta,
+        "per_condition_delta": deltas,
+        "per_condition_winner": winners,
+        "top_finding_a": top_left,
+        "top_finding_b": top_right,
+        "finding_status_a": left_status,
+        "finding_status_b": right_status,
     }
 
 

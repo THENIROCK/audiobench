@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-05-20
+
+PyPI release aligned with the current CLI and suite catalog. Use
+`pip install audiobench` (not only an editable clone).
+
+### Added
+
+- **`ab/asr-hallucination`** — non-speech ASR hallucination stress test with
+  ranked findings, bootstrap CIs, Benjamini–Hochberg q-values, and validation
+  status (`validated` / `candidate` / `rejected`).
+- **Signal suites** — `ab/fidelity-roundtrip`, `ab/psychoacoustic-masking`,
+  `ab/phase-coherence` for `AudioProcessor` adapters (`passthrough`,
+  `passthrough-quantize8`, `polarity-flip-right`, plus entry-point plugins).
+- **Temporal task suites** — `ab/sed-urban` (event/segment F1 with IoU
+  matching) and `ab/diarization-cw` (DER with collar and Hungarian alignment).
+- **`audiobench run-matrix`** — Cartesian or YAML matrix runs with aggregated
+  `summary.json`; optional per-cell `gate` and JUnit output.
+- **`audiobench gate`** — threshold checks with suite-aware YAML/JSON configs
+  and `--junit` for CI.
+- **`audiobench push`** — upload run JSON to a Hugging Face leaderboard
+  submissions dataset (replaces MVP local-only stub).
+- **Local GUI** — `audiobench --gui` via optional `audiobench[gui]` (Gradio
+  Test Builder + Results browser).
+- **Model plugin entry points** — `audiobench.asr_models`, `.signal_models`,
+  `.sed_models`, `.diarization_models` alongside bundled registries.
+- **Optional telemetry** — opt-in usage events (see `docs/reference/telemetry.md`).
+
+### Changed
+
+- README and docs quickstart now document **PyPI install first**; editable
+  `pip install -e .` is labeled as the development path.
+
 ## [0.1.1] - 2026-05-07
 
 First public release on PyPI. (Version `0.1.0` was tagged in git as part
@@ -63,5 +95,6 @@ version users can `pip install`.)
   pip issue [#13153](https://github.com/pypa/pip/issues/13153)). Fix:
   `chflags -R nohidden .venv/lib/python3.13/site-packages`.
 
-[Unreleased]: https://github.com/THENIROCK/audiobench/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/THENIROCK/audiobench/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/THENIROCK/audiobench/releases/tag/v0.2.0
 [0.1.1]: https://github.com/THENIROCK/audiobench/releases/tag/v0.1.1

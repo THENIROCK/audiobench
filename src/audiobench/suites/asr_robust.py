@@ -9,8 +9,9 @@ from typing import Any, Callable
 import soundfile as sf
 
 from audiobench.hashing import manifest_hash, run_hash
-from audiobench.metrics import compute_wer
-from audiobench.models.whisper import WhisperTranscriber
+from audiobench.metrics import compute_asr_signal_metrics, compute_wer
+from audiobench.models.asr import ASRAdapter, asr_result_to_dict, normalize_asr_response
+from audiobench.models.asr_registry import make_model
 from audiobench.perturbations import bandlimited_8k, noise_cafe_10db, noise_pink_5db, reverb_medium
 
 
@@ -50,6 +51,7 @@ def run_suite(
     limit: int | None = None,
     condition_names: list[str] | None = None,
     progress_callback: ProgressCallback | None = None,
+    model: ASRAdapter | None = None,
 ) -> dict:
     manifest = load_manifest()
     clips = manifest["clips"][:limit] if limit else manifest["clips"]
@@ -62,9 +64,12 @@ def run_suite(
     if not selected_conditions:
         raise ValueError("no conditions selected")
 
-    transcriber = WhisperTranscriber(model_name=model_name, seed=seed)
+    transcriber: ASRAdapter = model if model is not None else make_model(model_name, seed=seed)
     condition_refs: dict[str, list[str]] = {item.name: [] for item in selected_conditions}
     condition_hyps: dict[str, list[str]] = {item.name: [] for item in selected_conditions}
+    condition_latencies: dict[str, list[float]] = {item.name: [] for item in selected_conditions}
+    condition_costs: dict[str, list[float]] = {item.name: [] for item in selected_conditions}
+    condition_error_counts: dict[str, int] = {item.name: 0 for item in selected_conditions}
     per_clip_hypotheses: list[dict] = []
 
     data_dir = _manifest_path().parent / "clips"
@@ -83,6 +88,7 @@ def run_suite(
         audio, sample_rate = sf.read(clip_path)
         ref = clip["text"]
         condition_outputs: dict[str, str] = {}
+        condition_details: dict[str, dict] = {}
         for condition in selected_conditions:
             _emit_progress(
                 progress_callback,
@@ -94,10 +100,19 @@ def run_suite(
             )
             condition_seed = int(manifest["condition_seeds"][condition.name]) + int(clip["id"])
             perturbed, perturbed_sr = condition.transform(audio, int(sample_rate), condition_seed)
-            hyp = transcriber.transcribe(perturbed, perturbed_sr)
+            response = transcriber.transcribe(perturbed, perturbed_sr)
+            normalized = normalize_asr_response(response)
+            hyp = normalized.transcript
             condition_refs[condition.name].append(ref)
             condition_hyps[condition.name].append(hyp)
             condition_outputs[condition.name] = hyp
+            condition_details[condition.name] = asr_result_to_dict(normalized)
+            if normalized.latency_ms is not None:
+                condition_latencies[condition.name].append(normalized.latency_ms)
+            if normalized.cost_usd is not None:
+                condition_costs[condition.name].append(normalized.cost_usd)
+            if normalized.error:
+                condition_error_counts[condition.name] += 1
             _emit_progress(
                 progress_callback,
                 "condition_done",
@@ -112,6 +127,7 @@ def run_suite(
                 "file": clip["file"],
                 "reference": ref,
                 "hypotheses": condition_outputs,
+                "condition_details": condition_details,
             }
         )
 
@@ -119,6 +135,19 @@ def run_suite(
         condition.name: compute_wer(condition_refs[condition.name], condition_hyps[condition.name])
         for condition in selected_conditions
     }
+    per_condition_runtime = {}
+    for condition in selected_conditions:
+        latencies = condition_latencies[condition.name]
+        costs = condition_costs[condition.name]
+        total_rows = len(condition_refs[condition.name]) or 1
+        per_condition_runtime[condition.name] = {
+            "mean_latency_ms": (sum(latencies) / len(latencies)) if latencies else None,
+            "mean_cost_usd": (sum(costs) / len(costs)) if costs else None,
+            "error_rate": condition_error_counts[condition.name] / float(total_rows),
+        }
+    all_refs = [ref for condition in selected_conditions for ref in condition_refs[condition.name]]
+    all_hyps = [hyp for condition in selected_conditions for hyp in condition_hyps[condition.name]]
+    asr_signal_metrics = compute_asr_signal_metrics(all_refs, all_hyps)
     weighted_mean_wer = sum(per_condition_wer.values()) / len(per_condition_wer)
 
     config = {
@@ -139,13 +168,15 @@ def run_suite(
     return {
         "suite": SUITE_ID,
         "revision": SUITE_REVISION,
-        "model": model_name,
+        "model": transcriber.name,
         "seed": seed,
         "clip_count": clip_count,
         "conditions": [item.name for item in selected_conditions],
         "manifest_hash": digest,
         "per_condition_wer": per_condition_wer,
         "weighted_mean_wer": weighted_mean_wer,
+        "per_condition_runtime": per_condition_runtime,
+        "asr_signal_metrics": asr_signal_metrics,
         "per_clip_hypotheses": per_clip_hypotheses,
         "run_hash": digest_run,
     }
