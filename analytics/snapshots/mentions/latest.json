@@ -1,23 +1,15 @@
 {
-  "collected_at": "2026-05-20T05:55:50+00:00",
+  "collected_at": "2026-05-25T11:11:51+00:00",
   "query": "audiobench",
   "counts": {
     "hn": 0,
-    "reddit": 3,
+    "reddit": 0,
     "bluesky": 0,
     "github": 22,
     "libraries.io": 0,
-    "total": 25
+    "total": 22
   },
   "items": [
-    {
-      "source": "reddit",
-      "url": "https://www.reddit.com/r/WebsiteLaunches/comments/1t5h4fv/daily_top_10_most_upvoted_sites_from_yesterday/",
-      "title": "\ud83d\udcca Daily Top 10 - Most Upvoted Sites from Yesterday (May 6, 2026)",
-      "author": "antiochIst",
-      "ts": "2026-05-06T16:00:03+00:00",
-      "snippet": "**The top 10 most upvoted sites from yesterday on [Website Launches](https://websitelaunches.com)**\n\n---\n\n*32 total upvotes across all sites* \ud83d\udd25\n\n---\n\n**#1 \ud83c\udfc6** **watchorwander.com** *(4 upvotes)*  \n\ud83d\ude80 Video &amp; Streaming  \nWatch Or Wander is an entertainment review platform created by and for people"
-    },
     {
       "source": "github",
       "url": "https://github.com/ricklon/talkbot/issues/37",
@@ -49,22 +41,6 @@
       "author": "github-actions[bot]",
       "ts": "2026-01-13T16:56:14Z",
       "snippet": "bddk520/DailyArXiv"
-    },
-    {
-      "source": "reddit",
-      "url": "https://www.reddit.com/r/synthesizers/comments/1pjgl7r/audiobench_a_handson_macos_tool_for_learning_dsp/",
-      "title": "AudioBench: a hands-on macOS tool for learning DSP, signal flow, and sound design",
-      "author": "the_aurchitect",
-      "ts": "2025-12-10T22:26:43+00:00",
-      "snippet": "Hi everyone! I\u2019ve just launched **AudioBench**, a modular audio laboratory for macOS that lets you build and visualize audio signal flows in real time. It\u2019s designed for musicians, engineers, educators, and DSP learners \u2014 basically anyone who wants to understand how sound works by experimenting with"
-    },
-    {
-      "source": "reddit",
-      "url": "https://www.reddit.com/r/DSP/comments/1pjgi3y/audiobench_a_handson_macos_tool_for_learning_dsp/",
-      "title": "AudioBench: a hands-on macOS tool for learning DSP, signal flow, and sound design",
-      "author": "the_aurchitect",
-      "ts": "2025-12-10T22:23:15+00:00",
-      "snippet": "Hi everyone! I\u2019ve just launched **AudioBench**, a modular audio laboratory for macOS that lets you build and visualize audio signal flows in real time. It\u2019s designed for musicians, engineers, educators, and DSP learners \u2014 basically anyone who wants to understand how sound works by experimenting with"
     },
     {
       "source": "github",
@@ -213,14 +189,6 @@
   ],
   "feed": [
     {
-      "source": "reddit",
-      "url": "https://www.reddit.com/r/WebsiteLaunches/comments/1t5h4fv/daily_top_10_most_upvoted_sites_from_yesterday/",
-      "title": "\ud83d\udcca Daily Top 10 - Most Upvoted Sites from Yesterday (May 6, 2026)",
-      "author": "antiochIst",
-      "ts": "2026-05-06T16:00:03+00:00",
-      "snippet": "**The top 10 most upvoted sites from yesterday on [Website Launches](https://websitelaunches.com)**\n\n---\n\n*32 total upvotes across all sites* \ud83d\udd25\n\n---\n\n**#1 \ud83c\udfc6** **watchorwander.com** *(4 upvotes)*  \n\ud83d\ude80 Video &amp; Streaming  \nWatch Or Wander is an entertainment review platform created by and for people"
-    },
-    {
       "source": "github",
       "url": "https://github.com/ricklon/talkbot/issues/37",
       "title": "feat: LLM-judge benchmark with pass^k, TTS quality scoring, and conversation endurance",
@@ -251,22 +219,6 @@
       "author": "github-actions[bot]",
       "ts": "2026-01-13T16:56:14Z",
       "snippet": "bddk520/DailyArXiv"
-    },
-    {
-      "source": "reddit",
-      "url": "https://www.reddit.com/r/synthesizers/comments/1pjgl7r/audiobench_a_handson_macos_tool_for_learning_dsp/",
-      "title": "AudioBench: a hands-on macOS tool for learning DSP, signal flow, and sound design",
-      "author": "the_aurchitect",
-      "ts": "2025-12-10T22:26:43+00:00",
-      "snippet": "Hi everyone! I\u2019ve just launched **AudioBench**, a modular audio laboratory for macOS that lets you build and visualize audio signal flows in real time. It\u2019s designed for musicians, engineers, educators, and DSP learners \u2014 basically anyone who wants to understand how sound works by experimenting with"
-    },
-    {
-      "source": "reddit",
-      "url": "https://www.reddit.com/r/DSP/comments/1pjgi3y/audiobench_a_handson_macos_tool_for_learning_dsp/",
-      "title": "AudioBench: a hands-on macOS tool for learning DSP, signal flow, and sound design",
-      "author": "the_aurchitect",
-      "ts": "2025-12-10T22:23:15+00:00",
-      "snippet": "Hi everyone! I\u2019ve just launched **AudioBench**, a modular audio laboratory for macOS that lets you build and visualize audio signal flows in real time. It\u2019s designed for musicians, engineers, educators, and DSP learners \u2014 basically anyone who wants to understand how sound works by experimenting with"
     },
     {
       "source": "github",
