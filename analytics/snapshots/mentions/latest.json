@@ -1,15 +1,23 @@
 {
-  "collected_at": "2026-05-25T11:11:51+00:00",
+  "collected_at": "2026-06-01T12:38:20+00:00",
   "query": "audiobench",
   "counts": {
     "hn": 0,
     "reddit": 0,
     "bluesky": 0,
-    "github": 22,
+    "github": 23,
     "libraries.io": 0,
-    "total": 22
+    "total": 23
   },
   "items": [
+    {
+      "source": "github",
+      "url": "https://github.com/AudioLLMs/AudioBench/issues/15",
+      "title": "Where can I find data and instructions for IFEval-Audio",
+      "author": "cantabile-kwok",
+      "ts": "2026-04-14T11:24:38Z",
+      "snippet": "AudioLLMs/AudioBench"
+    },
     {
       "source": "github",
       "url": "https://github.com/ricklon/talkbot/issues/37",
@@ -188,6 +196,14 @@
     }
   ],
   "feed": [
+    {
+      "source": "github",
+      "url": "https://github.com/AudioLLMs/AudioBench/issues/15",
+      "title": "Where can I find data and instructions for IFEval-Audio",
+      "author": "cantabile-kwok",
+      "ts": "2026-04-14T11:24:38Z",
+      "snippet": "AudioLLMs/AudioBench"
+    },
     {
       "source": "github",
       "url": "https://github.com/ricklon/talkbot/issues/37",
