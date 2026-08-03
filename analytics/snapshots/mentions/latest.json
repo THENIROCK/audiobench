@@ -1,15 +1,23 @@
 {
-  "collected_at": "2026-07-27T10:43:06+00:00",
+  "collected_at": "2026-08-03T10:42:34+00:00",
   "query": "audiobench",
   "counts": {
     "hn": 0,
     "reddit": 0,
     "bluesky": 0,
-    "github": 26,
+    "github": 27,
     "libraries.io": 0,
-    "total": 26
+    "total": 27
   },
   "items": [
+    {
+      "source": "github",
+      "url": "https://github.com/ktwu01/benchmark-radar/issues/83",
+      "title": "\u80fd\u4e0d\u80fd\u518d\u6536\u96c6\u4e00\u4e2a\u5404model card\u6253\u699c\u8fc7\u7684popular benchmark\u699c",
+      "author": "ktwu01",
+      "ts": "2026-08-02T15:39:00Z",
+      "snippet": "ktwu01/benchmark-radar"
+    },
     {
       "source": "github",
       "url": "https://github.com/NVIDIA-NeMo/Gym/issues/2067",
@@ -222,6 +230,14 @@
   "feed": [
     {
       "source": "github",
+      "url": "https://github.com/ktwu01/benchmark-radar/issues/83",
+      "title": "\u80fd\u4e0d\u80fd\u518d\u6536\u96c6\u4e00\u4e2a\u5404model card\u6253\u699c\u8fc7\u7684popular benchmark\u699c",
+      "author": "ktwu01",
+      "ts": "2026-08-02T15:39:00Z",
+      "snippet": "ktwu01/benchmark-radar"
+    },
+    {
+      "source": "github",
       "url": "https://github.com/NVIDIA-NeMo/Gym/issues/2067",
       "title": "[Tracker] Pull request handoff SLA",
       "author": "github-actions[bot]",
@@ -411,14 +427,6 @@
       "author": "github-actions[bot]",
       "ts": "2024-09-04T16:43:55Z",
       "snippet": "tangwen-qian/DailyArXiv"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/LAION-AI/CLAP/issues/137",
-      "title": "can't load the pretrained checkpoints",
-      "author": "naarkhoo",
-      "ts": "2024-01-04T15:14:55Z",
-      "snippet": "LAION-AI/CLAP"
     }
   ]
 }
