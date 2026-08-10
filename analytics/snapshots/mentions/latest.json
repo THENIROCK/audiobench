@@ -1,15 +1,23 @@
 {
-  "collected_at": "2026-08-03T10:42:34+00:00",
+  "collected_at": "2026-08-10T08:26:43+00:00",
   "query": "audiobench",
   "counts": {
     "hn": 0,
     "reddit": 0,
     "bluesky": 0,
-    "github": 27,
+    "github": 29,
     "libraries.io": 0,
-    "total": 27
+    "total": 29
   },
   "items": [
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1433",
+      "title": "Bind the proven eval infrastructure (Leg-B scorer, held-out NLL) to the live R1 candidate",
+      "author": "wordingone",
+      "ts": "2026-08-05T03:29:28Z",
+      "snippet": "wordingone/ember"
+    },
     {
       "source": "github",
       "url": "https://github.com/ktwu01/benchmark-radar/issues/83",
@@ -17,6 +25,14 @@
       "author": "ktwu01",
       "ts": "2026-08-02T15:39:00Z",
       "snippet": "ktwu01/benchmark-radar"
+    },
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1116",
+      "title": "[ROADMAP][EMBER-02] Three-billion-parameter foundation birth",
+      "author": "wordingone",
+      "ts": "2026-07-27T15:54:29Z",
+      "snippet": "wordingone/ember"
     },
     {
       "source": "github",
@@ -230,11 +246,27 @@
   "feed": [
     {
       "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1433",
+      "title": "Bind the proven eval infrastructure (Leg-B scorer, held-out NLL) to the live R1 candidate",
+      "author": "wordingone",
+      "ts": "2026-08-05T03:29:28Z",
+      "snippet": "wordingone/ember"
+    },
+    {
+      "source": "github",
       "url": "https://github.com/ktwu01/benchmark-radar/issues/83",
       "title": "\u80fd\u4e0d\u80fd\u518d\u6536\u96c6\u4e00\u4e2a\u5404model card\u6253\u699c\u8fc7\u7684popular benchmark\u699c",
       "author": "ktwu01",
       "ts": "2026-08-02T15:39:00Z",
       "snippet": "ktwu01/benchmark-radar"
+    },
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1116",
+      "title": "[ROADMAP][EMBER-02] Three-billion-parameter foundation birth",
+      "author": "wordingone",
+      "ts": "2026-07-27T15:54:29Z",
+      "snippet": "wordingone/ember"
     },
     {
       "source": "github",
@@ -411,22 +443,6 @@
       "author": "Helw150",
       "ts": "2024-10-23T20:25:45Z",
       "snippet": "janhq/ichigo"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/janhq/ichigo/issues/66",
-      "title": "run: v0.3 phase 3 teach model to say \"i cannot hear/understand you\"",
-      "author": "bachvudinh",
-      "ts": "2024-09-20T02:42:03Z",
-      "snippet": "janhq/ichigo"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/tangwen-qian/DailyArXiv/issues/110",
-      "title": "Latest 15 Papers - September 05, 2024",
-      "author": "github-actions[bot]",
-      "ts": "2024-09-04T16:43:55Z",
-      "snippet": "tangwen-qian/DailyArXiv"
     }
   ]
 }
