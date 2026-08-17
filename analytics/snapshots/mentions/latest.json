@@ -1,15 +1,23 @@
 {
-  "collected_at": "2026-08-10T08:26:43+00:00",
+  "collected_at": "2026-08-17T07:53:16+00:00",
   "query": "audiobench",
   "counts": {
     "hn": 0,
     "reddit": 0,
     "bluesky": 0,
-    "github": 29,
+    "github": 30,
     "libraries.io": 0,
-    "total": 29
+    "total": 30
   },
   "items": [
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1720",
+      "title": "Scope: 44-source text-lab authority resolution program (blocks R1 rung)",
+      "author": "wordingone",
+      "ts": "2026-08-13T22:11:12Z",
+      "snippet": "wordingone/ember"
+    },
     {
       "source": "github",
       "url": "https://github.com/wordingone/ember/issues/1433",
@@ -246,6 +254,14 @@
   "feed": [
     {
       "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1720",
+      "title": "Scope: 44-source text-lab authority resolution program (blocks R1 rung)",
+      "author": "wordingone",
+      "ts": "2026-08-13T22:11:12Z",
+      "snippet": "wordingone/ember"
+    },
+    {
+      "source": "github",
       "url": "https://github.com/wordingone/ember/issues/1433",
       "title": "Bind the proven eval infrastructure (Leg-B scorer, held-out NLL) to the live R1 candidate",
       "author": "wordingone",
@@ -434,14 +450,6 @@
       "title": "task: Train and test text2semantic under decoder only framework for ichigo v0.5",
       "author": "tikikun",
       "ts": "2024-11-28T02:38:07Z",
-      "snippet": "janhq/ichigo"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/janhq/ichigo/issues/98",
-      "title": "Reproducing the OpenHermes and Alpaca Audio Evals",
-      "author": "Helw150",
-      "ts": "2024-10-23T20:25:45Z",
       "snippet": "janhq/ichigo"
     }
   ]
