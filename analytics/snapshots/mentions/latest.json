@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-08-24T07:57:40+00:00",
+  "collected_at": "2026-09-07T13:19:28+00:00",
   "query": "audiobench",
   "counts": {
     "hn": 0,
@@ -12,6 +12,38 @@
   "items": [
     {
       "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/2120",
+      "title": "[CUSTODY][C5] Make E-MATRIX-AUDIO producible: LibriSpeech test-clean heldout N=64 + protected audio contract + adapt-audio (#1947 front unit)",
+      "author": "wordingone",
+      "ts": "2026-09-05T04:13:36Z",
+      "snippet": "wordingone/ember"
+    },
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1964",
+      "title": "[CAMPAIGN][EVALUATION][E-MATRIX] Freeze complete protected modality matrix, adapters, and scorers",
+      "author": "wordingone",
+      "ts": "2026-08-28T18:12:57Z",
+      "snippet": "wordingone/ember"
+    },
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1947",
+      "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)",
+      "author": "wordingone",
+      "ts": "2026-08-28T00:11:16Z",
+      "snippet": "wordingone/ember"
+    },
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1948",
+      "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives",
+      "author": "wordingone",
+      "ts": "2026-08-28T00:11:16Z",
+      "snippet": "wordingone/ember"
+    },
+    {
+      "source": "github",
       "url": "https://github.com/wordingone/ember/issues/1720",
       "title": "Scope: 44-source text-lab authority resolution program (blocks R1 rung)",
       "author": "wordingone",
@@ -208,22 +240,6 @@
       "title": "task: Train and test text2semantic under decoder only framework for ichigo v0.5",
       "author": "tikikun",
       "ts": "2024-11-28T02:38:07Z",
-      "snippet": "janhq/ichigo"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/janhq/ichigo/issues/98",
-      "title": "Reproducing the OpenHermes and Alpaca Audio Evals",
-      "author": "Helw150",
-      "ts": "2024-10-23T20:25:45Z",
-      "snippet": "janhq/ichigo"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/janhq/ichigo/issues/66",
-      "title": "run: v0.3 phase 3 teach model to say \"i cannot hear/understand you\"",
-      "author": "bachvudinh",
-      "ts": "2024-09-20T02:42:03Z",
       "snippet": "janhq/ichigo"
     },
     {
@@ -233,25 +249,41 @@
       "author": "github-actions[bot]",
       "ts": "2024-09-04T16:43:55Z",
       "snippet": "tangwen-qian/DailyArXiv"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/LAION-AI/CLAP/issues/137",
-      "title": "can't load the pretrained checkpoints",
-      "author": "naarkhoo",
-      "ts": "2024-01-04T15:14:55Z",
-      "snippet": "LAION-AI/CLAP"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/juce-framework/JUCE/issues/768",
-      "title": "Fitted text does not fill the specified width.",
-      "author": "someguynamedjosh",
-      "ts": "2020-07-30T05:39:21Z",
-      "snippet": "juce-framework/JUCE"
     }
   ],
   "feed": [
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/2120",
+      "title": "[CUSTODY][C5] Make E-MATRIX-AUDIO producible: LibriSpeech test-clean heldout N=64 + protected audio contract + adapt-audio (#1947 front unit)",
+      "author": "wordingone",
+      "ts": "2026-09-05T04:13:36Z",
+      "snippet": "wordingone/ember"
+    },
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1964",
+      "title": "[CAMPAIGN][EVALUATION][E-MATRIX] Freeze complete protected modality matrix, adapters, and scorers",
+      "author": "wordingone",
+      "ts": "2026-08-28T18:12:57Z",
+      "snippet": "wordingone/ember"
+    },
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1947",
+      "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)",
+      "author": "wordingone",
+      "ts": "2026-08-28T00:11:16Z",
+      "snippet": "wordingone/ember"
+    },
+    {
+      "source": "github",
+      "url": "https://github.com/wordingone/ember/issues/1948",
+      "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives",
+      "author": "wordingone",
+      "ts": "2026-08-28T00:11:16Z",
+      "snippet": "wordingone/ember"
+    },
     {
       "source": "github",
       "url": "https://github.com/wordingone/ember/issues/1720",
@@ -419,38 +451,6 @@
       "author": "BinWang28",
       "ts": "2025-03-12T15:03:04Z",
       "snippet": "Sakshi113/MMAU"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/AudioLLMs/AudioBench/issues/5",
-      "title": "To be fixed",
-      "author": "BinWang28",
-      "ts": "2025-02-19T08:47:32Z",
-      "snippet": "AudioLLMs/AudioBench"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/AudioLLMs/AudioBench/issues/4",
-      "title": "Evaluation on speech output tasks",
-      "author": "Ashbajawed",
-      "ts": "2025-01-29T00:03:44Z",
-      "snippet": "AudioLLMs/AudioBench"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/janhq/ichigo/issues/163",
-      "title": "exp: pip install ichigo",
-      "author": "tuanlda78202",
-      "ts": "2025-01-20T06:29:47Z",
-      "snippet": "janhq/ichigo"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/janhq/ichigo/issues/145",
-      "title": "task: Train and test text2semantic under decoder only framework for ichigo v0.5",
-      "author": "tikikun",
-      "ts": "2024-11-28T02:38:07Z",
-      "snippet": "janhq/ichigo"
     }
   ]
 }
