@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>audiobench analytics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+  .kpi-num { font-variant-numeric: tabular-nums; }
+  .chart-box { position: relative; width: 100%; }
+  .chart-box > canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+<div class="max-w-7xl mx-auto px-6 py-10">
+  <header class="flex items-end justify-between mb-10">
+    <div>
+      <h1 class="text-3xl font-semibold tracking-tight">audiobench</h1>
+      <p class="text-slate-400 mt-1">PyPI, GitHub, mentions, geo, and opt-in CLI usage.</p>
+    </div>
+    <div class="text-right text-xs text-slate-500">
+      <div>Generated <span id="generated_at"></span></div>
+      <div>Sources: pypistats / GitHub / HN / Reddit / Bluesky / GoatCounter / CLI telemetry</div>
+    </div>
+  </header>
+
+  <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="kpis"></section>
+
+  <section class="mb-8">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Where from (mentions)</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4" id="growth_kpis"></div>
+  </section>
+
+  <section class="card rounded-xl p-5 mb-8">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Mentions feed (latest 25)</h2>
+    <table class="w-full text-sm" id="tbl_mentions"></table>
+  </section>
+
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Geography (PyPI installs)</h2>
+      <div class="chart-box" style="height:280px;"><canvas id="chart_geo"></canvas></div>
+      <p class="text-xs text-slate-500 mt-2" id="geo_note"></p>
+    </div>
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Docs site (GoatCounter)</h2>
+      <div id="goatcounter_panel" class="text-sm text-slate-400"></div>
+    </div>
+  </section>
+
+  <section class="card rounded-xl p-5 mb-8">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Real-use telemetry (opt-in CLI)</h2>
+    <div id="telemetry_panel"></div>
+  </section>
+
+  <section class="card rounded-xl p-5 mb-8" id="gsc_section" style="display:none">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Search queries (Google Search Console)</h2>
+    <table class="w-full text-sm" id="tbl_gsc"></table>
+  </section>
+
+  <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    <div class="card rounded-xl p-5 lg:col-span-3">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">PyPI downloads, last 180 days</h2>
+      <div class="chart-box" style="height:280px;"><canvas id="chart_downloads"></canvas></div>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Downloads by Python version</h2>
+      <div class="chart-box" style="height:280px;"><canvas id="chart_python"></canvas></div>
+    </div>
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Downloads by OS</h2>
+      <div class="chart-box" style="height:280px;"><canvas id="chart_os"></canvas></div>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">GitHub page views, last 14 days</h2>
+      <div class="chart-box" style="height:240px;"><canvas id="chart_views"></canvas></div>
+    </div>
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">GitHub clones, last 14 days</h2>
+      <div class="chart-box" style="height:240px;"><canvas id="chart_clones"></canvas></div>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Top referrers (GitHub)</h2>
+      <table class="w-full text-sm" id="tbl_referrers"></table>
+    </div>
+    <div class="card rounded-xl p-5">
+      <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Top repo paths (GitHub)</h2>
+      <table class="w-full text-sm" id="tbl_paths"></table>
+    </div>
+  </section>
+
+  <section class="card rounded-xl p-5 mb-12">
+    <h2 class="text-sm uppercase tracking-wider text-slate-400 mb-3">Hugging Face</h2>
+    <div id="hf"></div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-500 pb-8">
+    CLI telemetry is opt-in only. PyPI provides no install referrer. See docs/reference/telemetry.md.
+  </footer>
+</div>
+
+<script>
+const DATA = {"generated_at": "2026-09-07T13:21:17+00:00", "project": {"pypi": "audiobench", "github": "THENIROCK/audiobench", "created_at": "2026-05-05T03:11:30Z"}, "kpis": {"downloads_last_day": 0, "downloads_last_week": 4, "downloads_last_month": 29, "downloads_total_180d": 748, "github_stars": 2, "github_forks": 0, "github_watchers": 0, "github_open_issues": 0, "views_14d": null, "unique_visitors_14d": null, "clones_14d": null, "unique_cloners_14d": null}, "series": {"downloads_daily": [{"date": "2026-05-07", "downloads": 177}, {"date": "2026-05-08", "downloads": 10}, {"date": "2026-05-09", "downloads": 11}, {"date": "2026-05-10", "downloads": 2}, {"date": "2026-05-11", "downloads": 2}, {"date": "2026-05-12", "downloads": 16}, {"date": "2026-05-13", "downloads": 3}, {"date": "2026-05-14", "downloads": 16}, {"date": "2026-05-15", "downloads": 8}, {"date": "2026-05-16", "downloads": 4}, {"date": "2026-05-17", "downloads": 4}, {"date": "2026-05-18", "downloads": 14}, {"date": "2026-05-20", "downloads": 116}, {"date": "2026-05-21", "downloads": 11}, {"date": "2026-05-22", "downloads": 6}, {"date": "2026-05-23", "downloads": 1}, {"date": "2026-05-24", "downloads": 4}, {"date": "2026-05-25", "downloads": 33}, {"date": "2026-05-26", "downloads": 10}, {"date": "2026-05-27", "downloads": 4}, {"date": "2026-05-28", "downloads": 4}, {"date": "2026-05-29", "downloads": 3}, {"date": "2026-05-30", "downloads": 2}, {"date": "2026-06-01", "downloads": 1}, {"date": "2026-06-02", "downloads": 9}, {"date": "2026-06-03", "downloads": 2}, {"date": "2026-06-04", "downloads": 1}, {"date": "2026-06-05", "downloads": 15}, {"date": "2026-06-06", "downloads": 30}, {"date": "2026-06-07", "downloads": 12}, {"date": "2026-06-08", "downloads": 7}, {"date": "2026-06-09", "downloads": 2}, {"date": "2026-06-10", "downloads": 12}, {"date": "2026-06-11", "downloads": 7}, {"date": "2026-06-12", "downloads": 1}, {"date": "2026-06-13", "downloads": 11}, {"date": "2026-06-14", "downloads": 5}, {"date": "2026-06-15", "downloads": 1}, {"date": "2026-06-16", "downloads": 10}, {"date": "2026-06-17", "downloads": 5}, {"date": "2026-06-18", "downloads": 11}, {"date": "2026-06-20", "downloads": 2}, {"date": "2026-06-21", "downloads": 4}, {"date": "2026-06-22", "downloads": 5}, {"date": "2026-06-23", "downloads": 5}, {"date": "2026-06-24", "downloads": 10}, {"date": "2026-06-25", "downloads": 12}, {"date": "2026-06-26", "downloads": 2}, {"date": "2026-06-27", "downloads": 4}, {"date": "2026-06-28", "downloads": 3}, {"date": "2026-06-29", "downloads": 3}, {"date": "2026-06-30", "downloads": 8}, {"date": "2026-07-03", "downloads": 6}, {"date": "2026-07-05", "downloads": 3}, {"date": "2026-07-07", "downloads": 3}, {"date": "2026-07-09", "downloads": 1}, {"date": "2026-07-11", "downloads": 2}, {"date": "2026-07-13", "downloads": 3}, {"date": "2026-07-14", "downloads": 3}, {"date": "2026-07-15", "downloads": 3}, {"date": "2026-07-17", "downloads": 1}, {"date": "2026-07-18", "downloads": 8}, {"date": "2026-07-19", "downloads": 2}, {"date": "2026-07-20", "downloads": 7}, {"date": "2026-07-21", "downloads": 6}, {"date": "2026-07-22", "downloads": 2}, {"date": "2026-07-23", "downloads": 3}, {"date": "2026-07-28", "downloads": 2}, {"date": "2026-08-02", "downloads": 1}, {"date": "2026-08-03", "downloads": 1}, {"date": "2026-08-06", "downloads": 1}, {"date": "2026-08-09", "downloads": 3}, {"date": "2026-08-14", "downloads": 2}, {"date": "2026-08-18", "downloads": 2}, {"date": "2026-08-20", "downloads": 2}, {"date": "2026-08-21", "downloads": 1}, {"date": "2026-08-23", "downloads": 3}, {"date": "2026-08-24", "downloads": 6}, {"date": "2026-08-25", "downloads": 1}, {"date": "2026-08-26", "downloads": 2}, {"date": "2026-08-27", "downloads": 1}, {"date": "2026-08-28", "downloads": 2}, {"date": "2026-08-31", "downloads": 1}, {"date": "2026-09-01", "downloads": 2}, {"date": "2026-09-03", "downloads": 1}], "views_daily": [], "clones_daily": []}, "breakdowns": {"by_python_minor": [["Unknown / mirrors", 630], ["3.12", 48], ["3.10", 35], ["3.11", 27], ["3.13", 6], ["3.14", 2]], "by_os": [["Unknown / mirrors", 630], ["Linux", 95], ["Darwin", 18], ["Windows", 5]], "referrers": {"_error": "{\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/metrics/traffic#get-top-referral-sources\",\"status\":\"403\"}gh: Resource not accessible by integration (HTTP 403)"}, "paths": {"_error": "{\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/metrics/traffic#get-top-referral-paths\",\"status\":\"403\"}gh: Resource not accessible by integration (HTTP 403)"}}, "hf": [], "growth": {"mentions": {"collected_at": "2026-09-07T13:19:28+00:00", "query": "audiobench", "counts": {"hn": 0, "reddit": 0, "bluesky": 0, "github": 30, "libraries.io": 0, "total": 30}, "items": [{"source": "github", "url": "https://github.com/wordingone/ember/issues/2120", "title": "[CUSTODY][C5] Make E-MATRIX-AUDIO producible: LibriSpeech test-clean heldout N=64 + protected audio contract + adapt-audio (#1947 front unit)", "author": "wordingone", "ts": "2026-09-05T04:13:36Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1964", "title": "[CAMPAIGN][EVALUATION][E-MATRIX] Freeze complete protected modality matrix, adapters, and scorers", "author": "wordingone", "ts": "2026-08-28T18:12:57Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1947", "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)", "author": "wordingone", "ts": "2026-08-28T00:11:16Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1948", "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives", "author": "wordingone", "ts": "2026-08-28T00:11:16Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1720", "title": "Scope: 44-source text-lab authority resolution program (blocks R1 rung)", "author": "wordingone", "ts": "2026-08-13T22:11:12Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1433", "title": "Bind the proven eval infrastructure (Leg-B scorer, held-out NLL) to the live R1 candidate", "author": "wordingone", "ts": "2026-08-05T03:29:28Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/ktwu01/benchmark-radar/issues/83", "title": "\u80fd\u4e0d\u80fd\u518d\u6536\u96c6\u4e00\u4e2a\u5404model card\u6253\u699c\u8fc7\u7684popular benchmark\u699c", "author": "ktwu01", "ts": "2026-08-02T15:39:00Z", "snippet": "ktwu01/benchmark-radar"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1116", "title": "[ROADMAP][EMBER-02] Three-billion-parameter foundation birth", "author": "wordingone", "ts": "2026-07-27T15:54:29Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/NVIDIA-NeMo/Gym/issues/2067", "title": "[Tracker] Pull request handoff SLA", "author": "github-actions[bot]", "ts": "2026-07-17T09:44:00Z", "snippet": "NVIDIA-NeMo/Gym"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/872", "title": "[EMBER-02C] Land full-closure frozen evaluator integration", "author": "wordingone", "ts": "2026-07-16T17:37:57Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/812", "title": "[EMBER-02] Bind clean-genesis 3B trainer input identity and shard forwarding end to end", "author": "wordingone", "ts": "2026-07-13T07:58:19Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/15", "title": "Where can I find data and instructions for IFEval-Audio", "author": "cantabile-kwok", "ts": "2026-04-14T11:24:38Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/ricklon/talkbot/issues/37", "title": "feat: LLM-judge benchmark with pass^k, TTS quality scoring, and conversation endurance", "author": "rianders", "ts": "2026-03-10T15:55:14Z", "snippet": "ricklon/talkbot"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/234", "title": "Latest 15 Papers - January 15, 2026", "author": "github-actions[bot]", "ts": "2026-01-14T16:55:20Z", "snippet": "bddk520/DailyArXiv"}, {"source": "github", "url": "https://github.com/xrose3159/DailyArXiv/issues/57", "title": "Latest 15 Papers - January 14, 2026", "author": "github-actions[bot]", "ts": "2026-01-13T16:56:58Z", "snippet": "xrose3159/DailyArXiv"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/233", "title": "Latest 15 Papers - January 14, 2026", "author": "github-actions[bot]", "ts": "2026-01-13T16:56:14Z", "snippet": "bddk520/DailyArXiv"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/218", "title": "Latest 20 Papers - November 17, 2025", "author": "github-actions[bot]", "ts": "2025-11-16T16:41:54Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/217", "title": "Latest 20 Papers - November 16, 2025", "author": "github-actions[bot]", "ts": "2025-11-16T08:32:42Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/216", "title": "Latest 20 Papers - November 15, 2025", "author": "github-actions[bot]", "ts": "2025-11-15T08:31:42Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/Tencent-Hunyuan/HunyuanVideo-Foley/issues/19", "title": "About evaluation on vggsound and other benchmark", "author": "explore-aigc", "ts": "2025-09-01T16:15:31Z", "snippet": "Tencent-Hunyuan/HunyuanVideo-Foley"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/77", "title": "Latest 15 Papers - May 28, 2025", "author": "github-actions[bot]", "ts": "2025-05-27T16:47:08Z", "snippet": "bddk520/DailyArXiv"}, {"source": "github", "url": "https://github.com/set-path/DailyArXiv/issues/33", "title": "Papers - May 26, 2025", "author": "github-actions[bot]", "ts": "2025-05-25T16:45:40Z", "snippet": "set-path/DailyArXiv"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/9", "title": "'bash examples/eval_SALMONN_7B.sh' ?", "author": "greatnoble", "ts": "2025-05-01T05:18:48Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/xiaomi-research/r1-aqa/issues/3", "title": "Only evaluate on MMAU?", "author": "shanhaidexiamo", "ts": "2025-03-17T07:54:12Z", "snippet": "xiaomi-research/r1-aqa"}, {"source": "github", "url": "https://github.com/Sakshi113/MMAU/issues/9", "title": "HF Dataset and Evaluation with AudioBench", "author": "BinWang28", "ts": "2025-03-12T15:03:04Z", "snippet": "Sakshi113/MMAU"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/5", "title": "To be fixed", "author": "BinWang28", "ts": "2025-02-19T08:47:32Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/4", "title": "Evaluation on speech output tasks", "author": "Ashbajawed", "ts": "2025-01-29T00:03:44Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/janhq/ichigo/issues/163", "title": "exp: pip install ichigo", "author": "tuanlda78202", "ts": "2025-01-20T06:29:47Z", "snippet": "janhq/ichigo"}, {"source": "github", "url": "https://github.com/janhq/ichigo/issues/145", "title": "task: Train and test text2semantic under decoder only framework for ichigo v0.5", "author": "tikikun", "ts": "2024-11-28T02:38:07Z", "snippet": "janhq/ichigo"}, {"source": "github", "url": "https://github.com/tangwen-qian/DailyArXiv/issues/110", "title": "Latest 15 Papers - September 05, 2024", "author": "github-actions[bot]", "ts": "2024-09-04T16:43:55Z", "snippet": "tangwen-qian/DailyArXiv"}], "feed": [{"source": "github", "url": "https://github.com/wordingone/ember/issues/2120", "title": "[CUSTODY][C5] Make E-MATRIX-AUDIO producible: LibriSpeech test-clean heldout N=64 + protected audio contract + adapt-audio (#1947 front unit)", "author": "wordingone", "ts": "2026-09-05T04:13:36Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1964", "title": "[CAMPAIGN][EVALUATION][E-MATRIX] Freeze complete protected modality matrix, adapters, and scorers", "author": "wordingone", "ts": "2026-08-28T18:12:57Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1947", "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)", "author": "wordingone", "ts": "2026-08-28T00:11:16Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1948", "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives", "author": "wordingone", "ts": "2026-08-28T00:11:16Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1720", "title": "Scope: 44-source text-lab authority resolution program (blocks R1 rung)", "author": "wordingone", "ts": "2026-08-13T22:11:12Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1433", "title": "Bind the proven eval infrastructure (Leg-B scorer, held-out NLL) to the live R1 candidate", "author": "wordingone", "ts": "2026-08-05T03:29:28Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/ktwu01/benchmark-radar/issues/83", "title": "\u80fd\u4e0d\u80fd\u518d\u6536\u96c6\u4e00\u4e2a\u5404model card\u6253\u699c\u8fc7\u7684popular benchmark\u699c", "author": "ktwu01", "ts": "2026-08-02T15:39:00Z", "snippet": "ktwu01/benchmark-radar"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/1116", "title": "[ROADMAP][EMBER-02] Three-billion-parameter foundation birth", "author": "wordingone", "ts": "2026-07-27T15:54:29Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/NVIDIA-NeMo/Gym/issues/2067", "title": "[Tracker] Pull request handoff SLA", "author": "github-actions[bot]", "ts": "2026-07-17T09:44:00Z", "snippet": "NVIDIA-NeMo/Gym"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/872", "title": "[EMBER-02C] Land full-closure frozen evaluator integration", "author": "wordingone", "ts": "2026-07-16T17:37:57Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/wordingone/ember/issues/812", "title": "[EMBER-02] Bind clean-genesis 3B trainer input identity and shard forwarding end to end", "author": "wordingone", "ts": "2026-07-13T07:58:19Z", "snippet": "wordingone/ember"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/15", "title": "Where can I find data and instructions for IFEval-Audio", "author": "cantabile-kwok", "ts": "2026-04-14T11:24:38Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/ricklon/talkbot/issues/37", "title": "feat: LLM-judge benchmark with pass^k, TTS quality scoring, and conversation endurance", "author": "rianders", "ts": "2026-03-10T15:55:14Z", "snippet": "ricklon/talkbot"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/234", "title": "Latest 15 Papers - January 15, 2026", "author": "github-actions[bot]", "ts": "2026-01-14T16:55:20Z", "snippet": "bddk520/DailyArXiv"}, {"source": "github", "url": "https://github.com/xrose3159/DailyArXiv/issues/57", "title": "Latest 15 Papers - January 14, 2026", "author": "github-actions[bot]", "ts": "2026-01-13T16:56:58Z", "snippet": "xrose3159/DailyArXiv"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/233", "title": "Latest 15 Papers - January 14, 2026", "author": "github-actions[bot]", "ts": "2026-01-13T16:56:14Z", "snippet": "bddk520/DailyArXiv"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/218", "title": "Latest 20 Papers - November 17, 2025", "author": "github-actions[bot]", "ts": "2025-11-16T16:41:54Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/217", "title": "Latest 20 Papers - November 16, 2025", "author": "github-actions[bot]", "ts": "2025-11-16T08:32:42Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/WangYijun-OUC/DailyArXiv/issues/216", "title": "Latest 20 Papers - November 15, 2025", "author": "github-actions[bot]", "ts": "2025-11-15T08:31:42Z", "snippet": "WangYijun-OUC/DailyArXiv"}, {"source": "github", "url": "https://github.com/Tencent-Hunyuan/HunyuanVideo-Foley/issues/19", "title": "About evaluation on vggsound and other benchmark", "author": "explore-aigc", "ts": "2025-09-01T16:15:31Z", "snippet": "Tencent-Hunyuan/HunyuanVideo-Foley"}, {"source": "github", "url": "https://github.com/bddk520/DailyArXiv/issues/77", "title": "Latest 15 Papers - May 28, 2025", "author": "github-actions[bot]", "ts": "2025-05-27T16:47:08Z", "snippet": "bddk520/DailyArXiv"}, {"source": "github", "url": "https://github.com/set-path/DailyArXiv/issues/33", "title": "Papers - May 26, 2025", "author": "github-actions[bot]", "ts": "2025-05-25T16:45:40Z", "snippet": "set-path/DailyArXiv"}, {"source": "github", "url": "https://github.com/AudioLLMs/AudioBench/issues/9", "title": "'bash examples/eval_SALMONN_7B.sh' ?", "author": "greatnoble", "ts": "2025-05-01T05:18:48Z", "snippet": "AudioLLMs/AudioBench"}, {"source": "github", "url": "https://github.com/xiaomi-research/r1-aqa/issues/3", "title": "Only evaluate on MMAU?", "author": "shanhaidexiamo", "ts": "2025-03-17T07:54:12Z", "snippet": "xiaomi-research/r1-aqa"}, {"source": "github", "url": "https://github.com/Sakshi113/MMAU/issues/9", "title": "HF Dataset and Evaluation with AudioBench", "author": "BinWang28", "ts": "2025-03-12T15:03:04Z", "snippet": "Sakshi113/MMAU"}]}, "goatcounter": {"_skipped": true, "_reason": "no token"}, "gsc": {"_skipped": true, "_reason": "no GCP_SA_KEY"}, "bigquery": null}, "telemetry": {"_empty": true, "_reason": "[Errno -2] Name or service not known"}};
+
+document.getElementById("generated_at").textContent = DATA.generated_at + " UTC";
+
+const fmt = (n) => (n == null ? "—" : Number(n).toLocaleString());
+
+const kpiDefs = [
+  ["Downloads last month",  DATA.kpis.downloads_last_month,   "PyPI / last 30d"],
+  ["Downloads last week",   DATA.kpis.downloads_last_week,    "PyPI / last 7d"],
+  ["Downloads (180d total)",DATA.kpis.downloads_total_180d,   "PyPI / pypistats overall"],
+  ["Downloads yesterday",   DATA.kpis.downloads_last_day,     "PyPI / last 1d"],
+  ["GitHub stars",          DATA.kpis.github_stars,           "github.com/" + DATA.project.github],
+  ["Unique visitors (14d)", DATA.kpis.unique_visitors_14d,    "GitHub Traffic"],
+  ["Page views (14d)",      DATA.kpis.views_14d,              "GitHub Traffic"],
+  ["Unique cloners (14d)",  DATA.kpis.unique_cloners_14d,     "GitHub Traffic"],
+];
+document.getElementById("kpis").innerHTML = kpiDefs.map(([label, val, sub]) => `
+  <div class="card rounded-xl p-5">
+    <div class="text-xs uppercase tracking-wider text-slate-400">${label}</div>
+    <div class="kpi-num text-3xl font-semibold mt-2">${fmt(val)}</div>
+    <div class="text-xs text-slate-500 mt-1">${sub}</div>
+  </div>
+`).join("");
+
+Chart.defaults.color = "#94a3b8";
+Chart.defaults.borderColor = "rgba(148,163,184,0.15)";
+const ACCENT = "rgba(99,102,241,1)";
+const ACCENT_FILL = "rgba(99,102,241,0.18)";
+
+function lineChart(id, labels, values, label) {
+  new Chart(document.getElementById(id), {
+    type: "line",
+    data: { labels, datasets: [{
+      label, data: values,
+      borderColor: ACCENT, backgroundColor: ACCENT_FILL,
+      borderWidth: 2, tension: 0.3, fill: true, pointRadius: 0,
+    }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxTicksLimit: 8 } },
+        y: { beginAtZero: true, grid: { color: "rgba(148,163,184,0.08)" } },
+      },
+    },
+  });
+}
+
+function donutChart(id, labels, values) {
+  new Chart(document.getElementById(id), {
+    type: "doughnut",
+    data: { labels, datasets: [{
+      data: values,
+      backgroundColor: ["#6366f1","#8b5cf6","#06b6d4","#10b981","#f59e0b","#ef4444","#ec4899","#64748b","#0ea5e9","#14b8a6"],
+      borderWidth: 0,
+    }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { boxWidth: 10 } } },
+      cutout: "62%",
+    },
+  });
+}
+
+lineChart(
+  "chart_downloads",
+  DATA.series.downloads_daily.map(r => r.date),
+  DATA.series.downloads_daily.map(r => r.downloads),
+  "downloads",
+);
+lineChart(
+  "chart_views",
+  (DATA.series.views_daily || []).map(r => r.timestamp.slice(0,10)),
+  (DATA.series.views_daily || []).map(r => r.count),
+  "views",
+);
+lineChart(
+  "chart_clones",
+  (DATA.series.clones_daily || []).map(r => r.timestamp.slice(0,10)),
+  (DATA.series.clones_daily || []).map(r => r.count),
+  "clones",
+);
+
+donutChart(
+  "chart_python",
+  DATA.breakdowns.by_python_minor.map(r => r[0]),
+  DATA.breakdowns.by_python_minor.map(r => r[1]),
+);
+donutChart(
+  "chart_os",
+  DATA.breakdowns.by_os.map(r => r[0]),
+  DATA.breakdowns.by_os.map(r => r[1]),
+);
+
+function table(id, rows, cols) {
+  const head = `<thead><tr class="text-left text-slate-400 text-xs uppercase tracking-wider">${cols.map(c => `<th class="py-2">${c.label}</th>`).join("")}</tr></thead>`;
+  const body = rows.length
+    ? rows.map(r => `<tr class="border-t border-slate-800">${cols.map(c => `<td class="py-2">${c.fmt ? c.fmt(r[c.key]) : (r[c.key] ?? "—")}</td>`).join("")}</tr>`).join("")
+    : `<tr><td colspan="${cols.length}" class="py-4 text-center text-slate-500">No data yet.</td></tr>`;
+  document.getElementById(id).innerHTML = head + "<tbody>" + body + "</tbody>";
+}
+
+table("tbl_referrers", DATA.breakdowns.referrers || [], [
+  { key: "referrer", label: "Source" },
+  { key: "count",    label: "Views", fmt: fmt },
+  { key: "uniques",  label: "Unique", fmt: fmt },
+]);
+table("tbl_paths", (DATA.breakdowns.paths || []).slice(0, 10), [
+  { key: "path",    label: "Path" },
+  { key: "count",   label: "Views", fmt: fmt },
+  { key: "uniques", label: "Unique", fmt: fmt },
+]);
+
+const growth = DATA.growth || {};
+const mcounts = (growth.mentions || {}).counts || {};
+const growthDefs = [
+  ["Hacker News", mcounts.hn || 0, "Algolia search"],
+  ["Reddit", mcounts.reddit || 0, "search API"],
+  ["Bluesky", mcounts.bluesky || 0, "public API"],
+  ["GitHub issues", mcounts.github || 0, "gh search"],
+  ["PyPI dependents", mcounts["libraries.io"] || 0, "libraries.io"],
+];
+document.getElementById("growth_kpis").innerHTML = growthDefs.map(([label, val, sub]) => `
+  <div class="card rounded-xl p-5">
+    <div class="text-xs uppercase tracking-wider text-slate-400">${label}</div>
+    <div class="kpi-num text-3xl font-semibold mt-2">${fmt(val)}</div>
+    <div class="text-xs text-slate-500 mt-1">${sub}</div>
+  </div>
+`).join("");
+
+const feed = (growth.mentions || {}).feed || [];
+table("tbl_mentions", feed, [
+  { key: "source", label: "Source" },
+  { key: "ts", label: "When" },
+  { key: "title", label: "Title" },
+  { key: "author", label: "Author" },
+]);
+
+const bq = growth.bigquery || {};
+const byCountry = Object.entries(bq.by_country || {});
+const geoNote = document.getElementById("geo_note");
+if (!byCountry.length) {
+  geoNote.textContent = "No BigQuery geo snapshot yet. Run: python scripts/analytics/bigquery_snapshot.py";
+  new Chart(document.getElementById("chart_geo"), {
+    type: "bar",
+    data: { labels: ["—"], datasets: [{ data: [0], backgroundColor: "#64748b" }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } },
+  });
+} else {
+  geoNote.textContent = `Last ${bq.lookback_days || 30}d · ${fmt(bq.total_downloads)} pip installs (filtered)`;
+  new Chart(document.getElementById("chart_geo"), {
+    type: "bar",
+    data: {
+      labels: byCountry.slice(0, 12).map(r => r[0]),
+      datasets: [{ data: byCountry.slice(0, 12).map(r => r[1]), backgroundColor: "#6366f1" }],
+    },
+    options: {
+      indexAxis: "y", responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { beginAtZero: true } },
+    },
+  });
+}
+
+const gc = growth.goatcounter || {};
+const gcPanel = document.getElementById("goatcounter_panel");
+if (gc._skipped) {
+  gcPanel.innerHTML = `<p>${gc._reason}. See docs/guides/analytics-setup.md</p>`;
+} else if (gc._error) {
+  gcPanel.innerHTML = `<p class="text-red-400">${gc._error}</p>`;
+} else {
+  const refs = (gc.by_referrer || []).map(r => `<li>${r[0]}: ${fmt(r[1])}</li>`).join("");
+  const countries = (gc.by_country || []).map(r => `<li>${r[0]}: ${fmt(r[1])}</li>`).join("");
+  gcPanel.innerHTML = `
+    <p class="mb-2">Pageviews (${gc.days || 30}d): <span class="kpi-num text-lg text-white">${fmt(gc.pageviews)}</span></p>
+    <div class="grid grid-cols-2 gap-4">
+      <div><div class="text-xs uppercase text-slate-500 mb-1">Top referrers</div><ul class="text-xs">${refs || "<li>—</li>"}</ul></div>
+      <div><div class="text-xs uppercase text-slate-500 mb-1">Top countries</div><ul class="text-xs">${countries || "<li>—</li>"}</ul></div>
+    </div>`;
+}
+
+const tel = DATA.telemetry || {};
+const telPanel = document.getElementById("telemetry_panel");
+if (tel._empty || tel._error) {
+  telPanel.innerHTML = `<p class="text-slate-500">No opt-in CLI data yet. Users see a first-run prompt; events appear here after deploy + opt-in.</p>`;
+} else {
+  const dau = (tel.daily_active || []).slice(-7);
+  const err = tel.cmd_stats || {};
+  const errRate = err.total ? ((err.failed || 0) / err.total * 100).toFixed(1) : "0";
+  telPanel.innerHTML = `
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+      <div><div class="text-xs text-slate-400">DAU (latest day)</div><div class="kpi-num text-2xl">${fmt(dau.length ? dau[dau.length-1].dau : 0)}</div></div>
+      <div><div class="text-xs text-slate-400">Events (30d window)</div><div class="kpi-num text-2xl">${fmt((tel.daily_active||[]).reduce((s,r)=>s+(r.events||0),0))}</div></div>
+      <div><div class="text-xs text-slate-400">Cmd error rate</div><div class="kpi-num text-2xl">${errRate}%</div></div>
+      <div><div class="text-xs text-slate-400">Window</div><div class="kpi-num text-2xl">${tel.window_days || 30}d</div></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+      <div><div class="uppercase text-slate-500 mb-1">Top suites</div>${(tel.top_suites||[]).map(r=>`<div>${r.name}: ${r.count}</div>`).join("")||"—"}</div>
+      <div><div class="uppercase text-slate-500 mb-1">Top adapters</div>${(tel.top_adapters||[]).map(r=>`<div>${r.name}: ${r.count}</div>`).join("")||"—"}</div>
+      <div><div class="uppercase text-slate-500 mb-1">Versions</div>${(tel.top_versions||[]).map(r=>`<div>${r.name}: ${r.count}</div>`).join("")||"—"}</div>
+    </div>`;
+}
+
+const gsc = growth.gsc || {};
+if (gsc.by_query && gsc.by_query.length) {
+  document.getElementById("gsc_section").style.display = "block";
+  table("tbl_gsc", gsc.by_query.map(([q,c])=>({query:q,clicks:c})), [
+    { key: "query", label: "Query" },
+    { key: "clicks", label: "Clicks", fmt: fmt },
+  ]);
+}
+
+const hfRoot = document.getElementById("hf");
+if (!DATA.hf || !DATA.hf.length) {
+  hfRoot.innerHTML = `<div class="text-slate-500 text-sm">No HF targets configured.</div>`;
+} else {
+  hfRoot.innerHTML = DATA.hf.map(item => {
+    const d = item.data || {};
+    if (d._error) return `<div class="text-sm text-slate-500">${item.kind} <code>${item.id}</code>: ${d._error}</div>`;
+    return `
+      <div class="flex items-center justify-between border-t border-slate-800 first:border-0 py-3">
+        <div>
+          <div class="text-sm font-medium">${item.kind} · ${item.id}</div>
+          <div class="text-xs text-slate-500">${d.sdk || d.pipeline_tag || ""} ${d.private ? "(private)" : ""}</div>
+        </div>
+        <div class="flex gap-6 text-right">
+          <div><div class="text-xs text-slate-400">Likes</div><div class="kpi-num text-lg">${fmt(d.likes)}</div></div>
+          <div><div class="text-xs text-slate-400">Downloads</div><div class="kpi-num text-lg">${fmt(d.downloads)}</div></div>
+        </div>
+      </div>`;
+  }).join("");
+}
+</script>
+</body>
+</html>
