@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-09-07T13:19:28+00:00",
+  "collected_at": "2026-09-14T13:42:30+00:00",
   "query": "audiobench",
   "counts": {
     "hn": 0,
@@ -10,6 +10,14 @@
     "total": 30
   },
   "items": [
+    {
+      "source": "github",
+      "url": "https://github.com/NVIDIA-NeMo/Gym/issues/3158",
+      "title": "[Tracker] Pull request handoff SLA",
+      "author": "github-actions[bot]",
+      "ts": "2026-09-08T14:30:04Z",
+      "snippet": "NVIDIA-NeMo/Gym"
+    },
     {
       "source": "github",
       "url": "https://github.com/wordingone/ember/issues/2120",
@@ -28,16 +36,16 @@
     },
     {
       "source": "github",
-      "url": "https://github.com/wordingone/ember/issues/1947",
-      "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)",
+      "url": "https://github.com/wordingone/ember/issues/1948",
+      "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives",
       "author": "wordingone",
       "ts": "2026-08-28T00:11:16Z",
       "snippet": "wordingone/ember"
     },
     {
       "source": "github",
-      "url": "https://github.com/wordingone/ember/issues/1948",
-      "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives",
+      "url": "https://github.com/wordingone/ember/issues/1947",
+      "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)",
       "author": "wordingone",
       "ts": "2026-08-28T00:11:16Z",
       "snippet": "wordingone/ember"
@@ -193,14 +201,6 @@
       "author": "greatnoble",
       "ts": "2025-05-01T05:18:48Z",
       "snippet": "AudioLLMs/AudioBench"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/xiaomi-research/r1-aqa/issues/3",
-      "title": "Only evaluate on MMAU?",
-      "author": "shanhaidexiamo",
-      "ts": "2025-03-17T07:54:12Z",
-      "snippet": "xiaomi-research/r1-aqa"
     },
     {
       "source": "github",
@@ -254,6 +254,14 @@
   "feed": [
     {
       "source": "github",
+      "url": "https://github.com/NVIDIA-NeMo/Gym/issues/3158",
+      "title": "[Tracker] Pull request handoff SLA",
+      "author": "github-actions[bot]",
+      "ts": "2026-09-08T14:30:04Z",
+      "snippet": "NVIDIA-NeMo/Gym"
+    },
+    {
+      "source": "github",
       "url": "https://github.com/wordingone/ember/issues/2120",
       "title": "[CUSTODY][C5] Make E-MATRIX-AUDIO producible: LibriSpeech test-clean heldout N=64 + protected audio contract + adapt-audio (#1947 front unit)",
       "author": "wordingone",
@@ -270,16 +278,16 @@
     },
     {
       "source": "github",
-      "url": "https://github.com/wordingone/ember/issues/1947",
-      "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)",
+      "url": "https://github.com/wordingone/ember/issues/1948",
+      "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives",
       "author": "wordingone",
       "ts": "2026-08-28T00:11:16Z",
       "snippet": "wordingone/ember"
     },
     {
       "source": "github",
-      "url": "https://github.com/wordingone/ember/issues/1948",
-      "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives",
+      "url": "https://github.com/wordingone/ember/issues/1947",
+      "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)",
       "author": "wordingone",
       "ts": "2026-08-28T00:11:16Z",
       "snippet": "wordingone/ember"
@@ -435,14 +443,6 @@
       "author": "greatnoble",
       "ts": "2025-05-01T05:18:48Z",
       "snippet": "AudioLLMs/AudioBench"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/xiaomi-research/r1-aqa/issues/3",
-      "title": "Only evaluate on MMAU?",
-      "author": "shanhaidexiamo",
-      "ts": "2025-03-17T07:54:12Z",
-      "snippet": "xiaomi-research/r1-aqa"
     },
     {
       "source": "github",
