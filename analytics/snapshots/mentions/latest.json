@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-09-14T13:42:30+00:00",
+  "collected_at": "2026-09-21T13:41:05+00:00",
   "query": "audiobench",
   "counts": {
     "hn": 0,
@@ -10,6 +10,14 @@
     "total": 30
   },
   "items": [
+    {
+      "source": "github",
+      "url": "https://github.com/NVIDIA-NeMo/Gym/issues/3402",
+      "title": "[Tracker] Pull request handoff SLA",
+      "author": "github-actions[bot]",
+      "ts": "2026-09-15T14:28:59Z",
+      "snippet": "NVIDIA-NeMo/Gym"
+    },
     {
       "source": "github",
       "url": "https://github.com/NVIDIA-NeMo/Gym/issues/3158",
@@ -36,16 +44,16 @@
     },
     {
       "source": "github",
-      "url": "https://github.com/wordingone/ember/issues/1948",
-      "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives",
+      "url": "https://github.com/wordingone/ember/issues/1947",
+      "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)",
       "author": "wordingone",
       "ts": "2026-08-28T00:11:16Z",
       "snippet": "wordingone/ember"
     },
     {
       "source": "github",
-      "url": "https://github.com/wordingone/ember/issues/1947",
-      "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)",
+      "url": "https://github.com/wordingone/ember/issues/1948",
+      "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives",
       "author": "wordingone",
       "ts": "2026-08-28T00:11:16Z",
       "snippet": "wordingone/ember"
@@ -209,14 +217,6 @@
       "author": "BinWang28",
       "ts": "2025-03-12T15:03:04Z",
       "snippet": "Sakshi113/MMAU"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/AudioLLMs/AudioBench/issues/5",
-      "title": "To be fixed",
-      "author": "BinWang28",
-      "ts": "2025-02-19T08:47:32Z",
-      "snippet": "AudioLLMs/AudioBench"
     },
     {
       "source": "github",
@@ -254,6 +254,14 @@
   "feed": [
     {
       "source": "github",
+      "url": "https://github.com/NVIDIA-NeMo/Gym/issues/3402",
+      "title": "[Tracker] Pull request handoff SLA",
+      "author": "github-actions[bot]",
+      "ts": "2026-09-15T14:28:59Z",
+      "snippet": "NVIDIA-NeMo/Gym"
+    },
+    {
+      "source": "github",
       "url": "https://github.com/NVIDIA-NeMo/Gym/issues/3158",
       "title": "[Tracker] Pull request handoff SLA",
       "author": "github-actions[bot]",
@@ -278,16 +286,16 @@
     },
     {
       "source": "github",
-      "url": "https://github.com/wordingone/ember/issues/1948",
-      "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives",
+      "url": "https://github.com/wordingone/ember/issues/1947",
+      "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)",
       "author": "wordingone",
       "ts": "2026-08-28T00:11:16Z",
       "snippet": "wordingone/ember"
     },
     {
       "source": "github",
-      "url": "https://github.com/wordingone/ember/issues/1947",
-      "title": "[CAMPAIGN][EVALUATION] Protected multimodal evaluation plane to CERT.007/CERT.009 (beneath #1581)",
+      "url": "https://github.com/wordingone/ember/issues/1948",
+      "title": "[EVALUATION][E-CANARY] CPU-only image canary: real checkpoint-to-score chain with planted negatives",
       "author": "wordingone",
       "ts": "2026-08-28T00:11:16Z",
       "snippet": "wordingone/ember"
@@ -443,14 +451,6 @@
       "author": "greatnoble",
       "ts": "2025-05-01T05:18:48Z",
       "snippet": "AudioLLMs/AudioBench"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/Sakshi113/MMAU/issues/9",
-      "title": "HF Dataset and Evaluation with AudioBench",
-      "author": "BinWang28",
-      "ts": "2025-03-12T15:03:04Z",
-      "snippet": "Sakshi113/MMAU"
     }
   ]
 }
