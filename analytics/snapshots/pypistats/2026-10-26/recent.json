@@ -1,0 +1,9 @@
+{
+  "data": {
+    "last_day": 3,
+    "last_month": 30,
+    "last_week": 14
+  },
+  "package": "audiobench",
+  "type": "recent_downloads"
+}
