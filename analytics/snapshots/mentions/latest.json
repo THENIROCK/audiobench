@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-11-02T16:51:42+00:00",
+  "collected_at": "2026-11-09T17:12:31+00:00",
   "query": "audiobench",
   "counts": {
     "hn": 0,
@@ -10,6 +10,14 @@
     "total": 30
   },
   "items": [
+    {
+      "source": "github",
+      "url": "https://github.com/Agent-Threat-Rule/agent-threat-rules/issues/827",
+      "title": "Attack sources: weekly review",
+      "author": "github-actions[bot]",
+      "ts": "2026-11-08T21:46:05Z",
+      "snippet": "Agent-Threat-Rule/agent-threat-rules"
+    },
     {
       "source": "github",
       "url": "https://github.com/marshiyar/oneTake/issues/50",
@@ -209,14 +217,6 @@
       "author": "greatnoble",
       "ts": "2025-05-01T05:18:48Z",
       "snippet": "AudioLLMs/AudioBench"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/Sakshi113/MMAU/issues/9",
-      "title": "HF Dataset and Evaluation with AudioBench",
-      "author": "BinWang28",
-      "ts": "2025-03-12T15:03:04Z",
-      "snippet": "Sakshi113/MMAU"
     },
     {
       "source": "github",
@@ -254,6 +254,14 @@
   "feed": [
     {
       "source": "github",
+      "url": "https://github.com/Agent-Threat-Rule/agent-threat-rules/issues/827",
+      "title": "Attack sources: weekly review",
+      "author": "github-actions[bot]",
+      "ts": "2026-11-08T21:46:05Z",
+      "snippet": "Agent-Threat-Rule/agent-threat-rules"
+    },
+    {
+      "source": "github",
       "url": "https://github.com/marshiyar/oneTake/issues/50",
       "title": "Swift 6 language mode for every target",
       "author": "marshiyar",
@@ -443,14 +451,6 @@
       "author": "github-actions[bot]",
       "ts": "2025-05-25T16:45:40Z",
       "snippet": "set-path/DailyArXiv"
-    },
-    {
-      "source": "github",
-      "url": "https://github.com/AudioLLMs/AudioBench/issues/9",
-      "title": "'bash examples/eval_SALMONN_7B.sh' ?",
-      "author": "greatnoble",
-      "ts": "2025-05-01T05:18:48Z",
-      "snippet": "AudioLLMs/AudioBench"
     }
   ]
 }
