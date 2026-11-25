@@ -15,6 +15,15 @@ _PLUGINS_LOADED = False
 _FACTORIES: dict[str, Callable[[int], ASRAdapter]] = {}
 
 
+def _make_oruk_fourier(seed: int) -> ASRAdapter:
+    from audiobench.models.oruk_fourier import OrukFourierTranscriber
+
+    return OrukFourierTranscriber(seed=seed)
+
+
+_FACTORIES["oruk-fourier-2b"] = _make_oruk_fourier
+
+
 def _iter_entry_points(group: str) -> list:
     discovered = entry_points()
     if hasattr(discovered, "select"):
